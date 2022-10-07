@@ -15,7 +15,33 @@ namespace stockManagement
         public mainForm()
         {
             InitializeComponent();
+            //this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
+        private const int cGrip = 16;
+        private const int cCaption = 32;
+
+        /*
+        //Form Resizing
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x84)
+            {
+                Point pos = new Point(m.LParam.ToInt32());
+                pos = this.PointToClient(pos);
+                if (pos.Y < cCaption)
+                {
+                    m.Result = (IntPtr)2;
+                    return;
+                }
+                if (pos.X >= this.ClientSize.Width - cGrip && pos.Y >= this.ClientSize.Height - cGrip)
+                {
+                    m.Result = (IntPtr)17;
+                    return;
+                }
+            }
+            base.WndProc(ref m);
+        }
+        */
         //closing form
         private void closeButton_Click(object sender, EventArgs e)
         {
@@ -39,11 +65,11 @@ namespace stockManagement
             mouseDown = true;
             lastLocation = e.Location;
         }
-
         private void titlePanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (mouseDown)
             {
+                this.WindowState = FormWindowState.Normal;
                 this.Location = new Point(
                     (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
             }
@@ -51,5 +77,14 @@ namespace stockManagement
 
         private bool mouseDown;
         private Point lastLocation;
+
+        //resizing Form with double click on title bar
+        private void titlePanel_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Maximized)
+                this.WindowState = FormWindowState.Normal;
+            else
+                this.WindowState = FormWindowState.Maximized;
+        }
     }
 }
