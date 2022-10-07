@@ -17,10 +17,11 @@ namespace stockManagement
             InitializeComponent();
             //this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
+        /*
         private const int cGrip = 16;
         private const int cCaption = 32;
 
-        /*
+       
         //Form Resizing
         protected override void WndProc(ref Message m)
         {
@@ -85,6 +86,46 @@ namespace stockManagement
                 this.WindowState = FormWindowState.Normal;
             else
                 this.WindowState = FormWindowState.Maximized;
+        }
+
+        //hides all panels
+        void hidePanel()
+        {
+            customerPanel.Visible = false;
+            productPanel.Visible = false;
+            incomeOutcomePanel.Visible = false;
+            recipePanel.Visible = false;
+        }
+        //shows specific panel
+        void showPanel(Panel panel)
+        {
+            hidePanel();
+            panel.Visible = true;
+        }
+
+        private void homeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            hidePanel();
+        }
+
+        private void productLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            showPanel(productPanel);
+        }
+
+        private void CustomerLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            showPanel(customerPanel);
+        }
+
+        private void incomeOutcomeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            showPanel(incomeOutcomePanel);
+        }
+
+        private void recipeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            showPanel(recipePanel);
         }
     }
 }
