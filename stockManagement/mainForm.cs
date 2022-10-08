@@ -138,9 +138,100 @@ namespace stockManagement
             showPanel(customerPanel);
         }
 
-        private void custombtn1_Click(object sender, EventArgs e)
+        private void hideAdminControls()
         {
+            productControlsPanel.Visible = false;
+            customerControlsPanel.Visible = false;
+        }
+        private void showAdminControls(Panel panel)
+        {
+            hideAdminControls();
+            panel.Visible = true;
+        }
 
+        //show admin controls related to product
+        private void productAdminControlButton_Click(object sender, EventArgs e)
+        {
+            showAdminControls(productControlsPanel);
+        }
+
+        //show admin controls related to customer
+        private void customerAdminControlButton_Click(object sender, EventArgs e)
+        {
+            showAdminControls(customerControlsPanel);
+        }
+
+        //customer admin controls
+        //hides controls inside customer panel
+        private void hideCustomerControls()
+        {
+            customerNameLabel.Visible = false;
+            customerNameTextbox.Visible = false;
+            customerPhoneLabel.Visible = false;
+            customerPhoneTextbox.Visible = false;
+            customerAddressLabel.Visible = false;
+            customerAddressTextbox.Visible = false;
+        }
+        // 0 = add , 1 = update , 2 = delete
+        private void showCustomerControls(int choice)
+        {
+            hideCustomerControls();
+            if (choice == 0)
+            {
+                customerPanelTitle.Text = "Customer Add";
+                customerNameLabel.Visible = true;
+                customerNameTextbox.Visible = true;
+                customerPhoneLabel.Visible = true;
+                customerPhoneTextbox.Visible = true;
+                customerAddressLabel.Visible = true;
+                customerAddressTextbox.Visible = true;
+                customerAddButton.Visible = true;
+                customerUpdateButton.Visible = false;
+                customerDeleteButton.Visible = false;
+            }
+            else if (choice == 1)
+            {
+                customerPanelTitle.Text = "Customer Update";
+                customerNameLabel.Visible = true;
+                customerNameTextbox.Visible = true;
+                customerPhoneLabel.Visible = true;
+                customerPhoneTextbox.Visible = true;
+                customerAddressLabel.Visible = true;
+                customerAddressTextbox.Visible = true;
+                customerAddButton.Visible = false;
+                customerUpdateButton.Visible = true;
+                customerDeleteButton.Visible = false;
+            }
+            else if (choice == 2)
+            {
+                customerPanelTitle.Text = "Customer Delete";
+                customerNameLabel.Visible = true;
+                customerNameTextbox.Visible = true;
+                customerPhoneLabel.Visible = true;
+                customerPhoneTextbox.Visible = true;
+                customerAddressLabel.Visible = true;
+                customerAddressTextbox.Visible = true;
+                customerAddButton.Visible = false;
+                customerUpdateButton.Visible = false;
+                customerDeleteButton.Visible = true;
+            }
+        }
+        private void customerAddPanelButton_Click(object sender, EventArgs e)
+        {
+            showCustomerControls(0);
+            showPanel(customerPanel);
+        }
+
+        private void customerUpdatePanelButton_Click(object sender, EventArgs e)
+        {
+            showCustomerControls(1);
+            showPanel(customerPanel);
+        }
+
+        private void customerDeletePanelButton_Click(object sender, EventArgs e)
+        {
+            showCustomerControls(2);
+            showPanel(customerPanel);
         }
     }
 }

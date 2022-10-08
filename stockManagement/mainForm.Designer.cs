@@ -44,16 +44,12 @@ namespace stockManagement
             this.customerLinkLabel = new System.Windows.Forms.LinkLabel();
             this.productLinkLabel = new System.Windows.Forms.LinkLabel();
             this.homeLinkLabel = new System.Windows.Forms.LinkLabel();
-            this.picboxuser = new stockManagement.custompicturebox();
             this.customerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.customerAddTSI = new System.Windows.Forms.ToolStripMenuItem();
             this.productPanel = new System.Windows.Forms.Panel();
             this.customerPanel = new System.Windows.Forms.Panel();
             this.customerAddressLabel = new System.Windows.Forms.Label();
             this.customerPhoneLabel = new System.Windows.Forms.Label();
-            this.customerNameTextbox = new stockmanagement.customtextbox();
-            this.customerPhoneTextbox = new stockmanagement.customtextbox();
-            this.customerAdressTextbox = new stockmanagement.customtextbox();
             this.customerNameLabel = new System.Windows.Forms.Label();
             this.customerPanelTitle = new System.Windows.Forms.Label();
             this.incomeOutcomePanel = new System.Windows.Forms.Panel();
@@ -66,27 +62,38 @@ namespace stockManagement
             this.recipeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.recipeAddTSI = new System.Windows.Forms.ToolStripMenuItem();
             this.adminControlsPanel = new System.Windows.Forms.Panel();
+            this.customerControlsPanel = new System.Windows.Forms.Panel();
+            this.dashInBetweenLabel = new System.Windows.Forms.Label();
+            this.productControlsPanel = new System.Windows.Forms.Panel();
+            this.dashBottomLabel = new System.Windows.Forms.Label();
+            this.adminControlsLabel = new System.Windows.Forms.Label();
+            this.dashTopLabel = new System.Windows.Forms.Label();
             this.customerDeletePanelButton = new stockmanagement.custombtn();
             this.customerUpdatePanelButton = new stockmanagement.custombtn();
             this.customerAddPanelButton = new stockmanagement.custombtn();
             this.customerAdminControlButton = new stockmanagement.custombtn();
-            this.dashInBetweenLabel = new System.Windows.Forms.Label();
             this.productDeletePanelButton = new stockmanagement.custombtn();
             this.productUpdatePanelButton = new stockmanagement.custombtn();
             this.productAddPanelButton = new stockmanagement.custombtn();
             this.productAdminControlButton = new stockmanagement.custombtn();
-            this.dashBottomLabel = new System.Windows.Forms.Label();
-            this.adminControlsLabel = new System.Windows.Forms.Label();
-            this.dashTopLabel = new System.Windows.Forms.Label();
+            this.customerDeleteButton = new stockmanagement.custombtn();
+            this.customerUpdateButton = new stockmanagement.custombtn();
+            this.customerAddButton = new stockmanagement.custombtn();
+            this.customerNameTextbox = new stockmanagement.customtextbox();
+            this.customerPhoneTextbox = new stockmanagement.customtextbox();
+            this.customerAddressTextbox = new stockmanagement.customtextbox();
+            this.picboxuser = new stockManagement.custompicturebox();
             this.titlePanel.SuspendLayout();
             this.navigationPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).BeginInit();
             this.customerContextMenu.SuspendLayout();
             this.customerPanel.SuspendLayout();
             this.productContextMenu.SuspendLayout();
             this.incomeOutcomeContextMenu.SuspendLayout();
             this.recipeContextMenu.SuspendLayout();
             this.adminControlsPanel.SuspendLayout();
+            this.customerControlsPanel.SuspendLayout();
+            this.productControlsPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).BeginInit();
             this.SuspendLayout();
             // 
             // titlePanel
@@ -258,23 +265,6 @@ namespace stockManagement
             this.homeLinkLabel.VisitedLinkColor = System.Drawing.Color.Transparent;
             this.homeLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.homeLinkLabel_LinkClicked);
             // 
-            // picboxuser
-            // 
-            this.picboxuser.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
-            this.picboxuser.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.picboxuser.BorderColor2 = System.Drawing.Color.HotPink;
-            this.picboxuser.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
-            this.picboxuser.BorderSize = 2;
-            this.picboxuser.GradientAngle = 50F;
-            this.picboxuser.Image = ((System.Drawing.Image)(resources.GetObject("picboxuser.Image")));
-            this.picboxuser.Location = new System.Drawing.Point(0, 0);
-            this.picboxuser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.picboxuser.Name = "picboxuser";
-            this.picboxuser.Size = new System.Drawing.Size(115, 115);
-            this.picboxuser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.picboxuser.TabIndex = 6;
-            this.picboxuser.TabStop = false;
-            // 
             // customerContextMenu
             // 
             this.customerContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -304,11 +294,14 @@ namespace stockManagement
             // customerPanel
             // 
             this.customerPanel.BackColor = System.Drawing.Color.Peru;
+            this.customerPanel.Controls.Add(this.customerDeleteButton);
+            this.customerPanel.Controls.Add(this.customerUpdateButton);
+            this.customerPanel.Controls.Add(this.customerAddButton);
             this.customerPanel.Controls.Add(this.customerAddressLabel);
             this.customerPanel.Controls.Add(this.customerPhoneLabel);
             this.customerPanel.Controls.Add(this.customerNameTextbox);
             this.customerPanel.Controls.Add(this.customerPhoneTextbox);
-            this.customerPanel.Controls.Add(this.customerAdressTextbox);
+            this.customerPanel.Controls.Add(this.customerAddressTextbox);
             this.customerPanel.Controls.Add(this.customerNameLabel);
             this.customerPanel.Controls.Add(this.customerPanelTitle);
             this.customerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -326,9 +319,9 @@ namespace stockManagement
             this.customerAddressLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.customerAddressLabel.Location = new System.Drawing.Point(509, 280);
             this.customerAddressLabel.Name = "customerAddressLabel";
-            this.customerAddressLabel.Size = new System.Drawing.Size(198, 25);
+            this.customerAddressLabel.Size = new System.Drawing.Size(210, 25);
             this.customerAddressLabel.TabIndex = 5;
-            this.customerAddressLabel.Text = "Customer Adress : ";
+            this.customerAddressLabel.Text = "Customer Address : ";
             // 
             // customerPhoneLabel
             // 
@@ -340,69 +333,6 @@ namespace stockManagement
             this.customerPhoneLabel.Size = new System.Drawing.Size(180, 25);
             this.customerPhoneLabel.TabIndex = 4;
             this.customerPhoneLabel.Text = "Customer Phone:";
-            // 
-            // customerNameTextbox
-            // 
-            this.customerNameTextbox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.customerNameTextbox.BackColor = System.Drawing.SystemColors.Window;
-            this.customerNameTextbox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.customerNameTextbox.BorderFocusColor = System.Drawing.Color.DarkSlateBlue;
-            this.customerNameTextbox.BorderSize = 4;
-            this.customerNameTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.customerNameTextbox.ForeColor = System.Drawing.Color.DimGray;
-            this.customerNameTextbox.Location = new System.Drawing.Point(730, 146);
-            this.customerNameTextbox.Margin = new System.Windows.Forms.Padding(4);
-            this.customerNameTextbox.MaxLength = 10;
-            this.customerNameTextbox.Multiline = false;
-            this.customerNameTextbox.Name = "customerNameTextbox";
-            this.customerNameTextbox.Padding = new System.Windows.Forms.Padding(7);
-            this.customerNameTextbox.PasswordChar = false;
-            this.customerNameTextbox.Size = new System.Drawing.Size(284, 40);
-            this.customerNameTextbox.TabIndex = 0;
-            this.customerNameTextbox.Texts = "";
-            this.customerNameTextbox.UnderlinedStyle = false;
-            // 
-            // customerPhoneTextbox
-            // 
-            this.customerPhoneTextbox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.customerPhoneTextbox.BackColor = System.Drawing.SystemColors.Window;
-            this.customerPhoneTextbox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.customerPhoneTextbox.BorderFocusColor = System.Drawing.Color.DarkSlateBlue;
-            this.customerPhoneTextbox.BorderSize = 4;
-            this.customerPhoneTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.customerPhoneTextbox.ForeColor = System.Drawing.Color.DimGray;
-            this.customerPhoneTextbox.Location = new System.Drawing.Point(729, 208);
-            this.customerPhoneTextbox.Margin = new System.Windows.Forms.Padding(4);
-            this.customerPhoneTextbox.MaxLength = 11;
-            this.customerPhoneTextbox.Multiline = false;
-            this.customerPhoneTextbox.Name = "customerPhoneTextbox";
-            this.customerPhoneTextbox.Padding = new System.Windows.Forms.Padding(7);
-            this.customerPhoneTextbox.PasswordChar = false;
-            this.customerPhoneTextbox.Size = new System.Drawing.Size(284, 40);
-            this.customerPhoneTextbox.TabIndex = 1;
-            this.customerPhoneTextbox.Texts = "";
-            this.customerPhoneTextbox.UnderlinedStyle = false;
-            // 
-            // customerAdressTextbox
-            // 
-            this.customerAdressTextbox.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.customerAdressTextbox.BackColor = System.Drawing.SystemColors.Window;
-            this.customerAdressTextbox.BorderColor = System.Drawing.Color.RoyalBlue;
-            this.customerAdressTextbox.BorderFocusColor = System.Drawing.Color.DarkSlateBlue;
-            this.customerAdressTextbox.BorderSize = 4;
-            this.customerAdressTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.customerAdressTextbox.ForeColor = System.Drawing.Color.DimGray;
-            this.customerAdressTextbox.Location = new System.Drawing.Point(729, 280);
-            this.customerAdressTextbox.Margin = new System.Windows.Forms.Padding(4);
-            this.customerAdressTextbox.MaxLength = 120;
-            this.customerAdressTextbox.Multiline = true;
-            this.customerAdressTextbox.Name = "customerAdressTextbox";
-            this.customerAdressTextbox.Padding = new System.Windows.Forms.Padding(7);
-            this.customerAdressTextbox.PasswordChar = false;
-            this.customerAdressTextbox.Size = new System.Drawing.Size(284, 114);
-            this.customerAdressTextbox.TabIndex = 2;
-            this.customerAdressTextbox.Texts = "";
-            this.customerAdressTextbox.UnderlinedStyle = false;
             // 
             // customerNameLabel
             // 
@@ -500,14 +430,10 @@ namespace stockManagement
             // adminControlsPanel
             // 
             this.adminControlsPanel.BackColor = System.Drawing.Color.MediumSlateBlue;
-            this.adminControlsPanel.Controls.Add(this.customerDeletePanelButton);
-            this.adminControlsPanel.Controls.Add(this.customerUpdatePanelButton);
-            this.adminControlsPanel.Controls.Add(this.customerAddPanelButton);
+            this.adminControlsPanel.Controls.Add(this.customerControlsPanel);
             this.adminControlsPanel.Controls.Add(this.customerAdminControlButton);
             this.adminControlsPanel.Controls.Add(this.dashInBetweenLabel);
-            this.adminControlsPanel.Controls.Add(this.productDeletePanelButton);
-            this.adminControlsPanel.Controls.Add(this.productUpdatePanelButton);
-            this.adminControlsPanel.Controls.Add(this.productAddPanelButton);
+            this.adminControlsPanel.Controls.Add(this.productControlsPanel);
             this.adminControlsPanel.Controls.Add(this.productAdminControlButton);
             this.adminControlsPanel.Controls.Add(this.dashBottomLabel);
             this.adminControlsPanel.Controls.Add(this.adminControlsLabel);
@@ -518,88 +444,18 @@ namespace stockManagement
             this.adminControlsPanel.Size = new System.Drawing.Size(200, 460);
             this.adminControlsPanel.TabIndex = 7;
             // 
-            // customerDeletePanelButton
+            // customerControlsPanel
             // 
-            this.customerDeletePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
-            this.customerDeletePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
-            this.customerDeletePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.customerDeletePanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.customerDeletePanelButton.BorderRadius = 0;
-            this.customerDeletePanelButton.BorderSize = 0;
-            this.customerDeletePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.customerDeletePanelButton.FlatAppearance.BorderSize = 0;
-            this.customerDeletePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.customerDeletePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.customerDeletePanelButton.ForeColor = System.Drawing.Color.White;
-            this.customerDeletePanelButton.Location = new System.Drawing.Point(0, 420);
-            this.customerDeletePanelButton.Name = "customerDeletePanelButton";
-            this.customerDeletePanelButton.Size = new System.Drawing.Size(200, 45);
-            this.customerDeletePanelButton.TabIndex = 17;
-            this.customerDeletePanelButton.Text = "Delete Customer";
-            this.customerDeletePanelButton.textColor = System.Drawing.Color.White;
-            this.customerDeletePanelButton.UseVisualStyleBackColor = false;
-            // 
-            // customerUpdatePanelButton
-            // 
-            this.customerUpdatePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
-            this.customerUpdatePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
-            this.customerUpdatePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.customerUpdatePanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.customerUpdatePanelButton.BorderRadius = 0;
-            this.customerUpdatePanelButton.BorderSize = 0;
-            this.customerUpdatePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.customerUpdatePanelButton.FlatAppearance.BorderSize = 0;
-            this.customerUpdatePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.customerUpdatePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.customerUpdatePanelButton.ForeColor = System.Drawing.Color.White;
-            this.customerUpdatePanelButton.Location = new System.Drawing.Point(0, 375);
-            this.customerUpdatePanelButton.Name = "customerUpdatePanelButton";
-            this.customerUpdatePanelButton.Size = new System.Drawing.Size(200, 45);
-            this.customerUpdatePanelButton.TabIndex = 16;
-            this.customerUpdatePanelButton.Text = "Update Customer";
-            this.customerUpdatePanelButton.textColor = System.Drawing.Color.White;
-            this.customerUpdatePanelButton.UseVisualStyleBackColor = false;
-            // 
-            // customerAddPanelButton
-            // 
-            this.customerAddPanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
-            this.customerAddPanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
-            this.customerAddPanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.customerAddPanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.customerAddPanelButton.BorderRadius = 0;
-            this.customerAddPanelButton.BorderSize = 0;
-            this.customerAddPanelButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.customerAddPanelButton.FlatAppearance.BorderSize = 0;
-            this.customerAddPanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.customerAddPanelButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.customerAddPanelButton.ForeColor = System.Drawing.Color.White;
-            this.customerAddPanelButton.Location = new System.Drawing.Point(0, 330);
-            this.customerAddPanelButton.Name = "customerAddPanelButton";
-            this.customerAddPanelButton.Size = new System.Drawing.Size(200, 45);
-            this.customerAddPanelButton.TabIndex = 15;
-            this.customerAddPanelButton.Text = "Add Customer";
-            this.customerAddPanelButton.textColor = System.Drawing.Color.White;
-            this.customerAddPanelButton.UseVisualStyleBackColor = false;
-            // 
-            // customerAdminControlButton
-            // 
-            this.customerAdminControlButton.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.customerAdminControlButton.backgroundColor = System.Drawing.SystemColors.MenuHighlight;
-            this.customerAdminControlButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.customerAdminControlButton.BorderRadius = 0;
-            this.customerAdminControlButton.BorderSize = 0;
-            this.customerAdminControlButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.customerAdminControlButton.FlatAppearance.BorderSize = 0;
-            this.customerAdminControlButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.customerAdminControlButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.customerAdminControlButton.ForeColor = System.Drawing.Color.White;
-            this.customerAdminControlButton.Location = new System.Drawing.Point(0, 280);
-            this.customerAdminControlButton.Name = "customerAdminControlButton";
-            this.customerAdminControlButton.Size = new System.Drawing.Size(200, 50);
-            this.customerAdminControlButton.TabIndex = 14;
-            this.customerAdminControlButton.Text = "Customer Controls";
-            this.customerAdminControlButton.textColor = System.Drawing.Color.White;
-            this.customerAdminControlButton.UseVisualStyleBackColor = false;
+            this.customerControlsPanel.AutoSize = true;
+            this.customerControlsPanel.BackColor = System.Drawing.Color.Ivory;
+            this.customerControlsPanel.Controls.Add(this.customerDeletePanelButton);
+            this.customerControlsPanel.Controls.Add(this.customerUpdatePanelButton);
+            this.customerControlsPanel.Controls.Add(this.customerAddPanelButton);
+            this.customerControlsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.customerControlsPanel.Location = new System.Drawing.Point(0, 330);
+            this.customerControlsPanel.Name = "customerControlsPanel";
+            this.customerControlsPanel.Size = new System.Drawing.Size(200, 135);
+            this.customerControlsPanel.TabIndex = 21;
             // 
             // dashInBetweenLabel
             // 
@@ -611,91 +467,17 @@ namespace stockManagement
             this.dashInBetweenLabel.TabIndex = 19;
             this.dashInBetweenLabel.Text = "---------------------------------------------------";
             // 
-            // productDeletePanelButton
+            // productControlsPanel
             // 
-            this.productDeletePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
-            this.productDeletePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
-            this.productDeletePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.productDeletePanelButton.BorderColor = System.Drawing.Color.Plum;
-            this.productDeletePanelButton.BorderRadius = 0;
-            this.productDeletePanelButton.BorderSize = 0;
-            this.productDeletePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.productDeletePanelButton.FlatAppearance.BorderColor = System.Drawing.Color.PapayaWhip;
-            this.productDeletePanelButton.FlatAppearance.BorderSize = 0;
-            this.productDeletePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.productDeletePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.productDeletePanelButton.ForeColor = System.Drawing.Color.White;
-            this.productDeletePanelButton.Location = new System.Drawing.Point(0, 215);
-            this.productDeletePanelButton.Name = "productDeletePanelButton";
-            this.productDeletePanelButton.Size = new System.Drawing.Size(200, 45);
-            this.productDeletePanelButton.TabIndex = 13;
-            this.productDeletePanelButton.Text = "Delete Product";
-            this.productDeletePanelButton.textColor = System.Drawing.Color.White;
-            this.productDeletePanelButton.UseVisualStyleBackColor = false;
-            // 
-            // productUpdatePanelButton
-            // 
-            this.productUpdatePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
-            this.productUpdatePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
-            this.productUpdatePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.productUpdatePanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.productUpdatePanelButton.BorderRadius = 0;
-            this.productUpdatePanelButton.BorderSize = 0;
-            this.productUpdatePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.productUpdatePanelButton.FlatAppearance.BorderColor = System.Drawing.Color.PapayaWhip;
-            this.productUpdatePanelButton.FlatAppearance.BorderSize = 0;
-            this.productUpdatePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.productUpdatePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.productUpdatePanelButton.ForeColor = System.Drawing.SystemColors.Window;
-            this.productUpdatePanelButton.Location = new System.Drawing.Point(0, 170);
-            this.productUpdatePanelButton.Name = "productUpdatePanelButton";
-            this.productUpdatePanelButton.Size = new System.Drawing.Size(200, 45);
-            this.productUpdatePanelButton.TabIndex = 12;
-            this.productUpdatePanelButton.Text = "Update Product";
-            this.productUpdatePanelButton.textColor = System.Drawing.SystemColors.Window;
-            this.productUpdatePanelButton.UseVisualStyleBackColor = false;
-            // 
-            // productAddPanelButton
-            // 
-            this.productAddPanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
-            this.productAddPanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
-            this.productAddPanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.productAddPanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.productAddPanelButton.BorderRadius = 0;
-            this.productAddPanelButton.BorderSize = 0;
-            this.productAddPanelButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.productAddPanelButton.FlatAppearance.BorderSize = 0;
-            this.productAddPanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.productAddPanelButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.productAddPanelButton.ForeColor = System.Drawing.Color.White;
-            this.productAddPanelButton.Location = new System.Drawing.Point(0, 125);
-            this.productAddPanelButton.Name = "productAddPanelButton";
-            this.productAddPanelButton.Size = new System.Drawing.Size(200, 45);
-            this.productAddPanelButton.TabIndex = 11;
-            this.productAddPanelButton.Text = "Add Product";
-            this.productAddPanelButton.textColor = System.Drawing.Color.White;
-            this.productAddPanelButton.UseVisualStyleBackColor = false;
-            // 
-            // productAdminControlButton
-            // 
-            this.productAdminControlButton.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.productAdminControlButton.backgroundColor = System.Drawing.SystemColors.MenuHighlight;
-            this.productAdminControlButton.BorderColor = System.Drawing.Color.PaleVioletRed;
-            this.productAdminControlButton.BorderRadius = 0;
-            this.productAdminControlButton.BorderSize = 0;
-            this.productAdminControlButton.Dock = System.Windows.Forms.DockStyle.Top;
-            this.productAdminControlButton.FlatAppearance.BorderSize = 0;
-            this.productAdminControlButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.productAdminControlButton.Font = new System.Drawing.Font("Georgia", 12F);
-            this.productAdminControlButton.ForeColor = System.Drawing.Color.White;
-            this.productAdminControlButton.Location = new System.Drawing.Point(0, 75);
-            this.productAdminControlButton.Name = "productAdminControlButton";
-            this.productAdminControlButton.Size = new System.Drawing.Size(200, 50);
-            this.productAdminControlButton.TabIndex = 10;
-            this.productAdminControlButton.Text = "Product Controls";
-            this.productAdminControlButton.textColor = System.Drawing.Color.White;
-            this.productAdminControlButton.UseVisualStyleBackColor = false;
-            this.productAdminControlButton.Click += new System.EventHandler(this.custombtn1_Click);
+            this.productControlsPanel.AutoSize = true;
+            this.productControlsPanel.Controls.Add(this.productDeletePanelButton);
+            this.productControlsPanel.Controls.Add(this.productUpdatePanelButton);
+            this.productControlsPanel.Controls.Add(this.productAddPanelButton);
+            this.productControlsPanel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productControlsPanel.Location = new System.Drawing.Point(0, 125);
+            this.productControlsPanel.Name = "productControlsPanel";
+            this.productControlsPanel.Size = new System.Drawing.Size(200, 135);
+            this.productControlsPanel.TabIndex = 20;
             // 
             // dashBottomLabel
             // 
@@ -728,6 +510,316 @@ namespace stockManagement
             this.dashTopLabel.TabIndex = 18;
             this.dashTopLabel.Text = "---------------------------------------------------";
             // 
+            // customerDeletePanelButton
+            // 
+            this.customerDeletePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
+            this.customerDeletePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
+            this.customerDeletePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customerDeletePanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerDeletePanelButton.BorderRadius = 0;
+            this.customerDeletePanelButton.BorderSize = 0;
+            this.customerDeletePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.customerDeletePanelButton.FlatAppearance.BorderSize = 0;
+            this.customerDeletePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerDeletePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.customerDeletePanelButton.ForeColor = System.Drawing.Color.White;
+            this.customerDeletePanelButton.Location = new System.Drawing.Point(0, 90);
+            this.customerDeletePanelButton.Name = "customerDeletePanelButton";
+            this.customerDeletePanelButton.Size = new System.Drawing.Size(200, 45);
+            this.customerDeletePanelButton.TabIndex = 17;
+            this.customerDeletePanelButton.Text = "Delete Customer";
+            this.customerDeletePanelButton.textColor = System.Drawing.Color.White;
+            this.customerDeletePanelButton.UseVisualStyleBackColor = false;
+            this.customerDeletePanelButton.Click += new System.EventHandler(this.customerDeletePanelButton_Click);
+            // 
+            // customerUpdatePanelButton
+            // 
+            this.customerUpdatePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
+            this.customerUpdatePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
+            this.customerUpdatePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customerUpdatePanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerUpdatePanelButton.BorderRadius = 0;
+            this.customerUpdatePanelButton.BorderSize = 0;
+            this.customerUpdatePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.customerUpdatePanelButton.FlatAppearance.BorderSize = 0;
+            this.customerUpdatePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerUpdatePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.customerUpdatePanelButton.ForeColor = System.Drawing.Color.White;
+            this.customerUpdatePanelButton.Location = new System.Drawing.Point(0, 45);
+            this.customerUpdatePanelButton.Name = "customerUpdatePanelButton";
+            this.customerUpdatePanelButton.Size = new System.Drawing.Size(200, 45);
+            this.customerUpdatePanelButton.TabIndex = 16;
+            this.customerUpdatePanelButton.Text = "Update Customer";
+            this.customerUpdatePanelButton.textColor = System.Drawing.Color.White;
+            this.customerUpdatePanelButton.UseVisualStyleBackColor = false;
+            this.customerUpdatePanelButton.Click += new System.EventHandler(this.customerUpdatePanelButton_Click);
+            // 
+            // customerAddPanelButton
+            // 
+            this.customerAddPanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
+            this.customerAddPanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
+            this.customerAddPanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customerAddPanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerAddPanelButton.BorderRadius = 0;
+            this.customerAddPanelButton.BorderSize = 0;
+            this.customerAddPanelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.customerAddPanelButton.FlatAppearance.BorderSize = 0;
+            this.customerAddPanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerAddPanelButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.customerAddPanelButton.ForeColor = System.Drawing.Color.White;
+            this.customerAddPanelButton.Location = new System.Drawing.Point(0, 0);
+            this.customerAddPanelButton.Name = "customerAddPanelButton";
+            this.customerAddPanelButton.Size = new System.Drawing.Size(200, 45);
+            this.customerAddPanelButton.TabIndex = 15;
+            this.customerAddPanelButton.Text = "Add Customer";
+            this.customerAddPanelButton.textColor = System.Drawing.Color.White;
+            this.customerAddPanelButton.UseVisualStyleBackColor = false;
+            this.customerAddPanelButton.Click += new System.EventHandler(this.customerAddPanelButton_Click);
+            // 
+            // customerAdminControlButton
+            // 
+            this.customerAdminControlButton.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.customerAdminControlButton.backgroundColor = System.Drawing.SystemColors.MenuHighlight;
+            this.customerAdminControlButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerAdminControlButton.BorderRadius = 0;
+            this.customerAdminControlButton.BorderSize = 0;
+            this.customerAdminControlButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.customerAdminControlButton.FlatAppearance.BorderSize = 0;
+            this.customerAdminControlButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerAdminControlButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.customerAdminControlButton.ForeColor = System.Drawing.Color.White;
+            this.customerAdminControlButton.Location = new System.Drawing.Point(0, 280);
+            this.customerAdminControlButton.Name = "customerAdminControlButton";
+            this.customerAdminControlButton.Size = new System.Drawing.Size(200, 50);
+            this.customerAdminControlButton.TabIndex = 14;
+            this.customerAdminControlButton.Text = "Customer Controls";
+            this.customerAdminControlButton.textColor = System.Drawing.Color.White;
+            this.customerAdminControlButton.UseVisualStyleBackColor = false;
+            this.customerAdminControlButton.Click += new System.EventHandler(this.customerAdminControlButton_Click);
+            // 
+            // productDeletePanelButton
+            // 
+            this.productDeletePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
+            this.productDeletePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
+            this.productDeletePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.productDeletePanelButton.BorderColor = System.Drawing.Color.Plum;
+            this.productDeletePanelButton.BorderRadius = 0;
+            this.productDeletePanelButton.BorderSize = 0;
+            this.productDeletePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productDeletePanelButton.FlatAppearance.BorderColor = System.Drawing.Color.PapayaWhip;
+            this.productDeletePanelButton.FlatAppearance.BorderSize = 0;
+            this.productDeletePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.productDeletePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.productDeletePanelButton.ForeColor = System.Drawing.Color.White;
+            this.productDeletePanelButton.Location = new System.Drawing.Point(0, 90);
+            this.productDeletePanelButton.Name = "productDeletePanelButton";
+            this.productDeletePanelButton.Size = new System.Drawing.Size(200, 45);
+            this.productDeletePanelButton.TabIndex = 13;
+            this.productDeletePanelButton.Text = "Delete Product";
+            this.productDeletePanelButton.textColor = System.Drawing.Color.White;
+            this.productDeletePanelButton.UseVisualStyleBackColor = false;
+            // 
+            // productUpdatePanelButton
+            // 
+            this.productUpdatePanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
+            this.productUpdatePanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
+            this.productUpdatePanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.productUpdatePanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.productUpdatePanelButton.BorderRadius = 0;
+            this.productUpdatePanelButton.BorderSize = 0;
+            this.productUpdatePanelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productUpdatePanelButton.FlatAppearance.BorderColor = System.Drawing.Color.PapayaWhip;
+            this.productUpdatePanelButton.FlatAppearance.BorderSize = 0;
+            this.productUpdatePanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.productUpdatePanelButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.productUpdatePanelButton.ForeColor = System.Drawing.SystemColors.Window;
+            this.productUpdatePanelButton.Location = new System.Drawing.Point(0, 45);
+            this.productUpdatePanelButton.Name = "productUpdatePanelButton";
+            this.productUpdatePanelButton.Size = new System.Drawing.Size(200, 45);
+            this.productUpdatePanelButton.TabIndex = 12;
+            this.productUpdatePanelButton.Text = "Update Product";
+            this.productUpdatePanelButton.textColor = System.Drawing.SystemColors.Window;
+            this.productUpdatePanelButton.UseVisualStyleBackColor = false;
+            // 
+            // productAddPanelButton
+            // 
+            this.productAddPanelButton.BackColor = System.Drawing.Color.MediumVioletRed;
+            this.productAddPanelButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
+            this.productAddPanelButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.productAddPanelButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.productAddPanelButton.BorderRadius = 0;
+            this.productAddPanelButton.BorderSize = 0;
+            this.productAddPanelButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productAddPanelButton.FlatAppearance.BorderSize = 0;
+            this.productAddPanelButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.productAddPanelButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.productAddPanelButton.ForeColor = System.Drawing.Color.White;
+            this.productAddPanelButton.Location = new System.Drawing.Point(0, 0);
+            this.productAddPanelButton.Name = "productAddPanelButton";
+            this.productAddPanelButton.Size = new System.Drawing.Size(200, 45);
+            this.productAddPanelButton.TabIndex = 11;
+            this.productAddPanelButton.Text = "Add Product";
+            this.productAddPanelButton.textColor = System.Drawing.Color.White;
+            this.productAddPanelButton.UseVisualStyleBackColor = false;
+            // 
+            // productAdminControlButton
+            // 
+            this.productAdminControlButton.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.productAdminControlButton.backgroundColor = System.Drawing.SystemColors.MenuHighlight;
+            this.productAdminControlButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.productAdminControlButton.BorderRadius = 0;
+            this.productAdminControlButton.BorderSize = 0;
+            this.productAdminControlButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.productAdminControlButton.FlatAppearance.BorderSize = 0;
+            this.productAdminControlButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.productAdminControlButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.productAdminControlButton.ForeColor = System.Drawing.Color.White;
+            this.productAdminControlButton.Location = new System.Drawing.Point(0, 75);
+            this.productAdminControlButton.Name = "productAdminControlButton";
+            this.productAdminControlButton.Size = new System.Drawing.Size(200, 50);
+            this.productAdminControlButton.TabIndex = 10;
+            this.productAdminControlButton.Text = "Product Controls";
+            this.productAdminControlButton.textColor = System.Drawing.Color.White;
+            this.productAdminControlButton.UseVisualStyleBackColor = false;
+            this.productAdminControlButton.Click += new System.EventHandler(this.productAdminControlButton_Click);
+            // 
+            // customerDeleteButton
+            // 
+            this.customerDeleteButton.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerDeleteButton.backgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerDeleteButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerDeleteButton.BorderRadius = 0;
+            this.customerDeleteButton.BorderSize = 0;
+            this.customerDeleteButton.FlatAppearance.BorderSize = 0;
+            this.customerDeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerDeleteButton.Font = new System.Drawing.Font("Georgia", 16F);
+            this.customerDeleteButton.ForeColor = System.Drawing.Color.White;
+            this.customerDeleteButton.Location = new System.Drawing.Point(962, 401);
+            this.customerDeleteButton.Name = "customerDeleteButton";
+            this.customerDeleteButton.Size = new System.Drawing.Size(128, 40);
+            this.customerDeleteButton.TabIndex = 9;
+            this.customerDeleteButton.Text = "Delete";
+            this.customerDeleteButton.textColor = System.Drawing.Color.White;
+            this.customerDeleteButton.UseVisualStyleBackColor = false;
+            // 
+            // customerUpdateButton
+            // 
+            this.customerUpdateButton.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerUpdateButton.backgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerUpdateButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerUpdateButton.BorderRadius = 0;
+            this.customerUpdateButton.BorderSize = 0;
+            this.customerUpdateButton.FlatAppearance.BorderSize = 0;
+            this.customerUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerUpdateButton.Font = new System.Drawing.Font("Georgia", 16F);
+            this.customerUpdateButton.ForeColor = System.Drawing.Color.White;
+            this.customerUpdateButton.Location = new System.Drawing.Point(802, 401);
+            this.customerUpdateButton.Name = "customerUpdateButton";
+            this.customerUpdateButton.Size = new System.Drawing.Size(128, 40);
+            this.customerUpdateButton.TabIndex = 8;
+            this.customerUpdateButton.Text = "Update";
+            this.customerUpdateButton.textColor = System.Drawing.Color.White;
+            this.customerUpdateButton.UseVisualStyleBackColor = false;
+            // 
+            // customerAddButton
+            // 
+            this.customerAddButton.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerAddButton.backgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerAddButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerAddButton.BorderRadius = 0;
+            this.customerAddButton.BorderSize = 0;
+            this.customerAddButton.FlatAppearance.BorderSize = 0;
+            this.customerAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerAddButton.Font = new System.Drawing.Font("Georgia", 16F);
+            this.customerAddButton.ForeColor = System.Drawing.Color.White;
+            this.customerAddButton.Location = new System.Drawing.Point(647, 401);
+            this.customerAddButton.Name = "customerAddButton";
+            this.customerAddButton.Size = new System.Drawing.Size(128, 40);
+            this.customerAddButton.TabIndex = 7;
+            this.customerAddButton.Text = "Add";
+            this.customerAddButton.textColor = System.Drawing.Color.White;
+            this.customerAddButton.UseVisualStyleBackColor = false;
+            // 
+            // customerNameTextbox
+            // 
+            this.customerNameTextbox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerNameTextbox.BackColor = System.Drawing.SystemColors.Window;
+            this.customerNameTextbox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.customerNameTextbox.BorderFocusColor = System.Drawing.Color.DarkSlateBlue;
+            this.customerNameTextbox.BorderSize = 4;
+            this.customerNameTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerNameTextbox.ForeColor = System.Drawing.Color.DimGray;
+            this.customerNameTextbox.Location = new System.Drawing.Point(757, 146);
+            this.customerNameTextbox.Margin = new System.Windows.Forms.Padding(4);
+            this.customerNameTextbox.MaxLength = 10;
+            this.customerNameTextbox.Multiline = false;
+            this.customerNameTextbox.Name = "customerNameTextbox";
+            this.customerNameTextbox.Padding = new System.Windows.Forms.Padding(7);
+            this.customerNameTextbox.PasswordChar = false;
+            this.customerNameTextbox.Size = new System.Drawing.Size(284, 40);
+            this.customerNameTextbox.TabIndex = 0;
+            this.customerNameTextbox.Texts = "";
+            this.customerNameTextbox.UnderlinedStyle = false;
+            // 
+            // customerPhoneTextbox
+            // 
+            this.customerPhoneTextbox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerPhoneTextbox.BackColor = System.Drawing.SystemColors.Window;
+            this.customerPhoneTextbox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.customerPhoneTextbox.BorderFocusColor = System.Drawing.Color.DarkSlateBlue;
+            this.customerPhoneTextbox.BorderSize = 4;
+            this.customerPhoneTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerPhoneTextbox.ForeColor = System.Drawing.Color.DimGray;
+            this.customerPhoneTextbox.Location = new System.Drawing.Point(757, 208);
+            this.customerPhoneTextbox.Margin = new System.Windows.Forms.Padding(4);
+            this.customerPhoneTextbox.MaxLength = 11;
+            this.customerPhoneTextbox.Multiline = false;
+            this.customerPhoneTextbox.Name = "customerPhoneTextbox";
+            this.customerPhoneTextbox.Padding = new System.Windows.Forms.Padding(7);
+            this.customerPhoneTextbox.PasswordChar = false;
+            this.customerPhoneTextbox.Size = new System.Drawing.Size(284, 40);
+            this.customerPhoneTextbox.TabIndex = 1;
+            this.customerPhoneTextbox.Texts = "";
+            this.customerPhoneTextbox.UnderlinedStyle = false;
+            // 
+            // customerAddressTextbox
+            // 
+            this.customerAddressTextbox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerAddressTextbox.BackColor = System.Drawing.SystemColors.Window;
+            this.customerAddressTextbox.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.customerAddressTextbox.BorderFocusColor = System.Drawing.Color.DarkSlateBlue;
+            this.customerAddressTextbox.BorderSize = 4;
+            this.customerAddressTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerAddressTextbox.ForeColor = System.Drawing.Color.DimGray;
+            this.customerAddressTextbox.Location = new System.Drawing.Point(757, 280);
+            this.customerAddressTextbox.Margin = new System.Windows.Forms.Padding(4);
+            this.customerAddressTextbox.MaxLength = 120;
+            this.customerAddressTextbox.Multiline = true;
+            this.customerAddressTextbox.Name = "customerAddressTextbox";
+            this.customerAddressTextbox.Padding = new System.Windows.Forms.Padding(7);
+            this.customerAddressTextbox.PasswordChar = false;
+            this.customerAddressTextbox.Size = new System.Drawing.Size(284, 114);
+            this.customerAddressTextbox.TabIndex = 2;
+            this.customerAddressTextbox.Texts = "";
+            this.customerAddressTextbox.UnderlinedStyle = false;
+            // 
+            // picboxuser
+            // 
+            this.picboxuser.BorderCapStyle = System.Drawing.Drawing2D.DashCap.Flat;
+            this.picboxuser.BorderColor = System.Drawing.Color.RoyalBlue;
+            this.picboxuser.BorderColor2 = System.Drawing.Color.HotPink;
+            this.picboxuser.BorderLineStyle = System.Drawing.Drawing2D.DashStyle.Solid;
+            this.picboxuser.BorderSize = 2;
+            this.picboxuser.GradientAngle = 50F;
+            this.picboxuser.Image = ((System.Drawing.Image)(resources.GetObject("picboxuser.Image")));
+            this.picboxuser.Location = new System.Drawing.Point(0, 0);
+            this.picboxuser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.picboxuser.Name = "picboxuser";
+            this.picboxuser.Size = new System.Drawing.Size(115, 115);
+            this.picboxuser.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.picboxuser.TabIndex = 6;
+            this.picboxuser.TabStop = false;
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -751,7 +843,6 @@ namespace stockManagement
             this.titlePanel.PerformLayout();
             this.navigationPanel.ResumeLayout(false);
             this.navigationPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).EndInit();
             this.customerContextMenu.ResumeLayout(false);
             this.customerPanel.ResumeLayout(false);
             this.customerPanel.PerformLayout();
@@ -759,6 +850,10 @@ namespace stockManagement
             this.incomeOutcomeContextMenu.ResumeLayout(false);
             this.recipeContextMenu.ResumeLayout(false);
             this.adminControlsPanel.ResumeLayout(false);
+            this.adminControlsPanel.PerformLayout();
+            this.customerControlsPanel.ResumeLayout(false);
+            this.productControlsPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -793,7 +888,7 @@ namespace stockManagement
         private Label customerAddressLabel;
         private Label customerPhoneLabel;
         private Label customerNameLabel;
-        private stockmanagement.customtextbox customerAdressTextbox;
+        private stockmanagement.customtextbox customerAddressTextbox;
         private stockmanagement.customtextbox customerPhoneTextbox;
         private stockmanagement.customtextbox customerNameTextbox;
         private Panel adminControlsPanel;
@@ -809,6 +904,10 @@ namespace stockManagement
         private stockmanagement.custombtn productAddPanelButton;
         private Label dashTopLabel;
         private Label dashInBetweenLabel;
+        private Panel productControlsPanel;
+        private Panel customerControlsPanel;
+        private stockmanagement.custombtn customerDeleteButton;
+        private stockmanagement.custombtn customerUpdateButton;
+        private stockmanagement.custombtn customerAddButton;
     }
 }
-
