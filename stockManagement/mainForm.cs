@@ -15,6 +15,7 @@ namespace stockManagement
         public mainForm()
         {
             InitializeComponent();
+            alignControls();
             //this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
         /*
@@ -43,6 +44,10 @@ namespace stockManagement
             base.WndProc(ref m);
         }
         */
+        private void alignControls()
+        {
+        }
+
         //closing form
         private void closeButton_Click(object sender, EventArgs e)
         {
@@ -110,22 +115,32 @@ namespace stockManagement
 
         private void productLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            showPanel(productPanel);
-        }
-
-        private void CustomerLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            showPanel(customerPanel);
+            productContextMenu.Show(this.PointToScreen(new Point(productLinkLabel.Location.X + productLinkLabel.Width / 2, productLinkLabel.Location.Y + productLinkLabel.Height * 2)));
         }
 
         private void incomeOutcomeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            showPanel(incomeOutcomePanel);
+            incomeOutcomeContextMenu.Show(this.PointToScreen(new Point(incomeOutcomeLinkLabel.Location.X + incomeOutcomeLinkLabel.Width / 2, incomeOutcomeLinkLabel.Location.Y + incomeOutcomeLinkLabel.Height * 2)));
         }
 
         private void recipeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            showPanel(recipePanel);
+            recipeContextMenu.Show(this.PointToScreen(new Point(recipeLinkLabel.Location.X + recipeLinkLabel.Width / 2, recipeLinkLabel.Location.Y + recipeLinkLabel.Height * 2)));
+        }
+
+        private void CustomerLinkLabel_Click(object sender, EventArgs e)
+        {
+            customerContextMenu.Show(this.PointToScreen(new Point(customerLinkLabel.Location.X + customerLinkLabel.Width / 2, customerLinkLabel.Location.Y + customerLinkLabel.Height * 2)));
+        }
+
+        private void customerAddTSI_Click(object sender, EventArgs e)
+        {
+            showPanel(customerPanel);
+        }
+
+        private void custombtn1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

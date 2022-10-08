@@ -10,6 +10,7 @@ namespace stockmanagement
     public  class customtextbox : UserControl
     {
         //Fields
+        private int maxLength = 40;
         private Color borderColor = Color.RoyalBlue;
         private int borderSize = 4;
         private bool underlinedStyle = false;
@@ -27,36 +28,36 @@ namespace stockmanagement
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new TextBox();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // textBox1
             // 
-            this.textBox1.BorderStyle = BorderStyle.None;
-            this.textBox1.Dock = DockStyle.Fill;
-            this.textBox1.Location = new Point(7, 7);
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.textBox1.Location = new System.Drawing.Point(7, 7);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new Size(100, 15);
+            this.textBox1.Size = new System.Drawing.Size(236, 18);
             this.textBox1.TabIndex = 0;
-            this.textBox1.Click += new EventHandler(this.textBox1_Click);
-            this.textBox1.TextChanged += new EventHandler(this.textBox1_TextChanged);
-            this.textBox1.Enter += new EventHandler(this.textBox1_Enter);
-            this.textBox1.KeyPress += new KeyPressEventHandler(this.textBox1_KeyPress);
-            this.textBox1.Leave += new EventHandler(this.textBox1_Leave);
-            this.textBox1.MouseEnter += new EventHandler(this.textBox1_MouseEnter);
-            this.textBox1.MouseLeave += new EventHandler(this.textBox1_MouseLeave);
+            this.textBox1.Click += new System.EventHandler(this.textBox1_Click);
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
+            this.textBox1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBox1_KeyPress);
+            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            this.textBox1.MouseEnter += new System.EventHandler(this.textBox1_MouseEnter);
+            this.textBox1.MouseLeave += new System.EventHandler(this.textBox1_MouseLeave);
             // 
-            // RJTextBox
+            // customtextbox
             // 
-            this.AutoScaleMode = AutoScaleMode.None;
-            this.BackColor = SystemColors.Window;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.SystemColors.Window;
             this.Controls.Add(this.textBox1);
-            this.Font = new Font("Microsoft Sans Serif", 9.5F, FontStyle.Regular, GraphicsUnit.Point, ((byte)(0)));
-            this.ForeColor = Color.DimGray;
-            this.Margin = new Padding(4);
-            this.Name = "RJTextBox";
-            this.Padding = new Padding(7);
-            this.Size = new Size(250, 30);
+            this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.DimGray;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "customtextbox";
+            this.Padding = new System.Windows.Forms.Padding(7);
+            this.Size = new System.Drawing.Size(250, 30);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -101,6 +102,16 @@ namespace stockmanagement
                 this.Invalidate();
             }
         }
+        [Category("RJ Code Advance")]
+        public int MaxLength
+        {
+            get { return maxLength; }
+            set
+            {
+                maxLength = value;
+                this.Invalidate();
+            }
+        }
 
         [Category("RJ Code Advance")]
         public bool PasswordChar
@@ -137,6 +148,7 @@ namespace stockmanagement
                 textBox1.ForeColor = value;
             }
         }
+        
 
         [Category("RJ Code Advance")]
         public override Font Font
@@ -164,7 +176,6 @@ namespace stockmanagement
             get { return borderFocusColor; }
             set { borderFocusColor = value; }
         }
-
         protected override void OnPaint(PaintEventArgs e)
         {
             base.OnPaint(e);
@@ -193,10 +204,15 @@ namespace stockmanagement
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
+            textBox1.MaxLength = maxLength;
             UpdateControlHeight();
         }
 
         //Private methods
+        private void UpdateMaxLength()
+        {
+
+        }
         private void UpdateControlHeight()
         {
             if (textBox1.Multiline == false)
