@@ -320,6 +320,15 @@ namespace stockManagement
         {
             dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerFilterField, customerFilterTextBox.Texts);
         }
+        private void refreshCustomerDataGridView()
+        {
+            //for refreshing customer gridview data
+            clearCustomerControls();
+            dtCustomers.Clear();
+            loadCustomerData();
+            customerDataGridView.Update();
+            customerDataGridView.Refresh();
+        }
         //datagridview button click event
         private void customerDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -352,6 +361,8 @@ namespace stockManagement
                     customerAdd.ExecuteNonQuery();
                     customerAdd.Dispose();
                     conn.Close();
+                    refreshCustomerDataGridView();
+                    MessageBox.Show("Customer Succesfully Added", "Succesfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 else
                     MessageBox.Show("PLEASE ENTER NAME", "WARNING !", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
@@ -360,15 +371,39 @@ namespace stockManagement
             {
                 MessageBox.Show(ex.Message);
             }
-            //for refreshing customer gridview data
-            clearCustomerControls();
-            dtCustomers.Clear();
-            loadCustomerData();
-            customerDataGridView.Update();
-            customerDataGridView.Refresh();
         }
         //customer update button
         private void customerUpdateButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(customerNameTextbox.Texts))
+                {
+                    string customerUpdateQuery = "UPDATE customerTable set customer_name=@cusName,customer_phone=@cusPhone,customer_address=@cusAddress where customer_id=@id";
+                    SqlConnection conn = new SqlConnection(connString);
+                    conn.Open();
+                    SqlCommand customerUpdate = new SqlCommand(customerUpdateQuery, conn);
+                    customerUpdate.Parameters.AddWithValue("@id", customerID);
+                    customerUpdate.Parameters.AddWithValue("@cusName", customerNameTextbox.Texts);
+                    customerUpdate.Parameters.AddWithValue("@cusPhone", customerPhoneTextbox.Texts);
+                    customerUpdate.Parameters.AddWithValue("@cusAddress", customerAddressTextbox.Texts);
+                    customerUpdate.ExecuteNonQuery();
+                    customerUpdate.Dispose();
+                    conn.Close();
+                    refreshCustomerDataGridView();
+                    MessageBox.Show("Update Successfully Completed", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    showCustomerControls(1);
+                }
+                else
+                    MessageBox.Show("PLEASE ENTER NAME", "WARNING !", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void customerDeleteButton_Click(object sender, EventArgs e)
         {
 
         }
