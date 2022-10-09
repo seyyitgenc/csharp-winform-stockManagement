@@ -322,11 +322,6 @@ namespace stockManagement
             showCustomerControls(1);
             showPanel(customerPanel);
         }
-        //customer filter
-        private void customtextbox1__TextChanged(object sender, EventArgs e)
-        {
-            dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
-        }
         private void refreshCustomerDataGridView()
         {
             //for refreshing customer gridview data
@@ -432,15 +427,45 @@ namespace stockManagement
                 MessageBox.Show(ex.Message);
             }
         }
+        //customer filter
+        private void customtextbox1__TextChanged(object sender, EventArgs e)
+        {
+            if (customerAvailableCombobox.SelectedIndex == 0)
+            {
+                available = 1;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+            }
+            else if (customerAvailableCombobox.SelectedIndex == 1)
+            {
+                available = 0;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+            }
+            else if (customerAvailableCombobox.SelectedIndex == 2)
+            {
+                available = 3;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
+            }
+        }
+        int available = 3;
+
 
         private void customerAvailableCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
         {
-            int available = 0;
             if (customerAvailableCombobox.SelectedIndex == 0)
+            {
                 available = 1;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+            }
             else if (customerAvailableCombobox.SelectedIndex == 1)
+            {
                 available = 0;
-            dtCustomers.DefaultView.RowFilter = String.Format("[{0}] = {1}", customerAvailableFilterField, available);
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+            }
+            else if (customerAvailableCombobox.SelectedIndex == 2)
+            {
+                available = 3;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
+            }
         }
     }
 }
