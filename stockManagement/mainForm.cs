@@ -17,11 +17,11 @@ namespace stockManagement
     {
         //Fields
         string connString = "Data Source=SEYYIT\\SQLEXPRESS;Initial Catalog=stockMangementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        string customerSelectQuery = "select * from customerTable";
         private DataTable dtCustomers = new DataTable();
         string customerNameFilterField = "customer_name";
         string customerAvailableFilterField = "customer_delete_id";
         int customerID;
+        int isAvailable = 3;// 1 = available , 2 = not available , 3 = list all
 
         public mainForm()
         {
@@ -33,6 +33,7 @@ namespace stockManagement
         private void mainForm_Load(object sender, EventArgs e)
         {
             loadCustomerData();
+            loadCategoryData();
         }
         /*
         private const int cGrip = 16;
@@ -176,9 +177,23 @@ namespace stockManagement
         {
             showAdminControls(customerControlsPanel);
         }
+        void loadCategoryData()
+        {
+            SqlConnection conn = new SqlConnection(connString);
+            string categorySelectQuery = "select category_name from categoryTable";
+            SqlCommand categorySelect = new SqlCommand(categorySelectQuery, conn);
+            conn.Open();
+            SqlDataReader dr = categorySelect.ExecuteReader();
+            while (dr.Read())
+            {
+                productCategoryCombobox.Items.Add(dr["category_name"].ToString());
+            }
+
+        }
         void loadCustomerData()
         {
             SqlConnection conn = new SqlConnection(connString);
+            string customerSelectQuery = "select * from customerTable";
             SqlCommand customerSelect = new SqlCommand(customerSelectQuery, conn);
             conn.Open();
             SqlDataAdapter dac = new SqlDataAdapter(customerSelect);
@@ -432,38 +447,35 @@ namespace stockManagement
         {
             if (customerAvailableCombobox.SelectedIndex == 0)
             {
-                available = 1;
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+                isAvailable = 1;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
             }
             else if (customerAvailableCombobox.SelectedIndex == 1)
             {
-                available = 0;
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+                isAvailable = 0;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
             }
             else if (customerAvailableCombobox.SelectedIndex == 2)
             {
-                available = 3;
+                isAvailable = 3;
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
             }
         }
-        int available = 3;
-
-
         private void customerAvailableCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
         {
             if (customerAvailableCombobox.SelectedIndex == 0)
             {
-                available = 1;
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+                isAvailable = 1;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
             }
             else if (customerAvailableCombobox.SelectedIndex == 1)
             {
-                available = 0;
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, available);
+                isAvailable = 0;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
             }
             else if (customerAvailableCombobox.SelectedIndex == 2)
             {
-                available = 3;
+                isAvailable = 3;
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
             }
         }

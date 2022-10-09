@@ -24,7 +24,9 @@ namespace stockManagement
         }
 
         //Properties
+
         [Category("RJ Code Advance")]
+
         public int BorderSize
         {
             get
