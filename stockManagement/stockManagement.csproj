@@ -89,6 +89,17 @@
     <Compile Include="CustomControls\customtogglebtn.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="customerDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>customerDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="productControls.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="customerControls.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="mainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +123,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="customerDataSet.xsc">
+      <DependentUpon>customerDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="customerDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>customerDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="customerDataSet.xss">
+      <DependentUpon>customerDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

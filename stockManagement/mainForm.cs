@@ -2,21 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace stockManagement
 {
     public partial class mainForm : Form
     {
+        //Fields
+        string connString = "Data Source=SEYYIT\\SQLEXPRESS;Initial Catalog=stockMangementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        string customerSelectQuery = "select * from customerTable";
+        private DataTable dtCustomers = new DataTable();
+        string customerFilterField = "customer_name";
+        int customerID;
+
         public mainForm()
         {
             InitializeComponent();
             alignControls();
             //this.SetStyle(ControlStyles.ResizeRedraw, true);
+        }
+
+        private void mainForm_Load(object sender, EventArgs e)
+        {
+            loadCustomerData();
         }
         /*
         private const int cGrip = 16;
@@ -160,7 +175,57 @@ namespace stockManagement
         {
             showAdminControls(customerControlsPanel);
         }
+        void loadCustomerData()
+        {
+            SqlConnection conn = new SqlConnection(connString);
+            SqlCommand customerSelect = new SqlCommand(customerSelectQuery, conn);
+            conn.Open();
+            SqlDataAdapter dac = new SqlDataAdapter(customerSelect);
+            dac.Fill(dtCustomers);
+            customerDataGridView.DataSource = dtCustomers;
+            conn.Close();
+            dac.Dispose();
+        }
+        //product admin controls
+        //hides controls inside product panel
+        private void hideProductControls()
+        {
 
+        }
+        //0 = add , 1 = update , 2 = delete
+        private void showProductControls(int choice)
+        {
+            hideProductControls();
+            if (choice == 0)
+            {
+
+            }
+            else if (choice == 1)
+            {
+
+            }
+            else if (choice == 2)
+            {
+
+            }
+        }
+        private void productAddPanelButton_Click(object sender, EventArgs e)
+        {
+            showProductControls(0);
+            showPanel(productPanel);
+        }
+
+        private void productUpdatePanelButton_Click(object sender, EventArgs e)
+        {
+            showProductControls(1);
+            showPanel(productPanel);
+        }
+
+        private void productDeletePanelButton_Click(object sender, EventArgs e)
+        {
+            showProductControls(2);
+            showPanel(productPanel);
+        }
         //customer admin controls
         //hides controls inside customer panel
         private void hideCustomerControls()
@@ -172,12 +237,20 @@ namespace stockManagement
             customerAddressLabel.Visible = false;
             customerAddressTextbox.Visible = false;
         }
-        // 0 = add , 1 = update , 2 = delete
+        //clear customer controls
+        private void clearCustomerControls()
+        {
+            customerNameTextbox.Texts = "";
+            customerPhoneTextbox.Texts = "";
+            customerAddressTextbox.Texts = "";
+        }
+        // 0 = add , 1 = update panel visible with datagridview , 2 = delete , 3 = update panel visible without datagridview
         private void showCustomerControls(int choice)
         {
             hideCustomerControls();
             if (choice == 0)
             {
+                clearCustomerControls();
                 customerPanelTitle.Text = "Customer Add";
                 customerNameLabel.Visible = true;
                 customerNameTextbox.Visible = true;
@@ -188,10 +261,29 @@ namespace stockManagement
                 customerAddButton.Visible = true;
                 customerUpdateButton.Visible = false;
                 customerDeleteButton.Visible = false;
+                customerDataGridView.Visible = false;
+                customerFilterTextBox.Visible = false;
+                filterNameLabel.Visible = false;
             }
             else if (choice == 1)
             {
-                customerPanelTitle.Text = "Customer Update";
+                customerPanelTitle.Text = "Customer Update/Delete";
+                customerNameLabel.Visible = false;
+                customerNameTextbox.Visible = false;
+                customerPhoneLabel.Visible = false;
+                customerPhoneTextbox.Visible = false;
+                customerAddressLabel.Visible = false;
+                customerAddressTextbox.Visible = false;
+                customerAddButton.Visible = false;
+                customerUpdateButton.Visible = false;
+                customerDeleteButton.Visible = false;
+                customerDataGridView.Visible = true;
+                customerFilterTextBox.Visible = true;
+                filterNameLabel.Visible = true;
+            }
+            else if (choice == 2)
+            {
+                customerPanelTitle.Text = "Customer Update/Delete";
                 customerNameLabel.Visible = true;
                 customerNameTextbox.Visible = true;
                 customerPhoneLabel.Visible = true;
@@ -200,20 +292,10 @@ namespace stockManagement
                 customerAddressTextbox.Visible = true;
                 customerAddButton.Visible = false;
                 customerUpdateButton.Visible = true;
-                customerDeleteButton.Visible = false;
-            }
-            else if (choice == 2)
-            {
-                customerPanelTitle.Text = "Customer Delete";
-                customerNameLabel.Visible = true;
-                customerNameTextbox.Visible = true;
-                customerPhoneLabel.Visible = true;
-                customerPhoneTextbox.Visible = true;
-                customerAddressLabel.Visible = true;
-                customerAddressTextbox.Visible = true;
-                customerAddButton.Visible = false;
-                customerUpdateButton.Visible = false;
                 customerDeleteButton.Visible = true;
+                customerDataGridView.Visible = false;
+                customerFilterTextBox.Visible = false;
+                filterNameLabel.Visible = false;
             }
         }
         private void customerAddPanelButton_Click(object sender, EventArgs e)
@@ -230,8 +312,65 @@ namespace stockManagement
 
         private void customerDeletePanelButton_Click(object sender, EventArgs e)
         {
-            showCustomerControls(2);
+            showCustomerControls(1);
             showPanel(customerPanel);
+        }
+        //customer filter
+        private void customtextbox1__TextChanged(object sender, EventArgs e)
+        {
+            dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerFilterField, customerFilterTextBox.Texts);
+        }
+        //datagridview button click event
+        private void customerDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == 0)
+            {
+                int index = e.RowIndex;
+                DataGridViewRow selectedRow = customerDataGridView.Rows[index];
+                customerID = (int)selectedRow.Cells[1].Value;
+                customerNameTextbox.Texts = selectedRow.Cells[2].Value.ToString();
+                customerPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
+                customerAddressTextbox.Texts = selectedRow.Cells[4].Value.ToString();
+                showCustomerControls(2);
+            }
+        }
+        //customer add button
+        private void customerAddButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(customerNameTextbox.Texts))
+                {
+                    string customerAddQuery = "INSERT INTO customerTable (customer_name,customer_phone,customer_address,customer_delete_id) values(@cusName,@cusPhone,@cusAddress,@cusdelID)";
+                    SqlConnection conn = new SqlConnection(connString);
+                    conn.Open();
+                    SqlCommand customerAdd = new SqlCommand(customerAddQuery, conn);
+                    customerAdd.Parameters.AddWithValue("@cusName", customerNameTextbox.Texts);
+                    customerAdd.Parameters.AddWithValue("@cusPhone", customerPhoneTextbox.Texts);
+                    customerAdd.Parameters.AddWithValue("@cusAddress", customerAddressTextbox.Texts);
+                    customerAdd.Parameters.AddWithValue("@cusdelID", 1);
+                    customerAdd.ExecuteNonQuery();
+                    customerAdd.Dispose();
+                    conn.Close();
+                }
+                else
+                    MessageBox.Show("PLEASE ENTER NAME", "WARNING !", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            //for refreshing customer gridview data
+            clearCustomerControls();
+            dtCustomers.Clear();
+            loadCustomerData();
+            customerDataGridView.Update();
+            customerDataGridView.Refresh();
+        }
+        //customer update button
+        private void customerUpdateButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
