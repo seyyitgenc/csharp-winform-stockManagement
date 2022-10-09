@@ -19,7 +19,8 @@ namespace stockManagement
         string connString = "Data Source=SEYYIT\\SQLEXPRESS;Initial Catalog=stockMangementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         string customerSelectQuery = "select * from customerTable";
         private DataTable dtCustomers = new DataTable();
-        string customerFilterField = "customer_name";
+        string customerNameFilterField = "customer_name";
+        string customerAvailableFilterField = "customer_delete_id";
         int customerID;
 
         public mainForm()
@@ -244,7 +245,7 @@ namespace stockManagement
             customerPhoneTextbox.Texts = "";
             customerAddressTextbox.Texts = "";
         }
-        // 0 = add , 1 = update panel visible with datagridview , 2 = delete , 3 = update panel visible without datagridview
+        // 0 = add , 1 = update panel visible with datagridview , 2 = update panel visible without datagridview
         private void showCustomerControls(int choice)
         {
             hideCustomerControls();
@@ -264,6 +265,8 @@ namespace stockManagement
                 customerDataGridView.Visible = false;
                 customerFilterTextBox.Visible = false;
                 filterNameLabel.Visible = false;
+                filterCustomerAvailableLabel.Visible = false;
+                customerAvailableCombobox.Visible = false;
             }
             else if (choice == 1)
             {
@@ -280,6 +283,8 @@ namespace stockManagement
                 customerDataGridView.Visible = true;
                 customerFilterTextBox.Visible = true;
                 filterNameLabel.Visible = true;
+                filterCustomerAvailableLabel.Visible = true;
+                customerAvailableCombobox.Visible = true;
             }
             else if (choice == 2)
             {
@@ -296,6 +301,8 @@ namespace stockManagement
                 customerDataGridView.Visible = false;
                 customerFilterTextBox.Visible = false;
                 filterNameLabel.Visible = false;
+                filterCustomerAvailableLabel.Visible = false;
+                customerAvailableCombobox.Visible = false;
             }
         }
         private void customerAddPanelButton_Click(object sender, EventArgs e)
@@ -318,7 +325,7 @@ namespace stockManagement
         //customer filter
         private void customtextbox1__TextChanged(object sender, EventArgs e)
         {
-            dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerFilterField, customerFilterTextBox.Texts);
+            dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
         }
         private void refreshCustomerDataGridView()
         {
@@ -350,7 +357,7 @@ namespace stockManagement
             {
                 if (!String.IsNullOrEmpty(customerNameTextbox.Texts))
                 {
-                    string customerAddQuery = "INSERT INTO customerTable (customer_name,customer_phone,customer_address,customer_delete_id) values(@cusName,@cusPhone,@cusAddress,@cusdelID)";
+                    string customerAddQuery = "INSERT INTO customerTable (customer_name,customer_phone,customer_address,customer_delete_id) VALUES(@cusName,@cusPhone,@cusAddress,@cusdelID)";
                     SqlConnection conn = new SqlConnection(connString);
                     conn.Open();
                     SqlCommand customerAdd = new SqlCommand(customerAddQuery, conn);
@@ -379,7 +386,7 @@ namespace stockManagement
             {
                 if (!string.IsNullOrEmpty(customerNameTextbox.Texts))
                 {
-                    string customerUpdateQuery = "UPDATE customerTable set customer_name=@cusName,customer_phone=@cusPhone,customer_address=@cusAddress where customer_id=@id";
+                    string customerUpdateQuery = "UPDATE customerTable SET customer_name=@cusName,customer_phone=@cusPhone,customer_address=@cusAddress WHERE customer_id=@id";
                     SqlConnection conn = new SqlConnection(connString);
                     conn.Open();
                     SqlCommand customerUpdate = new SqlCommand(customerUpdateQuery, conn);
@@ -402,10 +409,38 @@ namespace stockManagement
                 MessageBox.Show(ex.Message);
             }
         }
-
+        //customer delete button
         private void customerDeleteButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string customerDeleteQuery = "UPDATE customerTable SET customer_delete_id=@cusdeleteID WHERE customer_id=@id";
+                SqlConnection conn = new SqlConnection(connString);
+                conn.Open();
+                SqlCommand customerDelete = new SqlCommand(customerDeleteQuery, conn);
+                customerDelete.Parameters.AddWithValue("@id", customerID);
+                customerDelete.Parameters.AddWithValue("@cusdeleteID", 0);
+                customerDelete.ExecuteNonQuery();
+                customerDelete.Dispose();
+                conn.Close();
+                refreshCustomerDataGridView();
+                MessageBox.Show("Customer Succesfully Deleted", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                showCustomerControls(1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
 
+        private void customerAvailableCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            int available = 0;
+            if (customerAvailableCombobox.SelectedIndex == 0)
+                available = 1;
+            else if (customerAvailableCombobox.SelectedIndex == 1)
+                available = 0;
+            dtCustomers.DefaultView.RowFilter = String.Format("[{0}] = {1}", customerAvailableFilterField, available);
         }
     }
 }
