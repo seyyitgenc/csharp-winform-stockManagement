@@ -18,20 +18,25 @@ namespace stockManagement
         //Fields
         string connString = "Data Source=SEYYIT\\SQLEXPRESS;Initial Catalog=stockMangementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         private DataTable dtCustomers = new DataTable();
+        private DataTable dtProducts = new DataTable();
         string customerNameFilterField = "customer_name";
         string customerAvailableFilterField = "customer_delete_id";
         int customerID;
-        int isAvailable = 3;// 1 = available , 2 = not available , 3 = list all
+        int isAvailable = 2;// 0 = available , 1 = not available , 2 = list all
 
         public mainForm()
         {
             InitializeComponent();
-            alignControls();
             //this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         private void mainForm_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'productDataSet.productTable' table. You can move, or remove it, as needed.
+            this.productTableTableAdapter.Fill(this.productDataSet.productTable);
+            // TODO: This line of code loads data into the 'customerDataSet.customerTable' table. You can move, or remove it, as needed.
+            this.customerTableTableAdapter.Fill(this.customerDataSet.customerTable);
+            loadProductData();
             loadCustomerData();
             loadCategoryData();
         }
@@ -61,9 +66,6 @@ namespace stockManagement
             base.WndProc(ref m);
         }
         */
-        private void alignControls()
-        {
-        }
 
         //closing form
         private void closeButton_Click(object sender, EventArgs e)
@@ -188,12 +190,14 @@ namespace stockManagement
             {
                 productCategoryCombobox.Items.Add(dr["category_name"].ToString());
             }
+            dr.Close();
+            conn.Close();
 
         }
         void loadCustomerData()
         {
             SqlConnection conn = new SqlConnection(connString);
-            string customerSelectQuery = "select * from customerTable";
+            string customerSelectQuery = "SELECT * FROM customerTable";
             SqlCommand customerSelect = new SqlCommand(customerSelectQuery, conn);
             conn.Open();
             SqlDataAdapter dac = new SqlDataAdapter(customerSelect);
@@ -201,6 +205,18 @@ namespace stockManagement
             customerDataGridView.DataSource = dtCustomers;
             conn.Close();
             dac.Dispose();
+        }
+        void loadProductData()
+        {
+            SqlConnection conn = new SqlConnection(connString);
+            string productSelectQuery = "SELECT * FROM productTable";
+            SqlCommand productSelect = new SqlCommand(productSelectQuery, conn);
+            conn.Open();
+            SqlDataAdapter dap = new SqlDataAdapter(productSelect);
+            dap.Fill(dtProducts);
+            productDataGridView.DataSource = dtProducts;
+            conn.Close();
+            dap.Dispose();
         }
         //product admin controls
         //hides controls inside product panel
@@ -443,21 +459,18 @@ namespace stockManagement
             }
         }
         //customer filter
-        private void customtextbox1__TextChanged(object sender, EventArgs e)
+        private void customerFilterTextBox__TextChanged(object sender, EventArgs e)
         {
-            if (customerAvailableCombobox.SelectedIndex == 0)
+            if (isAvailable == 0)
             {
-                isAvailable = 1;
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
             }
-            else if (customerAvailableCombobox.SelectedIndex == 1)
+            else if (isAvailable == 1)
             {
-                isAvailable = 0;
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
             }
-            else if (customerAvailableCombobox.SelectedIndex == 2)
+            else if (isAvailable == 2)
             {
-                isAvailable = 3;
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
             }
         }
@@ -475,8 +488,32 @@ namespace stockManagement
             }
             else if (customerAvailableCombobox.SelectedIndex == 2)
             {
-                isAvailable = 3;
+                isAvailable = 2;
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
+            }
+        }
+
+        private void productAddButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string productAddQuery = "INSERT INTO productTable (product_name,category,stroge_type,product_quantity,product_delete_id) VALUES(@productName,category,storageType,productQuantity,productDelID) ";
+                SqlConnection conn = new SqlConnection(connString);
+                SqlCommand productAdd = new SqlCommand(productAddQuery, conn);
+                conn.Open();
+                productAdd.Parameters.AddWithValue("@productName", productNameTextbox.Texts);
+                productAdd.Parameters.AddWithValue("@category", productCategoryCombobox.SelectedItem.ToString());
+                productAdd.Parameters.AddWithValue("@storageType", productTypeCombobox.SelectedItem.ToString());
+                productAdd.Parameters.AddWithValue("@productQuantity", productQuantityTextbox.Texts);
+                productAdd.Parameters.AddWithValue("@productDelID", 1);
+                productAdd.ExecuteNonQuery();
+                conn.Close();
+                productAdd.Dispose();
+                MessageBox.Show("Product Succesfully Added.", "Successfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
     }
