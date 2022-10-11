@@ -7,7 +7,6 @@ namespace stockmanagement
 {
     public class customtogglebtn : CheckBox
     {
-
         //Fields
         private Color onBackColor = Color.MediumSlateBlue;
         private Color onToggleColor = Color.WhiteSmoke;
@@ -106,6 +105,7 @@ namespace stockmanagement
             }
         }
 
+        //Constructor
         public customtogglebtn()
         {
             this.MinimumSize = new Size(45, 22);
@@ -131,6 +131,8 @@ namespace stockmanagement
         {
             int toggleSize = this.Height - 5;
             pevent.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            pevent.Graphics.Clear(this.Parent.BackColor);
+
             if (this.Checked) //ON
             {
                 //Draw the control surface

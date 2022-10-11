@@ -1,4 +1,5 @@
-﻿using System;
+﻿using stockmanagement;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,10 +20,13 @@ namespace stockManagement
         string connString = "Data Source=SEYYIT\\SQLEXPRESS;Initial Catalog=stockMangementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         private DataTable dtCustomers = new DataTable();
         private DataTable dtProducts = new DataTable();
-        string customerNameFilterField = "customer_name";
-        string customerAvailableFilterField = "customer_delete_id";
-        int customerID;
-        int isAvailable = 2;// 0 = available , 1 = not available , 2 = list all
+        private string customerNameFilterField = "customer_name";
+        private string customerAvailableFilterField = "customer_delete_id";
+        private int selectedProductControl;
+        private int selectedCustomerControl;
+        private int customerID;
+        private int productID;
+        private int isAvailable = 2;// 0 = available , 1 = not available , 2 = list all
 
         public mainForm()
         {
@@ -32,10 +36,6 @@ namespace stockManagement
 
         private void mainForm_Load(object sender, EventArgs e)
         {
-            // TODO: This line of code loads data into the 'productDataSet.productTable' table. You can move, or remove it, as needed.
-            this.productTableTableAdapter.Fill(this.productDataSet.productTable);
-            // TODO: This line of code loads data into the 'customerDataSet.customerTable' table. You can move, or remove it, as needed.
-            this.customerTableTableAdapter.Fill(this.customerDataSet.customerTable);
             loadProductData();
             loadCustomerData();
             loadCategoryData();
@@ -113,7 +113,7 @@ namespace stockManagement
         }
 
         //hides all panels
-        void hidePanel()
+        private void hidePanel()
         {
             customerPanel.Visible = false;
             productPanel.Visible = false;
@@ -121,7 +121,7 @@ namespace stockManagement
             recipePanel.Visible = false;
         }
         //shows specific panel
-        void showPanel(Panel panel)
+        private void showPanel(Panel panel)
         {
             hidePanel();
             panel.Visible = true;
@@ -179,7 +179,7 @@ namespace stockManagement
         {
             showAdminControls(customerControlsPanel);
         }
-        void loadCategoryData()
+        private void loadCategoryData()
         {
             SqlConnection conn = new SqlConnection(connString);
             string categorySelectQuery = "select category_name from categoryTable";
@@ -194,7 +194,7 @@ namespace stockManagement
             conn.Close();
 
         }
-        void loadCustomerData()
+        private void loadCustomerData()
         {
             SqlConnection conn = new SqlConnection(connString);
             string customerSelectQuery = "SELECT * FROM customerTable";
@@ -206,7 +206,7 @@ namespace stockManagement
             conn.Close();
             dac.Dispose();
         }
-        void loadProductData()
+        private void loadProductData()
         {
             SqlConnection conn = new SqlConnection(connString);
             string productSelectQuery = "SELECT * FROM productTable";
@@ -220,55 +220,92 @@ namespace stockManagement
         }
         //product admin controls
         //hides controls inside product panel
-        private void hideProductControls()
+        private void clearProductControls()
         {
-
+            productNameTextbox.Texts = "";
+            productQuantityTextbox.Texts = "";
+            productTypeCombobox.SelectedItem = null;
+            productCategoryCombobox.SelectedItem = null;
         }
-        //0 = add , 1 = update , 2 = delete
+        //0 = product add panel , 1 = product panel with datagridview , 2 = product update panel , 3 = product delete panel
         private void showProductControls(int choice)
         {
-            hideProductControls();
             if (choice == 0)
             {
-
+                clearProductControls();
+                productPanelTitleLabel.Text = "Product Add";
+                foreach (Control control in productPanel.Controls)
+                    control.Visible = false;
+                foreach (Control txtbox in productPanel.Controls.OfType<customtextbox>())
+                    txtbox.Visible = true;
+                foreach (Control label in productPanel.Controls.OfType<Label>())
+                    label.Visible = true;
+                foreach (Control combobox in productPanel.Controls.OfType<customcombobox>())
+                    combobox.Visible = true;
+                productAddButton.Visible = true;
+                productAvailableLabel.Visible = false;
+                productToggleIndicatorLabel.Visible = false;
             }
-            else if (choice == 1)
+            else if (choice == 1)//product panel with datagridview
             {
-
+                foreach (Control x in productPanel.Controls)
+                    x.Visible = false;
+                productPanelTitleLabel.Text = "Product Panel";
+                productPanelTitleLabel.Visible = true;
+                productDataGridView.Visible = true;
             }
-            else if (choice == 2)
+            else if (choice == 2)//product uptdate panel without datagridview
             {
-
+                productPanelTitleLabel.Text = "Product Update";
+                foreach (Control control in productPanel.Controls)
+                    control.Visible = false;
+                foreach (Control txtbox in productPanel.Controls.OfType<customtextbox>())
+                    txtbox.Visible = true;
+                foreach (Control label in productPanel.Controls.OfType<Label>())
+                    label.Visible = true;
+                foreach (Control combobox in productPanel.Controls.OfType<customcombobox>())
+                    combobox.Visible = true;
+                productDeleteTogglebutton.Visible = true;
+                productUpdateButton.Visible = true;
+            }
+            else if (choice == 3)//product delete button without datagridview
+            {
+                productPanelTitleLabel.Text = "Product Delete";
+                foreach (Control control in productPanel.Controls)
+                    control.Visible = false;
+                foreach (Control txtbox in productPanel.Controls.OfType<customtextbox>())
+                    txtbox.Visible = true;
+                foreach (Control label in productPanel.Controls.OfType<Label>())
+                    label.Visible = true;
+                foreach (Control combobox in productPanel.Controls.OfType<customcombobox>())
+                    combobox.Visible = true;
+                productDeleteButton.Visible = true;
+                productAvailableLabel.Visible = false;
+                productToggleIndicatorLabel.Visible = false;
             }
         }
         private void productAddPanelButton_Click(object sender, EventArgs e)
         {
             showProductControls(0);
             showPanel(productPanel);
+            selectedProductControl = 0;
         }
 
         private void productUpdatePanelButton_Click(object sender, EventArgs e)
         {
             showProductControls(1);
             showPanel(productPanel);
+            selectedProductControl = 1;
         }
 
         private void productDeletePanelButton_Click(object sender, EventArgs e)
         {
-            showProductControls(2);
+            showProductControls(1);
             showPanel(productPanel);
+            selectedProductControl = 2;
         }
         //customer admin controls
-        //hides controls inside customer panel
-        private void hideCustomerControls()
-        {
-            customerNameLabel.Visible = false;
-            customerNameTextbox.Visible = false;
-            customerPhoneLabel.Visible = false;
-            customerPhoneTextbox.Visible = false;
-            customerAddressLabel.Visible = false;
-            customerAddressTextbox.Visible = false;
-        }
+
         //clear customer controls
         private void clearCustomerControls()
         {
@@ -276,82 +313,81 @@ namespace stockManagement
             customerPhoneTextbox.Texts = "";
             customerAddressTextbox.Texts = "";
         }
-        // 0 = add , 1 = update panel visible with datagridview , 2 = update panel visible without datagridview
+        // 0 = customer add , 1 = customer update panel with datagridview , 2 = product update panel , 3 = product delete panel
         private void showCustomerControls(int choice)
         {
-            hideCustomerControls();
-            if (choice == 0)
+            if (choice == 0)//customer add panel
             {
                 clearCustomerControls();
                 customerPanelTitle.Text = "Customer Add";
-                customerNameLabel.Visible = true;
-                customerNameTextbox.Visible = true;
-                customerPhoneLabel.Visible = true;
-                customerPhoneTextbox.Visible = true;
-                customerAddressLabel.Visible = true;
-                customerAddressTextbox.Visible = true;
+                foreach (Control control in customerPanel.Controls)
+                    control.Visible = false;
+                foreach (Control label in customerPanel.Controls.OfType<Label>())
+                    label.Visible = true;
+                foreach (Control txtbox in customerPanel.Controls.OfType<customtextbox>())
+                    txtbox.Visible = true;
                 customerAddButton.Visible = true;
-                customerUpdateButton.Visible = false;
-                customerDeleteButton.Visible = false;
-                customerDataGridView.Visible = false;
-                customerFilterTextBox.Visible = false;
-                filterNameLabel.Visible = false;
-                filterCustomerAvailableLabel.Visible = false;
-                customerAvailableCombobox.Visible = false;
             }
-            else if (choice == 1)
+            else if (choice == 1)// customer update panel with datagridview
             {
-                customerPanelTitle.Text = "Customer Update/Delete";
-                customerNameLabel.Visible = false;
-                customerNameTextbox.Visible = false;
-                customerPhoneLabel.Visible = false;
-                customerPhoneTextbox.Visible = false;
-                customerAddressLabel.Visible = false;
-                customerAddressTextbox.Visible = false;
-                customerAddButton.Visible = false;
-                customerUpdateButton.Visible = false;
-                customerDeleteButton.Visible = false;
-                customerDataGridView.Visible = true;
+                foreach (Control control in customerPanel.Controls)
+                    control.Visible = false;
+                foreach (Control label in customerPanel.Controls.OfType<Label>())
+                    label.Visible = true;
                 customerFilterTextBox.Visible = true;
-                filterNameLabel.Visible = true;
-                filterCustomerAvailableLabel.Visible = true;
-                customerAvailableCombobox.Visible = true;
-            }
-            else if (choice == 2)
-            {
-                customerPanelTitle.Text = "Customer Update/Delete";
                 customerNameLabel.Visible = true;
-                customerNameTextbox.Visible = true;
-                customerPhoneLabel.Visible = true;
-                customerPhoneTextbox.Visible = true;
-                customerAddressLabel.Visible = true;
-                customerAddressTextbox.Visible = true;
-                customerAddButton.Visible = false;
+                customerAvailableCombobox.Visible = true;
+                customerAvailableLabel.Visible = true;
+                customerDataGridView.Visible = true;
+            }
+            else if (choice == 2)//customer update panel
+            {
+                foreach (Control control in customerPanel.Controls)
+                    control.Visible = false;
+                foreach (Control label in customerPanel.Controls.OfType<Label>())
+                    label.Visible = true;
+                foreach (Control txtbox in customerPanel.Controls.OfType<customtextbox>())
+                    txtbox.Visible = true;
                 customerUpdateButton.Visible = true;
-                customerDeleteButton.Visible = true;
-                customerDataGridView.Visible = false;
                 customerFilterTextBox.Visible = false;
-                filterNameLabel.Visible = false;
-                filterCustomerAvailableLabel.Visible = false;
+                customerNameLabel.Visible = false;
                 customerAvailableCombobox.Visible = false;
+                customerAvailableLabel.Visible = false;
+            }
+            else if (choice == 3)//customer delete panel
+            {
+                foreach (Control control in customerPanel.Controls)
+                    control.Visible = false;
+                foreach (Control label in customerPanel.Controls.OfType<Label>())
+                    label.Visible = true;
+                foreach (Control txtbox in customerPanel.Controls.OfType<customtextbox>())
+                    txtbox.Visible = true;
+                customerDeleteButton.Visible = true;
+                customerFilterTextBox.Visible = false;
+                customerNameLabel.Visible = false;
+                customerAvailableCombobox.Visible = false;
+                customerAvailableLabel.Visible = false;
             }
         }
         private void customerAddPanelButton_Click(object sender, EventArgs e)
         {
             showCustomerControls(0);
             showPanel(customerPanel);
+            selectedCustomerControl = 0;
         }
 
         private void customerUpdatePanelButton_Click(object sender, EventArgs e)
         {
             showCustomerControls(1);
             showPanel(customerPanel);
+            selectedCustomerControl = 1;
         }
 
         private void customerDeletePanelButton_Click(object sender, EventArgs e)
         {
             showCustomerControls(1);
             showPanel(customerPanel);
+            selectedCustomerControl = 2;
         }
         private void refreshCustomerDataGridView()
         {
@@ -362,18 +398,26 @@ namespace stockManagement
             customerDataGridView.Update();
             customerDataGridView.Refresh();
         }
+        private void setCustomerControlValues(int index)
+        {
+            DataGridViewRow selectedRow = customerDataGridView.Rows[index];
+            customerID = (int)selectedRow.Cells[1].Value;
+            customerNameTextbox.Texts = selectedRow.Cells[2].Value.ToString();
+            customerPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
+            customerAddressTextbox.Texts = selectedRow.Cells[4].Value.ToString();
+        }
         //datagridview button click event
         private void customerDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex == 0)
+            if (e.ColumnIndex == 0 && selectedCustomerControl == 1)
             {
-                int index = e.RowIndex;
-                DataGridViewRow selectedRow = customerDataGridView.Rows[index];
-                customerID = (int)selectedRow.Cells[1].Value;
-                customerNameTextbox.Texts = selectedRow.Cells[2].Value.ToString();
-                customerPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
-                customerAddressTextbox.Texts = selectedRow.Cells[4].Value.ToString();
+                setCustomerControlValues((int)e.RowIndex);
                 showCustomerControls(2);
+            }
+            else if (e.ColumnIndex == 0 && selectedCustomerControl == 2)
+            {
+                setCustomerControlValues((int)e.RowIndex);
+                showCustomerControls(3);
             }
         }
         //customer add button
@@ -493,11 +537,12 @@ namespace stockManagement
             }
         }
 
+        // TODO : get combobox item with selecteditem property
         private void productAddButton_Click(object sender, EventArgs e)
         {
             try
             {
-                string productAddQuery = "INSERT INTO productTable (product_name,category,stroge_type,product_quantity,product_delete_id) VALUES(@productName,category,storageType,productQuantity,productDelID) ";
+                string productAddQuery = "INSERT INTO productTable (product_name,category,storage_type,product_quantity,product_delete_id) VALUES(@productName,@category,@storageType,@productQuantity,@productDelID) ";
                 SqlConnection conn = new SqlConnection(connString);
                 SqlCommand productAdd = new SqlCommand(productAddQuery, conn);
                 conn.Open();
@@ -515,6 +560,95 @@ namespace stockManagement
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void productUpdateButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string productUpdateQuery = "Update productTable SET product_name=@productName,category=@category,storage_type=@type,product_quantity=@quantity,product_delete_id=@delID WHERE product_id=@id";
+                SqlConnection conn = new SqlConnection(connString);
+                SqlCommand productUpdate = new SqlCommand(productUpdateQuery, conn);
+                conn.Open();
+                productUpdate.Parameters.AddWithValue("@productName", productNameTextbox.Texts);
+                productUpdate.Parameters.AddWithValue("@category", productCategoryCombobox.SelectedItem.ToString());
+                productUpdate.Parameters.AddWithValue("@type", productTypeCombobox.SelectedItem.ToString());
+                productUpdate.Parameters.AddWithValue("@quantity", productQuantityTextbox.Texts);
+                productUpdate.Parameters.AddWithValue("@id", productID);
+                if (productDeleteTogglebutton.Checked)
+                    productUpdate.Parameters.AddWithValue("@delID", 1);
+                else
+                    productUpdate.Parameters.AddWithValue("@delID", 0);
+                productUpdate.ExecuteNonQuery();
+                conn.Close();
+                productUpdate.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void setProductControlValues(int index)
+        {
+            DataGridViewRow selectedrow = productDataGridView.Rows[index];
+            productID = (int)selectedrow.Cells[1].Value;
+            productNameTextbox.Texts = selectedrow.Cells[2].Value.ToString();
+            productCategoryCombobox.SelectedItem = selectedrow.Cells[3].Value;
+            productTypeCombobox.SelectedItem = selectedrow.Cells[4].Value;
+            productQuantityTextbox.Texts = selectedrow.Cells[5].Value.ToString();
+            if (selectedrow.Cells[6].Value.ToString() == "True")
+                productDeleteTogglebutton.Checked = true;
+            else
+                productDeleteTogglebutton.Checked = false;
+        }
+        private void productDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //update panel side
+            if (e.ColumnIndex == 0 && selectedProductControl == 1)
+            {
+                setProductControlValues((int)e.RowIndex);
+                showProductControls(2);
+            }
+            //delete panel side
+            else if (e.ColumnIndex == 0 && selectedProductControl == 2)
+            {
+                setProductControlValues((int)e.RowIndex);
+                showProductControls(3);
+            }
+        }
+
+        private void productDeleteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string productDeleteQuery = "Update productTable SET product_delete_id=@delID WHERE product_id=@id";
+                SqlConnection conn = new SqlConnection(connString);
+                conn.Open();
+                SqlCommand productDelete = new SqlCommand(productDeleteQuery, conn);
+                productDelete.Parameters.AddWithValue("@delID", 0);
+                productDelete.Parameters.AddWithValue("@id", productID);
+                productDelete.ExecuteNonQuery();
+                conn.Close();
+                productDelete.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+
+        private void customtogglebtn1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (productDeleteTogglebutton.Checked)
+                productToggleIndicatorLabel.Text = "ON";
+            else
+                productToggleIndicatorLabel.Text = "OFF";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

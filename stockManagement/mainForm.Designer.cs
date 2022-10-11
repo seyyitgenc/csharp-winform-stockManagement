@@ -41,6 +41,7 @@ namespace stockManagement
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.titlePanel = new System.Windows.Forms.Panel();
             this.titleLabel = new System.Windows.Forms.Label();
             this.minimizeButton = new System.Windows.Forms.Button();
@@ -55,6 +56,9 @@ namespace stockManagement
             this.customerContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.customerAddTSI = new System.Windows.Forms.ToolStripMenuItem();
             this.productPanel = new System.Windows.Forms.Panel();
+            this.productToggleIndicatorLabel = new System.Windows.Forms.Label();
+            this.productAvailableLabel = new System.Windows.Forms.Label();
+            this.productDeleteTogglebutton = new stockmanagement.customtogglebtn();
             this.productDataGridView = new System.Windows.Forms.DataGridView();
             this.Select = new System.Windows.Forms.DataGridViewButtonColumn();
             this.productidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -81,11 +85,12 @@ namespace stockManagement
             this.filterCustomerAvailableLabel = new System.Windows.Forms.Label();
             this.customerAvailableCombobox = new stockmanagement.customcombobox();
             this.customerDataGridView = new System.Windows.Forms.DataGridView();
-            this.customerDataGridViewButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.customeridDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.customernameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.customerphoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.customeraddressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customerDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.customerDataGridViewButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.customerTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.customerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.customerDataSet = new stockManagement.customerDataSet();
@@ -127,6 +132,9 @@ namespace stockManagement
             this.dashTopLabel = new System.Windows.Forms.Label();
             this.customerTableTableAdapter = new stockManagement.customerDataSetTableAdapters.customerTableTableAdapter();
             this.productTableTableAdapter = new stockManagement.productDataSetTableAdapters.productTableTableAdapter();
+            this.customerTogglebutton = new stockmanagement.customtogglebtn();
+            this.customerAvailableLabel = new System.Windows.Forms.Label();
+            this.customerTogglebuttonIndicatorLabel = new System.Windows.Forms.Label();
             this.titlePanel.SuspendLayout();
             this.navigationPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).BeginInit();
@@ -352,6 +360,9 @@ namespace stockManagement
             // productPanel
             // 
             this.productPanel.BackColor = System.Drawing.Color.Chocolate;
+            this.productPanel.Controls.Add(this.productToggleIndicatorLabel);
+            this.productPanel.Controls.Add(this.productAvailableLabel);
+            this.productPanel.Controls.Add(this.productDeleteTogglebutton);
             this.productPanel.Controls.Add(this.productDataGridView);
             this.productPanel.Controls.Add(this.productDeleteButton);
             this.productPanel.Controls.Add(this.productUpdateButton);
@@ -372,6 +383,40 @@ namespace stockManagement
             this.productPanel.Size = new System.Drawing.Size(1292, 741);
             this.productPanel.TabIndex = 2;
             this.productPanel.Visible = false;
+            // 
+            // productToggleIndicatorLabel
+            // 
+            this.productToggleIndicatorLabel.AutoSize = true;
+            this.productToggleIndicatorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.productToggleIndicatorLabel.Location = new System.Drawing.Point(765, 350);
+            this.productToggleIndicatorLabel.Name = "productToggleIndicatorLabel";
+            this.productToggleIndicatorLabel.Size = new System.Drawing.Size(62, 29);
+            this.productToggleIndicatorLabel.TabIndex = 15;
+            this.productToggleIndicatorLabel.Text = "OFF";
+            // 
+            // productAvailableLabel
+            // 
+            this.productAvailableLabel.AutoSize = true;
+            this.productAvailableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.productAvailableLabel.Location = new System.Drawing.Point(373, 346);
+            this.productAvailableLabel.Name = "productAvailableLabel";
+            this.productAvailableLabel.Size = new System.Drawing.Size(232, 29);
+            this.productAvailableLabel.TabIndex = 14;
+            this.productAvailableLabel.Text = "Product Delete Y/N :";
+            // 
+            // productDeleteTogglebutton
+            // 
+            this.productDeleteTogglebutton.Location = new System.Drawing.Point(656, 346);
+            this.productDeleteTogglebutton.MinimumSize = new System.Drawing.Size(45, 22);
+            this.productDeleteTogglebutton.Name = "productDeleteTogglebutton";
+            this.productDeleteTogglebutton.OffBackColor = System.Drawing.Color.Gray;
+            this.productDeleteTogglebutton.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.productDeleteTogglebutton.OnBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.productDeleteTogglebutton.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.productDeleteTogglebutton.Size = new System.Drawing.Size(100, 40);
+            this.productDeleteTogglebutton.TabIndex = 13;
+            this.productDeleteTogglebutton.UseVisualStyleBackColor = true;
+            this.productDeleteTogglebutton.CheckedChanged += new System.EventHandler(this.customtogglebtn1_CheckedChanged);
             // 
             // productDataGridView
             // 
@@ -416,7 +461,7 @@ namespace stockManagement
             this.productDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.productDataGridView.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.productDataGridView.EnableHeadersVisualStyles = false;
-            this.productDataGridView.Location = new System.Drawing.Point(0, 336);
+            this.productDataGridView.Location = new System.Drawing.Point(0, 486);
             this.productDataGridView.MultiSelect = false;
             this.productDataGridView.Name = "productDataGridView";
             this.productDataGridView.ReadOnly = true;
@@ -432,8 +477,9 @@ namespace stockManagement
             this.productDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.productDataGridView.RowTemplate.Height = 24;
             this.productDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.productDataGridView.Size = new System.Drawing.Size(1292, 405);
+            this.productDataGridView.Size = new System.Drawing.Size(1292, 255);
             this.productDataGridView.TabIndex = 12;
+            this.productDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.productDataGridView_CellContentClick);
             // 
             // Select
             // 
@@ -515,13 +561,14 @@ namespace stockManagement
             this.productDeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.productDeleteButton.Font = new System.Drawing.Font("Georgia", 20F);
             this.productDeleteButton.ForeColor = System.Drawing.Color.White;
-            this.productDeleteButton.Location = new System.Drawing.Point(890, 368);
+            this.productDeleteButton.Location = new System.Drawing.Point(895, 410);
             this.productDeleteButton.Name = "productDeleteButton";
             this.productDeleteButton.Size = new System.Drawing.Size(153, 56);
             this.productDeleteButton.TabIndex = 11;
             this.productDeleteButton.Text = "Delete";
             this.productDeleteButton.textColor = System.Drawing.Color.White;
             this.productDeleteButton.UseVisualStyleBackColor = false;
+            this.productDeleteButton.Click += new System.EventHandler(this.productDeleteButton_Click);
             // 
             // productUpdateButton
             // 
@@ -535,13 +582,14 @@ namespace stockManagement
             this.productUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.productUpdateButton.Font = new System.Drawing.Font("Georgia", 20F);
             this.productUpdateButton.ForeColor = System.Drawing.Color.White;
-            this.productUpdateButton.Location = new System.Drawing.Point(719, 370);
+            this.productUpdateButton.Location = new System.Drawing.Point(700, 410);
             this.productUpdateButton.Name = "productUpdateButton";
             this.productUpdateButton.Size = new System.Drawing.Size(153, 54);
             this.productUpdateButton.TabIndex = 10;
             this.productUpdateButton.Text = "Update";
             this.productUpdateButton.textColor = System.Drawing.Color.White;
             this.productUpdateButton.UseVisualStyleBackColor = false;
+            this.productUpdateButton.Click += new System.EventHandler(this.productUpdateButton_Click);
             // 
             // productAddButton
             // 
@@ -555,7 +603,7 @@ namespace stockManagement
             this.productAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.productAddButton.Font = new System.Drawing.Font("Georgia", 20F);
             this.productAddButton.ForeColor = System.Drawing.Color.White;
-            this.productAddButton.Location = new System.Drawing.Point(532, 370);
+            this.productAddButton.Location = new System.Drawing.Point(510, 410);
             this.productAddButton.Name = "productAddButton";
             this.productAddButton.Size = new System.Drawing.Size(153, 54);
             this.productAddButton.TabIndex = 9;
@@ -709,6 +757,9 @@ namespace stockManagement
             // customerPanel
             // 
             this.customerPanel.BackColor = System.Drawing.Color.Peru;
+            this.customerPanel.Controls.Add(this.customerTogglebuttonIndicatorLabel);
+            this.customerPanel.Controls.Add(this.customerAvailableLabel);
+            this.customerPanel.Controls.Add(this.customerTogglebutton);
             this.customerPanel.Controls.Add(this.filterCustomerAvailableLabel);
             this.customerPanel.Controls.Add(this.customerAvailableCombobox);
             this.customerPanel.Controls.Add(this.customerDataGridView);
@@ -793,11 +844,12 @@ namespace stockManagement
             this.customerDataGridView.ColumnHeadersHeight = 29;
             this.customerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.customerDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.customerDataGridViewButton,
             this.customeridDataGridViewTextBoxColumn,
             this.customernameDataGridViewTextBoxColumn,
             this.customerphoneDataGridViewTextBoxColumn,
-            this.customeraddressDataGridViewTextBoxColumn});
+            this.customeraddressDataGridViewTextBoxColumn,
+            this.customerDataGridViewCheckBoxColumn,
+            this.customerDataGridViewButton});
             this.customerDataGridView.DataSource = this.customerTableBindingSource;
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
@@ -808,26 +860,25 @@ namespace stockManagement
             dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.customerDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.customerDataGridView.EnableHeadersVisualStyles = false;
-            this.customerDataGridView.Location = new System.Drawing.Point(3, 221);
+            this.customerDataGridView.Location = new System.Drawing.Point(3, 669);
             this.customerDataGridView.MultiSelect = false;
             this.customerDataGridView.Name = "customerDataGridView";
             this.customerDataGridView.ReadOnly = true;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.customerDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle8;
             this.customerDataGridView.RowHeadersWidth = 51;
             this.customerDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerDataGridView.RowTemplate.Height = 24;
             this.customerDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.customerDataGridView.Size = new System.Drawing.Size(1286, 517);
+            this.customerDataGridView.Size = new System.Drawing.Size(1286, 69);
             this.customerDataGridView.TabIndex = 10;
             this.customerDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerDataGridView_CellContentClick);
-            // 
-            // customerDataGridViewButton
-            // 
-            this.customerDataGridViewButton.HeaderText = "Select";
-            this.customerDataGridViewButton.MinimumWidth = 6;
-            this.customerDataGridViewButton.Name = "customerDataGridViewButton";
-            this.customerDataGridViewButton.ReadOnly = true;
-            this.customerDataGridViewButton.Text = "Select";
-            this.customerDataGridViewButton.UseColumnTextForButtonValue = true;
             // 
             // customeridDataGridViewTextBoxColumn
             // 
@@ -861,6 +912,22 @@ namespace stockManagement
             this.customeraddressDataGridViewTextBoxColumn.MinimumWidth = 6;
             this.customeraddressDataGridViewTextBoxColumn.Name = "customeraddressDataGridViewTextBoxColumn";
             this.customeraddressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // customerDataGridViewCheckBoxColumn
+            // 
+            this.customerDataGridViewCheckBoxColumn.DataPropertyName = "customer_delete_id";
+            this.customerDataGridViewCheckBoxColumn.HeaderText = "customerDeleteID";
+            this.customerDataGridViewCheckBoxColumn.MinimumWidth = 6;
+            this.customerDataGridViewCheckBoxColumn.Name = "customerDataGridViewCheckBoxColumn";
+            this.customerDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // customerDataGridViewButton
+            // 
+            this.customerDataGridViewButton.HeaderText = "Select";
+            this.customerDataGridViewButton.MinimumWidth = 6;
+            this.customerDataGridViewButton.Name = "customerDataGridViewButton";
+            this.customerDataGridViewButton.ReadOnly = true;
+            this.customerDataGridViewButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // customerTableBindingSource
             // 
@@ -920,7 +987,7 @@ namespace stockManagement
             this.customerDeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customerDeleteButton.Font = new System.Drawing.Font("Georgia", 16F);
             this.customerDeleteButton.ForeColor = System.Drawing.Color.White;
-            this.customerDeleteButton.Location = new System.Drawing.Point(567, 512);
+            this.customerDeleteButton.Location = new System.Drawing.Point(567, 572);
             this.customerDeleteButton.Name = "customerDeleteButton";
             this.customerDeleteButton.Size = new System.Drawing.Size(212, 51);
             this.customerDeleteButton.TabIndex = 9;
@@ -941,7 +1008,7 @@ namespace stockManagement
             this.customerUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customerUpdateButton.Font = new System.Drawing.Font("Georgia", 16F);
             this.customerUpdateButton.ForeColor = System.Drawing.Color.White;
-            this.customerUpdateButton.Location = new System.Drawing.Point(808, 512);
+            this.customerUpdateButton.Location = new System.Drawing.Point(808, 572);
             this.customerUpdateButton.Name = "customerUpdateButton";
             this.customerUpdateButton.Size = new System.Drawing.Size(212, 51);
             this.customerUpdateButton.TabIndex = 8;
@@ -962,7 +1029,7 @@ namespace stockManagement
             this.customerAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customerAddButton.Font = new System.Drawing.Font("Georgia", 16F);
             this.customerAddButton.ForeColor = System.Drawing.Color.White;
-            this.customerAddButton.Location = new System.Drawing.Point(706, 512);
+            this.customerAddButton.Location = new System.Drawing.Point(706, 572);
             this.customerAddButton.Name = "customerAddButton";
             this.customerAddButton.Size = new System.Drawing.Size(212, 51);
             this.customerAddButton.TabIndex = 7;
@@ -1416,6 +1483,39 @@ namespace stockManagement
             // 
             this.productTableTableAdapter.ClearBeforeFill = true;
             // 
+            // customerTogglebutton
+            // 
+            this.customerTogglebutton.Location = new System.Drawing.Point(567, 516);
+            this.customerTogglebutton.MinimumSize = new System.Drawing.Size(45, 22);
+            this.customerTogglebutton.Name = "customerTogglebutton";
+            this.customerTogglebutton.OffBackColor = System.Drawing.Color.Gray;
+            this.customerTogglebutton.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.customerTogglebutton.OnBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerTogglebutton.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.customerTogglebutton.Size = new System.Drawing.Size(150, 50);
+            this.customerTogglebutton.TabIndex = 16;
+            this.customerTogglebutton.UseVisualStyleBackColor = true;
+            // 
+            // customerAvailableLabel
+            // 
+            this.customerAvailableLabel.AutoSize = true;
+            this.customerAvailableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerAvailableLabel.Location = new System.Drawing.Point(276, 532);
+            this.customerAvailableLabel.Name = "customerAvailableLabel";
+            this.customerAvailableLabel.Size = new System.Drawing.Size(253, 29);
+            this.customerAvailableLabel.TabIndex = 17;
+            this.customerAvailableLabel.Text = "Customer Available :";
+            // 
+            // customerTogglebuttonIndicatorLabel
+            // 
+            this.customerTogglebuttonIndicatorLabel.AutoSize = true;
+            this.customerTogglebuttonIndicatorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerTogglebuttonIndicatorLabel.Location = new System.Drawing.Point(735, 532);
+            this.customerTogglebuttonIndicatorLabel.Name = "customerTogglebuttonIndicatorLabel";
+            this.customerTogglebuttonIndicatorLabel.Size = new System.Drawing.Size(52, 29);
+            this.customerTogglebuttonIndicatorLabel.TabIndex = 18;
+            this.customerTogglebuttonIndicatorLabel.Text = "NO";
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1545,7 +1645,9 @@ namespace stockManagement
         private DataGridViewTextBoxColumn customernameDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn customerphoneDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn customeraddressDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn customerdeleteidDataGridViewCheckBoxColumn;
+        private DataGridViewCheckBoxColumn customerDataGridViewCheckBoxColumn;
+        private Label productAvailableLabel;
+        private Label productToggleIndicatorLabel;
         private DataGridViewButtonColumn Select;
         private DataGridViewTextBoxColumn productidDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn productnameDataGridViewTextBoxColumn;
@@ -1553,5 +1655,9 @@ namespace stockManagement
         private DataGridViewTextBoxColumn storagetypeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn productquantityDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn productdeleteidDataGridViewCheckBoxColumn;
+        private stockmanagement.customtogglebtn productDeleteTogglebutton;
+        private Label customerTogglebuttonIndicatorLabel;
+        private Label customerAvailableLabel;
+        private stockmanagement.customtogglebtn customerTogglebutton;
     }
 }
