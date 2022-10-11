@@ -219,6 +219,7 @@ namespace stockManagement
             dap.Dispose();
         }
         //product admin controls
+
         //hides controls inside product panel
         private void clearProductControls()
         {
@@ -321,41 +322,48 @@ namespace stockManagement
                 clearCustomerControls();
                 customerPanelTitle.Text = "Customer Add";
                 foreach (Control control in customerPanel.Controls)
-                    control.Visible = false;
-                foreach (Control label in customerPanel.Controls.OfType<Label>())
-                    label.Visible = true;
-                foreach (Control txtbox in customerPanel.Controls.OfType<customtextbox>())
-                    txtbox.Visible = true;
+                    control.Visible = true;
+                foreach (Control btn in customerPanel.Controls.OfType<custombtn>())
+                    btn.Visible = false;
                 customerAddButton.Visible = true;
+                customerFilterTextBox.Visible = false;
+                filterNameLabel.Visible = false;
+                filterCustomerAvailableLabel.Visible = false;
+                customerAvailableCombobox.Visible = false;
+                customerTogglebuttonIndicatorLabel.Visible = false;
+                customerTogglebutton.Visible = false;
+                customerDataGridView.Visible = false;
+                customerAvailableLabel.Visible = false;
             }
             else if (choice == 1)// customer update panel with datagridview
             {
+                customerPanelTitle.Text = "Customer Panel";
                 foreach (Control control in customerPanel.Controls)
                     control.Visible = false;
-                foreach (Control label in customerPanel.Controls.OfType<Label>())
-                    label.Visible = true;
+                customerPanelTitle.Visible = true;
                 customerFilterTextBox.Visible = true;
-                customerNameLabel.Visible = true;
+                filterNameLabel.Visible = true;
+                filterCustomerAvailableLabel.Visible = true;
                 customerAvailableCombobox.Visible = true;
-                customerAvailableLabel.Visible = true;
                 customerDataGridView.Visible = true;
             }
             else if (choice == 2)//customer update panel
             {
+                customerPanelTitle.Text = "Customer Update";
                 foreach (Control control in customerPanel.Controls)
-                    control.Visible = false;
-                foreach (Control label in customerPanel.Controls.OfType<Label>())
-                    label.Visible = true;
-                foreach (Control txtbox in customerPanel.Controls.OfType<customtextbox>())
-                    txtbox.Visible = true;
+                    control.Visible = true;
+                foreach (Control btn in customerPanel.Controls.OfType<custombtn>())
+                    btn.Visible = false;
                 customerUpdateButton.Visible = true;
                 customerFilterTextBox.Visible = false;
-                customerNameLabel.Visible = false;
+                filterNameLabel.Visible = false;
+                filterCustomerAvailableLabel.Visible = false;
                 customerAvailableCombobox.Visible = false;
-                customerAvailableLabel.Visible = false;
+                customerDataGridView.Visible = false;
             }
             else if (choice == 3)//customer delete panel
             {
+                customerPanelTitle.Text = "Customer Delete";
                 foreach (Control control in customerPanel.Controls)
                     control.Visible = false;
                 foreach (Control label in customerPanel.Controls.OfType<Label>())
@@ -364,8 +372,10 @@ namespace stockManagement
                     txtbox.Visible = true;
                 customerDeleteButton.Visible = true;
                 customerFilterTextBox.Visible = false;
-                customerNameLabel.Visible = false;
+                filterNameLabel.Visible = false;
+                filterCustomerAvailableLabel.Visible = false;
                 customerAvailableCombobox.Visible = false;
+                customerTogglebuttonIndicatorLabel.Visible = false;
                 customerAvailableLabel.Visible = false;
             }
         }
@@ -405,6 +415,16 @@ namespace stockManagement
             customerNameTextbox.Texts = selectedRow.Cells[2].Value.ToString();
             customerPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
             customerAddressTextbox.Texts = selectedRow.Cells[4].Value.ToString();
+            if (selectedRow.Cells[5].Value.ToString() == "True")
+            {
+                customerTogglebutton.Checked = true;
+                customerTogglebuttonIndicatorLabel.Text = "Available";
+            }
+            else
+            {
+                customerTogglebutton.Checked = false;
+                customerTogglebuttonIndicatorLabel.Text = "Not Available";
+            }
         }
         //datagridview button click event
         private void customerDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -456,7 +476,7 @@ namespace stockManagement
             {
                 if (!string.IsNullOrEmpty(customerNameTextbox.Texts))
                 {
-                    string customerUpdateQuery = "UPDATE customerTable SET customer_name=@cusName,customer_phone=@cusPhone,customer_address=@cusAddress WHERE customer_id=@id";
+                    string customerUpdateQuery = "UPDATE customerTable SET customer_name=@cusName,customer_phone=@cusPhone,customer_address=@cusAddress ,customer_delete_id=@cusdelID WHERE customer_id=@id";
                     SqlConnection conn = new SqlConnection(connString);
                     conn.Open();
                     SqlCommand customerUpdate = new SqlCommand(customerUpdateQuery, conn);
@@ -464,6 +484,10 @@ namespace stockManagement
                     customerUpdate.Parameters.AddWithValue("@cusName", customerNameTextbox.Texts);
                     customerUpdate.Parameters.AddWithValue("@cusPhone", customerPhoneTextbox.Texts);
                     customerUpdate.Parameters.AddWithValue("@cusAddress", customerAddressTextbox.Texts);
+                    if (customerTogglebutton.Checked == true)
+                        customerUpdate.Parameters.AddWithValue("@cusdelID", 1);
+                    else
+                        customerUpdate.Parameters.AddWithValue("@cusdelID", 0);
                     customerUpdate.ExecuteNonQuery();
                     customerUpdate.Dispose();
                     conn.Close();
@@ -537,7 +561,6 @@ namespace stockManagement
             }
         }
 
-        // TODO : get combobox item with selecteditem property
         private void productAddButton_Click(object sender, EventArgs e)
         {
             try
@@ -555,6 +578,7 @@ namespace stockManagement
                 conn.Close();
                 productAdd.Dispose();
                 MessageBox.Show("Product Succesfully Added.", "Successfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                refreshProductDataGridView();
             }
             catch (Exception ex)
             {
@@ -582,11 +606,46 @@ namespace stockManagement
                 productUpdate.ExecuteNonQuery();
                 conn.Close();
                 productUpdate.Dispose();
+                MessageBox.Show("Product Successfully Updated.", "Updated", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                refreshProductDataGridView();
+                showProductControls(1);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+        private void productDeleteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string productDeleteQuery = "Update productTable SET product_delete_id=@delID WHERE product_id=@id";
+                SqlConnection conn = new SqlConnection(connString);
+                conn.Open();
+                SqlCommand productDelete = new SqlCommand(productDeleteQuery, conn);
+                productDelete.Parameters.AddWithValue("@delID", 0);
+                productDelete.Parameters.AddWithValue("@id", productID);
+                productDelete.ExecuteNonQuery();
+                conn.Close();
+                productDelete.Dispose();
+                MessageBox.Show("Product Successfully Deleted", "Deleted", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                refreshProductDataGridView();
+                showProductControls(1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        private void refreshProductDataGridView()
+        {
+            //for refreshing product gridview data
+            clearProductControls();
+            dtProducts.Clear();
+            loadProductData();
+            productDataGridView.Update();
+            productDataGridView.Refresh();
         }
         private void setProductControlValues(int index)
         {
@@ -616,28 +675,6 @@ namespace stockManagement
                 showProductControls(3);
             }
         }
-
-        private void productDeleteButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                string productDeleteQuery = "Update productTable SET product_delete_id=@delID WHERE product_id=@id";
-                SqlConnection conn = new SqlConnection(connString);
-                conn.Open();
-                SqlCommand productDelete = new SqlCommand(productDeleteQuery, conn);
-                productDelete.Parameters.AddWithValue("@delID", 0);
-                productDelete.Parameters.AddWithValue("@id", productID);
-                productDelete.ExecuteNonQuery();
-                conn.Close();
-                productDelete.Dispose();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
         private void customtogglebtn1_CheckedChanged(object sender, EventArgs e)
         {
             if (productDeleteTogglebutton.Checked)
@@ -645,10 +682,12 @@ namespace stockManagement
             else
                 productToggleIndicatorLabel.Text = "OFF";
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        private void customerTogglebutton_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (customerTogglebutton.Checked == true)
+                customerTogglebuttonIndicatorLabel.Text = "Available";
+            else
+                customerTogglebuttonIndicatorLabel.Text = "Not Available";
         }
     }
 }

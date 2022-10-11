@@ -82,15 +82,12 @@ namespace stockManagement
             this.productCategoryCombobox = new stockmanagement.customcombobox();
             this.productPanelTitleLabel = new System.Windows.Forms.Label();
             this.customerPanel = new System.Windows.Forms.Panel();
+            this.customerTogglebuttonIndicatorLabel = new System.Windows.Forms.Label();
+            this.customerAvailableLabel = new System.Windows.Forms.Label();
+            this.customerTogglebutton = new stockmanagement.customtogglebtn();
             this.filterCustomerAvailableLabel = new System.Windows.Forms.Label();
             this.customerAvailableCombobox = new stockmanagement.customcombobox();
             this.customerDataGridView = new System.Windows.Forms.DataGridView();
-            this.customeridDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customernameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customerphoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customeraddressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.customerDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.customerDataGridViewButton = new System.Windows.Forms.DataGridViewButtonColumn();
             this.customerTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.customerDataSetBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.customerDataSet = new stockManagement.customerDataSet();
@@ -132,9 +129,12 @@ namespace stockManagement
             this.dashTopLabel = new System.Windows.Forms.Label();
             this.customerTableTableAdapter = new stockManagement.customerDataSetTableAdapters.customerTableTableAdapter();
             this.productTableTableAdapter = new stockManagement.productDataSetTableAdapters.productTableTableAdapter();
-            this.customerTogglebutton = new stockmanagement.customtogglebtn();
-            this.customerAvailableLabel = new System.Windows.Forms.Label();
-            this.customerTogglebuttonIndicatorLabel = new System.Windows.Forms.Label();
+            this.customerDataGridViewButton = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.customeridDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customernameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customerphoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customeraddressDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.customerDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.titlePanel.SuspendLayout();
             this.navigationPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).BeginInit();
@@ -783,6 +783,43 @@ namespace stockManagement
             this.customerPanel.TabIndex = 3;
             this.customerPanel.Visible = false;
             // 
+            // customerTogglebuttonIndicatorLabel
+            // 
+            this.customerTogglebuttonIndicatorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerTogglebuttonIndicatorLabel.AutoSize = true;
+            this.customerTogglebuttonIndicatorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerTogglebuttonIndicatorLabel.Location = new System.Drawing.Point(720, 525);
+            this.customerTogglebuttonIndicatorLabel.Name = "customerTogglebuttonIndicatorLabel";
+            this.customerTogglebuttonIndicatorLabel.Size = new System.Drawing.Size(168, 29);
+            this.customerTogglebuttonIndicatorLabel.TabIndex = 18;
+            this.customerTogglebuttonIndicatorLabel.Text = "Not Available";
+            // 
+            // customerAvailableLabel
+            // 
+            this.customerAvailableLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerAvailableLabel.AutoSize = true;
+            this.customerAvailableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerAvailableLabel.Location = new System.Drawing.Point(276, 532);
+            this.customerAvailableLabel.Name = "customerAvailableLabel";
+            this.customerAvailableLabel.Size = new System.Drawing.Size(253, 29);
+            this.customerAvailableLabel.TabIndex = 17;
+            this.customerAvailableLabel.Text = "Customer Available :";
+            // 
+            // customerTogglebutton
+            // 
+            this.customerTogglebutton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerTogglebutton.Location = new System.Drawing.Point(567, 516);
+            this.customerTogglebutton.MinimumSize = new System.Drawing.Size(45, 22);
+            this.customerTogglebutton.Name = "customerTogglebutton";
+            this.customerTogglebutton.OffBackColor = System.Drawing.Color.Gray;
+            this.customerTogglebutton.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.customerTogglebutton.OnBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerTogglebutton.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.customerTogglebutton.Size = new System.Drawing.Size(150, 50);
+            this.customerTogglebutton.TabIndex = 16;
+            this.customerTogglebutton.UseVisualStyleBackColor = true;
+            this.customerTogglebutton.CheckedChanged += new System.EventHandler(this.customerTogglebutton_CheckedChanged);
+            // 
             // filterCustomerAvailableLabel
             // 
             this.filterCustomerAvailableLabel.AutoSize = true;
@@ -844,12 +881,12 @@ namespace stockManagement
             this.customerDataGridView.ColumnHeadersHeight = 29;
             this.customerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.customerDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.customerDataGridViewButton,
             this.customeridDataGridViewTextBoxColumn,
             this.customernameDataGridViewTextBoxColumn,
             this.customerphoneDataGridViewTextBoxColumn,
             this.customeraddressDataGridViewTextBoxColumn,
-            this.customerDataGridViewCheckBoxColumn,
-            this.customerDataGridViewButton});
+            this.customerDataGridViewCheckBoxColumn});
             this.customerDataGridView.DataSource = this.customerTableBindingSource;
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
@@ -860,7 +897,7 @@ namespace stockManagement
             dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.customerDataGridView.DefaultCellStyle = dataGridViewCellStyle7;
             this.customerDataGridView.EnableHeadersVisualStyles = false;
-            this.customerDataGridView.Location = new System.Drawing.Point(3, 669);
+            this.customerDataGridView.Location = new System.Drawing.Point(3, 221);
             this.customerDataGridView.MultiSelect = false;
             this.customerDataGridView.Name = "customerDataGridView";
             this.customerDataGridView.ReadOnly = true;
@@ -876,58 +913,9 @@ namespace stockManagement
             this.customerDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerDataGridView.RowTemplate.Height = 24;
             this.customerDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.customerDataGridView.Size = new System.Drawing.Size(1286, 69);
+            this.customerDataGridView.Size = new System.Drawing.Size(1286, 517);
             this.customerDataGridView.TabIndex = 10;
             this.customerDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerDataGridView_CellContentClick);
-            // 
-            // customeridDataGridViewTextBoxColumn
-            // 
-            this.customeridDataGridViewTextBoxColumn.DataPropertyName = "customer_id";
-            this.customeridDataGridViewTextBoxColumn.HeaderText = "customer_id";
-            this.customeridDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.customeridDataGridViewTextBoxColumn.Name = "customeridDataGridViewTextBoxColumn";
-            this.customeridDataGridViewTextBoxColumn.ReadOnly = true;
-            this.customeridDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // customernameDataGridViewTextBoxColumn
-            // 
-            this.customernameDataGridViewTextBoxColumn.DataPropertyName = "customer_name";
-            this.customernameDataGridViewTextBoxColumn.HeaderText = "customerName";
-            this.customernameDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.customernameDataGridViewTextBoxColumn.Name = "customernameDataGridViewTextBoxColumn";
-            this.customernameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // customerphoneDataGridViewTextBoxColumn
-            // 
-            this.customerphoneDataGridViewTextBoxColumn.DataPropertyName = "customer_phone";
-            this.customerphoneDataGridViewTextBoxColumn.HeaderText = "customerPhone";
-            this.customerphoneDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.customerphoneDataGridViewTextBoxColumn.Name = "customerphoneDataGridViewTextBoxColumn";
-            this.customerphoneDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // customeraddressDataGridViewTextBoxColumn
-            // 
-            this.customeraddressDataGridViewTextBoxColumn.DataPropertyName = "customer_address";
-            this.customeraddressDataGridViewTextBoxColumn.HeaderText = "customerAddress";
-            this.customeraddressDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.customeraddressDataGridViewTextBoxColumn.Name = "customeraddressDataGridViewTextBoxColumn";
-            this.customeraddressDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // customerDataGridViewCheckBoxColumn
-            // 
-            this.customerDataGridViewCheckBoxColumn.DataPropertyName = "customer_delete_id";
-            this.customerDataGridViewCheckBoxColumn.HeaderText = "customerDeleteID";
-            this.customerDataGridViewCheckBoxColumn.MinimumWidth = 6;
-            this.customerDataGridViewCheckBoxColumn.Name = "customerDataGridViewCheckBoxColumn";
-            this.customerDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
-            // customerDataGridViewButton
-            // 
-            this.customerDataGridViewButton.HeaderText = "Select";
-            this.customerDataGridViewButton.MinimumWidth = 6;
-            this.customerDataGridViewButton.Name = "customerDataGridViewButton";
-            this.customerDataGridViewButton.ReadOnly = true;
-            this.customerDataGridViewButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // customerTableBindingSource
             // 
@@ -1483,38 +1471,56 @@ namespace stockManagement
             // 
             this.productTableTableAdapter.ClearBeforeFill = true;
             // 
-            // customerTogglebutton
+            // customerDataGridViewButton
             // 
-            this.customerTogglebutton.Location = new System.Drawing.Point(567, 516);
-            this.customerTogglebutton.MinimumSize = new System.Drawing.Size(45, 22);
-            this.customerTogglebutton.Name = "customerTogglebutton";
-            this.customerTogglebutton.OffBackColor = System.Drawing.Color.Gray;
-            this.customerTogglebutton.OffToggleColor = System.Drawing.Color.Gainsboro;
-            this.customerTogglebutton.OnBackColor = System.Drawing.Color.MediumSlateBlue;
-            this.customerTogglebutton.OnToggleColor = System.Drawing.Color.WhiteSmoke;
-            this.customerTogglebutton.Size = new System.Drawing.Size(150, 50);
-            this.customerTogglebutton.TabIndex = 16;
-            this.customerTogglebutton.UseVisualStyleBackColor = true;
+            this.customerDataGridViewButton.HeaderText = "Select";
+            this.customerDataGridViewButton.MinimumWidth = 6;
+            this.customerDataGridViewButton.Name = "customerDataGridViewButton";
+            this.customerDataGridViewButton.ReadOnly = true;
+            this.customerDataGridViewButton.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.customerDataGridViewButton.Text = "Select";
+            this.customerDataGridViewButton.UseColumnTextForButtonValue = true;
             // 
-            // customerAvailableLabel
+            // customeridDataGridViewTextBoxColumn
             // 
-            this.customerAvailableLabel.AutoSize = true;
-            this.customerAvailableLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.customerAvailableLabel.Location = new System.Drawing.Point(276, 532);
-            this.customerAvailableLabel.Name = "customerAvailableLabel";
-            this.customerAvailableLabel.Size = new System.Drawing.Size(253, 29);
-            this.customerAvailableLabel.TabIndex = 17;
-            this.customerAvailableLabel.Text = "Customer Available :";
+            this.customeridDataGridViewTextBoxColumn.DataPropertyName = "customer_id";
+            this.customeridDataGridViewTextBoxColumn.HeaderText = "customer_id";
+            this.customeridDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.customeridDataGridViewTextBoxColumn.Name = "customeridDataGridViewTextBoxColumn";
+            this.customeridDataGridViewTextBoxColumn.ReadOnly = true;
+            this.customeridDataGridViewTextBoxColumn.Visible = false;
             // 
-            // customerTogglebuttonIndicatorLabel
+            // customernameDataGridViewTextBoxColumn
             // 
-            this.customerTogglebuttonIndicatorLabel.AutoSize = true;
-            this.customerTogglebuttonIndicatorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.customerTogglebuttonIndicatorLabel.Location = new System.Drawing.Point(735, 532);
-            this.customerTogglebuttonIndicatorLabel.Name = "customerTogglebuttonIndicatorLabel";
-            this.customerTogglebuttonIndicatorLabel.Size = new System.Drawing.Size(52, 29);
-            this.customerTogglebuttonIndicatorLabel.TabIndex = 18;
-            this.customerTogglebuttonIndicatorLabel.Text = "NO";
+            this.customernameDataGridViewTextBoxColumn.DataPropertyName = "customer_name";
+            this.customernameDataGridViewTextBoxColumn.HeaderText = "customerName";
+            this.customernameDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.customernameDataGridViewTextBoxColumn.Name = "customernameDataGridViewTextBoxColumn";
+            this.customernameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // customerphoneDataGridViewTextBoxColumn
+            // 
+            this.customerphoneDataGridViewTextBoxColumn.DataPropertyName = "customer_phone";
+            this.customerphoneDataGridViewTextBoxColumn.HeaderText = "customerPhone";
+            this.customerphoneDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.customerphoneDataGridViewTextBoxColumn.Name = "customerphoneDataGridViewTextBoxColumn";
+            this.customerphoneDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // customeraddressDataGridViewTextBoxColumn
+            // 
+            this.customeraddressDataGridViewTextBoxColumn.DataPropertyName = "customer_address";
+            this.customeraddressDataGridViewTextBoxColumn.HeaderText = "customerAddress";
+            this.customeraddressDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.customeraddressDataGridViewTextBoxColumn.Name = "customeraddressDataGridViewTextBoxColumn";
+            this.customeraddressDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // customerDataGridViewCheckBoxColumn
+            // 
+            this.customerDataGridViewCheckBoxColumn.DataPropertyName = "customer_delete_id";
+            this.customerDataGridViewCheckBoxColumn.HeaderText = "customerDeleteID";
+            this.customerDataGridViewCheckBoxColumn.MinimumWidth = 6;
+            this.customerDataGridViewCheckBoxColumn.Name = "customerDataGridViewCheckBoxColumn";
+            this.customerDataGridViewCheckBoxColumn.ReadOnly = true;
             // 
             // mainForm
             // 
@@ -1640,12 +1646,6 @@ namespace stockManagement
         private productDataSet productDataSet;
         private BindingSource productTableBindingSource;
         private productDataSetTableAdapters.productTableTableAdapter productTableTableAdapter;
-        private DataGridViewButtonColumn customerDataGridViewButton;
-        private DataGridViewTextBoxColumn customeridDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn customernameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn customerphoneDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn customeraddressDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn customerDataGridViewCheckBoxColumn;
         private Label productAvailableLabel;
         private Label productToggleIndicatorLabel;
         private DataGridViewButtonColumn Select;
@@ -1659,5 +1659,11 @@ namespace stockManagement
         private Label customerTogglebuttonIndicatorLabel;
         private Label customerAvailableLabel;
         private stockmanagement.customtogglebtn customerTogglebutton;
+        private DataGridViewButtonColumn customerDataGridViewButton;
+        private DataGridViewTextBoxColumn customeridDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn customernameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn customerphoneDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn customeraddressDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn customerDataGridViewCheckBoxColumn;
     }
 }
