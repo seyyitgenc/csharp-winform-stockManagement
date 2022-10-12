@@ -16,20 +16,30 @@ namespace stockManagement
 {
     public partial class mainForm : Form
     {
-        //Fields
+        //data fields
         string connString = "Data Source=SEYYIT\\SQLEXPRESS;Initial Catalog=stockMangementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         private DataTable dtCustomers = new DataTable();
         private DataTable dtProducts = new DataTable();
+        //filter fields
         private string customerNameFilterField = "customer_name";
         private string customerAvailableFilterField = "customer_delete_id";
+        private string productNameFilterField = "product_name";
+        private string productAvailableFilterField = "product_delete_id";
+        private string productCategoryFilterFiled = "category";
+        private string productTypeFilterField = "storage_type";
+        private string productSelectedFilterCategory = null;
+        //selected control field
         private int selectedProductControl;
         private int selectedCustomerControl;
+        //id field
         private int customerID;
         private int productID;
-        private int isAvailable = 2;// 0 = available , 1 = not available , 2 = list all
-
+        //availablity fields
+        private int isCustomerAvailable = 2;// 0 = available , 1 = not available , 2 = list all
+        private int isProductAvailable = 2;// 0 = available , 1 = not available , 2 = list all
         public mainForm()
         {
+            // TODO : DON'T FORGET THE PRODUCT PRICES , THIS THING IS MUST FOR THE PROJECT 
             InitializeComponent();
             //this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
@@ -189,6 +199,7 @@ namespace stockManagement
             while (dr.Read())
             {
                 productCategoryCombobox.Items.Add(dr["category_name"].ToString());
+                productCategoryFilterCombobox.Items.Add(dr["category_name"].ToString());
             }
             dr.Close();
             conn.Close();
@@ -236,53 +247,44 @@ namespace stockManagement
                 clearProductControls();
                 productPanelTitleLabel.Text = "Product Add";
                 foreach (Control control in productPanel.Controls)
+                {
                     control.Visible = false;
-                foreach (Control txtbox in productPanel.Controls.OfType<customtextbox>())
-                    txtbox.Visible = true;
-                foreach (Control label in productPanel.Controls.OfType<Label>())
-                    label.Visible = true;
-                foreach (Control combobox in productPanel.Controls.OfType<customcombobox>())
-                    combobox.Visible = true;
-                productAddButton.Visible = true;
-                productAvailableLabel.Visible = false;
-                productToggleIndicatorLabel.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
             }
             else if (choice == 1)//product panel with datagridview
             {
-                foreach (Control x in productPanel.Controls)
-                    x.Visible = false;
+                foreach (Control control in productPanel.Controls)
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "1")
+                        control.Visible = true;
+                }
                 productPanelTitleLabel.Text = "Product Panel";
                 productPanelTitleLabel.Visible = true;
-                productDataGridView.Visible = true;
             }
             else if (choice == 2)//product uptdate panel without datagridview
             {
-                productPanelTitleLabel.Text = "Product Update";
                 foreach (Control control in productPanel.Controls)
+                {
                     control.Visible = false;
-                foreach (Control txtbox in productPanel.Controls.OfType<customtextbox>())
-                    txtbox.Visible = true;
-                foreach (Control label in productPanel.Controls.OfType<Label>())
-                    label.Visible = true;
-                foreach (Control combobox in productPanel.Controls.OfType<customcombobox>())
-                    combobox.Visible = true;
-                productDeleteTogglebutton.Visible = true;
-                productUpdateButton.Visible = true;
+                    if (control.Tag != null && control.Tag.ToString() == "2" || control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
+                productAddButton.Visible = false;
+                productPanelTitleLabel.Text = "Product Update";
             }
             else if (choice == 3)//product delete button without datagridview
             {
-                productPanelTitleLabel.Text = "Product Delete";
                 foreach (Control control in productPanel.Controls)
+                {
                     control.Visible = false;
-                foreach (Control txtbox in productPanel.Controls.OfType<customtextbox>())
-                    txtbox.Visible = true;
-                foreach (Control label in productPanel.Controls.OfType<Label>())
-                    label.Visible = true;
-                foreach (Control combobox in productPanel.Controls.OfType<customcombobox>())
-                    combobox.Visible = true;
-                productDeleteButton.Visible = true;
-                productAvailableLabel.Visible = false;
-                productToggleIndicatorLabel.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "3" || control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
+                productAddButton.Visible = false;
+                productPanelTitleLabel.Text = "Product Delete";
             }
         }
         private void productAddPanelButton_Click(object sender, EventArgs e)
@@ -322,61 +324,44 @@ namespace stockManagement
                 clearCustomerControls();
                 customerPanelTitle.Text = "Customer Add";
                 foreach (Control control in customerPanel.Controls)
-                    control.Visible = true;
-                foreach (Control btn in customerPanel.Controls.OfType<custombtn>())
-                    btn.Visible = false;
-                customerAddButton.Visible = true;
-                customerFilterTextBox.Visible = false;
-                filterNameLabel.Visible = false;
-                filterCustomerAvailableLabel.Visible = false;
-                customerAvailableCombobox.Visible = false;
-                customerTogglebuttonIndicatorLabel.Visible = false;
-                customerTogglebutton.Visible = false;
-                customerDataGridView.Visible = false;
-                customerAvailableLabel.Visible = false;
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
             }
             else if (choice == 1)// customer update panel with datagridview
             {
                 customerPanelTitle.Text = "Customer Panel";
                 foreach (Control control in customerPanel.Controls)
+                {
                     control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "1")
+                        control.Visible = true;
+                }
                 customerPanelTitle.Visible = true;
-                customerFilterTextBox.Visible = true;
-                filterNameLabel.Visible = true;
-                filterCustomerAvailableLabel.Visible = true;
-                customerAvailableCombobox.Visible = true;
-                customerDataGridView.Visible = true;
             }
             else if (choice == 2)//customer update panel
             {
                 customerPanelTitle.Text = "Customer Update";
                 foreach (Control control in customerPanel.Controls)
-                    control.Visible = true;
-                foreach (Control btn in customerPanel.Controls.OfType<custombtn>())
-                    btn.Visible = false;
-                customerUpdateButton.Visible = true;
-                customerFilterTextBox.Visible = false;
-                filterNameLabel.Visible = false;
-                filterCustomerAvailableLabel.Visible = false;
-                customerAvailableCombobox.Visible = false;
-                customerDataGridView.Visible = false;
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "2" || control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
+                customerAddButton.Visible = false;
             }
             else if (choice == 3)//customer delete panel
             {
                 customerPanelTitle.Text = "Customer Delete";
                 foreach (Control control in customerPanel.Controls)
+                {
                     control.Visible = false;
-                foreach (Control label in customerPanel.Controls.OfType<Label>())
-                    label.Visible = true;
-                foreach (Control txtbox in customerPanel.Controls.OfType<customtextbox>())
-                    txtbox.Visible = true;
-                customerDeleteButton.Visible = true;
-                customerFilterTextBox.Visible = false;
-                filterNameLabel.Visible = false;
-                filterCustomerAvailableLabel.Visible = false;
-                customerAvailableCombobox.Visible = false;
-                customerTogglebuttonIndicatorLabel.Visible = false;
-                customerAvailableLabel.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "3" || control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
+                customerAddButton.Visible = false;
             }
         }
         private void customerAddPanelButton_Click(object sender, EventArgs e)
@@ -529,15 +514,15 @@ namespace stockManagement
         //customer filter
         private void customerFilterTextBox__TextChanged(object sender, EventArgs e)
         {
-            if (isAvailable == 0)
+            if (isCustomerAvailable == 0)
             {
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isCustomerAvailable);
             }
-            else if (isAvailable == 1)
+            else if (isCustomerAvailable == 1)
             {
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isCustomerAvailable);
             }
-            else if (isAvailable == 2)
+            else if (isCustomerAvailable == 2)
             {
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
             }
@@ -546,21 +531,60 @@ namespace stockManagement
         {
             if (customerAvailableCombobox.SelectedIndex == 0)
             {
-                isAvailable = 1;
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
+                isCustomerAvailable = 1;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isCustomerAvailable);
             }
             else if (customerAvailableCombobox.SelectedIndex == 1)
             {
-                isAvailable = 0;
-                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isAvailable);
+                isCustomerAvailable = 0;
+                dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}]={3}", customerNameFilterField, customerFilterTextBox.Texts, customerAvailableFilterField, isCustomerAvailable);
             }
             else if (customerAvailableCombobox.SelectedIndex == 2)
             {
-                isAvailable = 2;
+                isCustomerAvailable = 2;
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
             }
         }
+        private void filterProducts()
+        {
 
+            if (isProductAvailable == 0 && productSelectedFilterCategory != null)
+                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'  AND [{2}] = {3} AND [{4}] = '{5}'", productNameFilterField, productNameFilterTextbox.Texts, productAvailableFilterField, isProductAvailable, productCategoryFilterFiled, productSelectedFilterCategory);
+            else if (isProductAvailable == 1 && productSelectedFilterCategory != null)
+                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'  AND [{2}] = {3} AND [{4}] = '{5}'", productNameFilterField, productNameFilterTextbox.Texts, productAvailableFilterField, isProductAvailable, productCategoryFilterFiled, productSelectedFilterCategory);
+            else if (isProductAvailable == 2 && productSelectedFilterCategory != null)
+                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}] = '{3}'", productNameFilterField, productNameFilterTextbox.Texts, productCategoryFilterFiled, productSelectedFilterCategory);
+        }
+        //product available filter
+        private void productDeletedFilterCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (productDeletedFilterCombobox.SelectedIndex == 0)
+            {
+                isProductAvailable = 1;
+                dtProducts.DefaultView.RowFilter = String.Format("[{0}] = {1}", productAvailableFilterField, isProductAvailable);
+            }
+            else if (productDeletedFilterCombobox.SelectedIndex == 1)
+            {
+                isProductAvailable = 0;
+                dtProducts.DefaultView.RowFilter = String.Format("[{0}] = {1}", productAvailableFilterField, isProductAvailable);
+            }
+            else
+            {
+                isProductAvailable = 2;
+                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", productNameFilterField, productNameFilterTextbox.Texts);
+            }
+        }
+        //product name filter
+        private void productNameFilterTextbox__TextChanged(object sender, EventArgs e)
+        {
+            filterProducts();
+        }
+        //product category filter
+        private void productCategoryFilterCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            productSelectedFilterCategory = productCategoryFilterCombobox.SelectedItem.ToString();
+            filterProducts();
+        }
         private void productAddButton_Click(object sender, EventArgs e)
         {
             try
