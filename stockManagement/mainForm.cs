@@ -23,10 +23,7 @@ namespace stockManagement
         //filter fields
         private string customerNameFilterField = "customer_name";
         private string customerAvailableFilterField = "customer_delete_id";
-        private string productNameFilterField = "product_name";
-        private string productAvailableFilterField = "product_delete_id";
-        private string productCategoryFilterFiled = "category";
-        private string productTypeFilterField = "storage_type";
+        private string productFilterString = "";
         private string productSelectedFilterCategory = null;
         //selected control field
         private int selectedProductControl;
@@ -41,7 +38,6 @@ namespace stockManagement
         {
             // TODO : DON'T FORGET THE PRODUCT PRICES , THIS THING IS MUST FOR THE PROJECT 
             InitializeComponent();
-            //this.SetStyle(ControlStyles.ResizeRedraw, true);
         }
 
         private void mainForm_Load(object sender, EventArgs e)
@@ -50,78 +46,6 @@ namespace stockManagement
             loadCustomerData();
             loadCategoryData();
         }
-        /*
-        private const int cGrip = 16;
-        private const int cCaption = 32;
-
-       
-        //Form Resizing
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == 0x84)
-            {
-                Point pos = new Point(m.LParam.ToInt32());
-                pos = this.PointToClient(pos);
-                if (pos.Y < cCaption)
-                {
-                    m.Result = (IntPtr)2;
-                    return;
-                }
-                if (pos.X >= this.ClientSize.Width - cGrip && pos.Y >= this.ClientSize.Height - cGrip)
-                {
-                    m.Result = (IntPtr)17;
-                    return;
-                }
-            }
-            base.WndProc(ref m);
-        }
-        */
-
-        //closing form
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        //minimizing form
-        private void minimizeButton_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
-        }
-
-
-        private void titlePanel_MouseUp(object sender, MouseEventArgs e)
-        {
-            mouseDown = false;
-        }
-
-        private void titlePanel_MouseDown(object sender, MouseEventArgs e)
-        {
-            mouseDown = true;
-            lastLocation = e.Location;
-        }
-        private void titlePanel_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (mouseDown)
-            {
-                this.WindowState = FormWindowState.Normal;
-                this.Location = new Point(
-                    (this.Location.X - lastLocation.X) + e.X, (this.Location.Y - lastLocation.Y) + e.Y);
-            }
-        }
-
-        private bool mouseDown;
-        private Point lastLocation;
-
-        //resizing Form with double click on title bar
-        private void titlePanel_DoubleClick(object sender, EventArgs e)
-        {
-            if (this.WindowState == FormWindowState.Maximized)
-                this.WindowState = FormWindowState.Normal;
-            else
-                this.WindowState = FormWindowState.Maximized;
-        }
-
         //hides all panels
         private void hidePanel()
         {
@@ -545,46 +469,6 @@ namespace stockManagement
                 dtCustomers.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", customerNameFilterField, customerFilterTextBox.Texts);
             }
         }
-        private void filterProducts()
-        {
-
-            if (isProductAvailable == 0 && productSelectedFilterCategory != null)
-                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'  AND [{2}] = {3} AND [{4}] = '{5}'", productNameFilterField, productNameFilterTextbox.Texts, productAvailableFilterField, isProductAvailable, productCategoryFilterFiled, productSelectedFilterCategory);
-            else if (isProductAvailable == 1 && productSelectedFilterCategory != null)
-                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'  AND [{2}] = {3} AND [{4}] = '{5}'", productNameFilterField, productNameFilterTextbox.Texts, productAvailableFilterField, isProductAvailable, productCategoryFilterFiled, productSelectedFilterCategory);
-            else if (isProductAvailable == 2 && productSelectedFilterCategory != null)
-                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%' AND [{2}] = '{3}'", productNameFilterField, productNameFilterTextbox.Texts, productCategoryFilterFiled, productSelectedFilterCategory);
-        }
-        //product available filter
-        private void productDeletedFilterCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (productDeletedFilterCombobox.SelectedIndex == 0)
-            {
-                isProductAvailable = 1;
-                dtProducts.DefaultView.RowFilter = String.Format("[{0}] = {1}", productAvailableFilterField, isProductAvailable);
-            }
-            else if (productDeletedFilterCombobox.SelectedIndex == 1)
-            {
-                isProductAvailable = 0;
-                dtProducts.DefaultView.RowFilter = String.Format("[{0}] = {1}", productAvailableFilterField, isProductAvailable);
-            }
-            else
-            {
-                isProductAvailable = 2;
-                dtProducts.DefaultView.RowFilter = String.Format("[{0}] LIKE '%{1}%'", productNameFilterField, productNameFilterTextbox.Texts);
-            }
-        }
-        //product name filter
-        private void productNameFilterTextbox__TextChanged(object sender, EventArgs e)
-        {
-            filterProducts();
-        }
-        //product category filter
-        private void productCategoryFilterCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
-        {
-            productSelectedFilterCategory = productCategoryFilterCombobox.SelectedItem.ToString();
-            filterProducts();
-        }
         private void productAddButton_Click(object sender, EventArgs e)
         {
             try
@@ -712,6 +596,81 @@ namespace stockManagement
                 customerTogglebuttonIndicatorLabel.Text = "Available";
             else
                 customerTogglebuttonIndicatorLabel.Text = "Not Available";
+        }
+        private void productFilterButton_Click(object sender, EventArgs e)
+        {
+            //if (!String.IsNullOrEmpty(productNameFilterTextbox.Texts))
+            //    productFilterString += String.Format("[{0}] LIKE '%{1}%'", productNameFilterField, productNameFilterTextbox.Texts);
+            //if (productCategoryFilterCombobox.SelectedIndex != -1)
+            //{
+            //    productSelectedFilterCategory = productCategoryFilterCombobox.SelectedItem.ToString();
+            //    if (productNameFilterTextbox.Texts.Length > 0)
+            //        productFilterString += String.Format("AND [{0}] = '{1}'", productCategoryFilterFiled, productSelectedFilterCategory);
+            //    else if (productDeletedFilterCombobox.SelectedIndex != -1 && isProductAvailable != 2)
+            //        productFilterString += String.Format("[{0}] = '{1}' AND", productCategoryFilterFiled, productSelectedFilterCategory);
+            //    else
+            //        productFilterString += String.Format("[{0}] = '{1}'", productCategoryFilterFiled, productSelectedFilterCategory);
+            //}
+            //if (productDeletedFilterCombobox.SelectedIndex != -1 && isProductAvailable != 2)
+            //    if (productNameFilterTextbox.Texts.Length > 0)
+            //        productFilterString += String.Format("AND [{0}] = {1}", productAvailableFilterField, isProductAvailable);
+            //    else
+            //        productFilterString += String.Format("[{0}] = {1}", productAvailableFilterField, isProductAvailable);
+            //dtProducts.DefaultView.RowFilter = productFilterString;
+            //productFilterString = "";
+        }
+        private string productNameFilterField = "product_name";
+        private string productAvailableFilterField = "product_delete_id";
+        private string productCategoryFilterFiled = "category";
+        private void filterProducts(string name)
+        {
+            if (!String.IsNullOrEmpty(name))
+                productFilterString += String.Format("[{0}] LIKE '%{1}%'", productNameFilterField, name);
+            if (productCategoryFilterCombobox.SelectedIndex != -1)
+            {
+                productSelectedFilterCategory = productCategoryFilterCombobox.SelectedItem.ToString();
+                if (name.Length > 0)
+                    productFilterString += String.Format("AND [{0}] = '{1}'", productCategoryFilterFiled, productSelectedFilterCategory);
+                else if (productDeletedFilterCombobox.SelectedIndex != -1 && isProductAvailable != 2)
+                    productFilterString += String.Format("[{0}] = '{1}' AND", productCategoryFilterFiled, productSelectedFilterCategory);
+                else
+                    productFilterString += String.Format("[{0}] = '{1}'", productCategoryFilterFiled, productSelectedFilterCategory);
+            }
+            if (productDeletedFilterCombobox.SelectedIndex != -1 && isProductAvailable != 2)
+                if (name.Length > 0)
+                    productFilterString += String.Format("AND [{0}] = {1}", productAvailableFilterField, isProductAvailable);
+                else
+                    productFilterString += String.Format("[{0}] = {1}", productAvailableFilterField, isProductAvailable);
+            dtProducts.DefaultView.RowFilter = productFilterString;
+            productFilterString = "";
+        }
+        private void productDeletedFilterCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (productDeletedFilterCombobox.SelectedIndex == 0)
+            {
+                isProductAvailable = 1;
+                filterProducts(productNameFilterTextbox.Texts);
+            }
+            else if (productDeletedFilterCombobox.SelectedIndex == 1)
+            {
+                isProductAvailable = 0;
+                filterProducts(productNameFilterTextbox.Texts);
+            }
+            else if (productDeletedFilterCombobox.SelectedIndex == 2)
+            {
+                isProductAvailable = 2;
+                filterProducts(productNameFilterTextbox.Texts);
+            }
+        }
+
+        private void productNameFilterTextbox__TextChanged(object sender, EventArgs e)
+        {
+            filterProducts(productNameFilterTextbox.Texts);
+        }
+
+        private void productCategoryFilterCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            filterProducts(productNameFilterTextbox.Texts);
         }
     }
 }
