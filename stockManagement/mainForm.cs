@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
@@ -10,7 +11,6 @@ using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace stockManagement
 {
@@ -21,14 +21,13 @@ namespace stockManagement
         private DataTable dtCustomers = new DataTable();
         private DataTable dtProducts = new DataTable();
         //filter fields
-        private string customerNameFilterField = "customer_name";
-        private string customerAvailableFilterField = "customer_delete_id";
         private string productFilterString = "";
         private string customerFilterString = "";
         private string productSelectedFilterCategory = null;
         //selected control field
         private int selectedProductControl;
         private int selectedCustomerControl;
+        private int selectedMealControl;
         //id field
         private int customerID;
         private int productID;
@@ -38,11 +37,15 @@ namespace stockManagement
         public mainForm()
         {
             // TODO : DON'T FORGET THE PRODUCT PRICES , THIS THING IS MUST FOR THE PROJECT 
+            // TODO : DON'T FORGET TO ADD PRODUCT ADMIN CONTROLS
             InitializeComponent();//initializing all components
         }
+
         //Main from Load event
         private void mainForm_Load(object sender, EventArgs e)
         {
+            // TODO: This line of code loads data into the 'mealTableDBDataSet.mealTable' table. You can move, or remove it, as needed.
+            this.mealTableTableAdapter.Fill(this.mealTableDBDataSet.mealTable);
             getProductData();
             getCustomerData();
             getCategoryData();
@@ -54,6 +57,7 @@ namespace stockManagement
             productPanel.Visible = false;
             incomeOutcomePanel.Visible = false;
             recipePanel.Visible = false;
+            mealPanel.Visible = false;
         }
         //shows specific panel
         private void showPanel(Panel panel)
@@ -61,7 +65,6 @@ namespace stockManagement
             hidePanel();
             panel.Visible = true;
         }
-
         private void homeLinkLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             hidePanel();
@@ -90,12 +93,16 @@ namespace stockManagement
         private void customerAddTSI_Click(object sender, EventArgs e)
         {
             showPanel(customerPanel);
+            showCustomerControls(1);
+            selectedCustomerControl = 3;
+            customerPanelTitle.Text = "Customer Meal Add Panel";
         }
 
         private void hideAdminControls()
         {
             productControlsPanel.Visible = false;
             customerControlsPanel.Visible = false;
+            mealControlsPanel.Visible = false;
         }
         private void showAdminControls(Panel panel)
         {
@@ -247,20 +254,20 @@ namespace stockManagement
             if (choice == 0)//customer add panel
             {
                 clearCustomerControls();
-                customerPanelTitle.Text = "Customer Add";
                 foreach (Control control in customerPanel.Controls)
                 {
                     control.Visible = false;
+                    control.Enabled = true;
                     if (control.Tag != null && control.Tag.ToString() == "0")
                         control.Visible = true;
                 }
             }
             else if (choice == 1)// customer update panel with datagridview
             {
-                customerPanelTitle.Text = "Customer Panel";
                 foreach (Control control in customerPanel.Controls)
                 {
                     control.Visible = false;
+                    control.Enabled = true;
                     if (control.Tag != null && control.Tag.ToString() == "1")
                         control.Visible = true;
                 }
@@ -268,10 +275,10 @@ namespace stockManagement
             }
             else if (choice == 2)//customer update panel
             {
-                customerPanelTitle.Text = "Customer Update";
                 foreach (Control control in customerPanel.Controls)
                 {
                     control.Visible = false;
+                    control.Enabled = true;
                     if (control.Tag != null && control.Tag.ToString() == "2" || control.Tag.ToString() == "0")
                         control.Visible = true;
                 }
@@ -279,14 +286,15 @@ namespace stockManagement
             }
             else if (choice == 3)//customer delete panel
             {
-                customerPanelTitle.Text = "Customer Delete";
                 foreach (Control control in customerPanel.Controls)
                 {
                     control.Visible = false;
+                    control.Enabled = true;
                     if (control.Tag != null && control.Tag.ToString() == "3" || control.Tag.ToString() == "0")
                         control.Visible = true;
                 }
-                customerAddButton.Visible = false;
+                foreach (customtextbox txtbox in customerPanel.Controls.OfType<customtextbox>())
+                    txtbox.Enabled = false;
             }
         }
         //customer add panel
@@ -295,6 +303,7 @@ namespace stockManagement
             showCustomerControls(0);
             showPanel(customerPanel);
             selectedCustomerControl = 0;
+            customerPanelTitle.Text = "Customer Add Panel";
         }
         //customer update panel
         private void customerUpdatePanelButton_Click(object sender, EventArgs e)
@@ -302,6 +311,7 @@ namespace stockManagement
             showCustomerControls(1);
             showPanel(customerPanel);
             selectedCustomerControl = 1;
+            customerPanelTitle.Text = "Customer Update Panel";
         }
         //customer delete panel 
         private void customerDeletePanelButton_Click(object sender, EventArgs e)
@@ -309,6 +319,7 @@ namespace stockManagement
             showCustomerControls(1);
             showPanel(customerPanel);
             selectedCustomerControl = 2;
+            customerPanelTitle.Text = "Customer Delete Panel";
         }
         private void refreshCustomerDataGridView()
         {
@@ -325,7 +336,9 @@ namespace stockManagement
             DataGridViewRow selectedRow = customerDataGridView.Rows[index];
             customerID = (int)selectedRow.Cells[1].Value;
             customerNameTextbox.Texts = selectedRow.Cells[2].Value.ToString();
+            mealCustomerName.Texts = selectedRow.Cells[2].Value.ToString();
             customerPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
+            mealCustomerPhone.Texts = selectedRow.Cells[3].Value.ToString();
             customerAddressTextbox.Texts = selectedRow.Cells[4].Value.ToString();
             if (selectedRow.Cells[5].Value.ToString() == "True")
             {
@@ -341,15 +354,25 @@ namespace stockManagement
         //customer datagridview cellcontent click event
         private void customerDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            //customer update
             if (e.ColumnIndex == 0 && selectedCustomerControl == 1)
             {
                 setCustomerControlValues((int)e.RowIndex);
                 showCustomerControls(2);
+                showPanel(customerPanel);
             }
+            //customer delete panel
             else if (e.ColumnIndex == 0 && selectedCustomerControl == 2)
             {
                 setCustomerControlValues((int)e.RowIndex);
                 showCustomerControls(3);
+                showPanel(customerPanel);
+            }
+            else if (e.ColumnIndex == 0 && selectedCustomerControl == 3)
+            {
+                setCustomerControlValues((int)e.RowIndex);
+                showMealControls(0);
+                showPanel(mealPanel);
             }
         }
         //customer add button
@@ -506,7 +529,7 @@ namespace stockManagement
         {
             try
             {
-                string productUpdateQuery = "Update productTable SET product_name=@productName,category=@category,storage_type=@type,product_quantity=@quantity,product_delete_id=@delID WHERE product_id=@id";
+                string productUpdateQuery = "UPDATE productTable SET product_name=@productName,category=@category,storage_type=@type,product_quantity=@quantity,product_delete_id=@delID WHERE product_id=@id";
                 SqlConnection conn = new SqlConnection(connString);
                 SqlCommand productUpdate = new SqlCommand(productUpdateQuery, conn);
                 conn.Open();
@@ -586,12 +609,14 @@ namespace stockManagement
             {
                 setProductControlValues((int)e.RowIndex);
                 showProductControls(2);
+                showPanel(productPanel);
             }
             //delete panel side
             else if (e.ColumnIndex == 0 && selectedProductControl == 2)
             {
                 setProductControlValues((int)e.RowIndex);
                 showProductControls(3);
+                showPanel(productPanel);
             }
         }
         //product toggle button event
@@ -662,6 +687,107 @@ namespace stockManagement
         {
             filterProducts(productNameFilterTextbox.Texts, dtProducts.Columns["product_name"].ToString(), dtProducts.Columns["category"].ToString(), dtProducts.Columns["product_delete_id"].ToString());
         }
+        private void showMealControls(int choice)
+        {
+            if (choice == 0)
+            {
+                mealPanelTitleLabel.Text = "Meal Add Panel";
+                foreach (Control control in mealPanel.Controls)//meal add panel
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
+            }
+            else if (choice == 1)//meal update panel
+            {
+                foreach (Control control in mealPanel.Controls)
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "1" || control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
+                customerMealAddButton.Visible = false;
+            }
+            else if (choice == 2)//meal update panel
+            {
+                foreach (Control control in mealPanel.Controls)
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "2" || control.Tag.ToString() == "0")
+                        control.Visible = true;
+                }
+                customerMealAddButton.Visible = false;
+            }
+        }
+        private void mealAdminControls_Click(object sender, EventArgs e)
+        {
+            showAdminControls(mealControlsPanel);
 
+        }
+        private void mealAddPanelControl_Click(object sender, EventArgs e)
+        {
+            selectedCustomerControl = 3;
+            showPanel(customerPanel);
+            showCustomerControls(1);
+            customerPanelTitle.Text = "Customer Meal Add Panel";
+        }
+
+        private void mealUpdatePanelButton_Click(object sender, EventArgs e)
+        {
+            showPanel(customerPanel);
+            showMealControls(0);
+            selectedCustomerControl = 4;
+            customerPanelTitle.Text = "Customer Meal Update Panel";
+        }
+        private void mealDeletePanelButton_Click(object sender, EventArgs e)
+        {
+            showPanel(customerPanel);
+            showMealControls(0);
+            selectedCustomerControl = 5;
+            customerPanelTitle.Text = "Customer Meal Delete Panel";
+        }
+        private void customerMealUpdateButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+        private void clearCustomerMealAddControls()
+        {
+            customerMealCountTextbox.Texts = "";
+            customerMealPriceTextbox.Texts = "";
+        }
+        private void customerMealAddButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string mealAddQuery = "INSERT INTO mealTable (date,count,price,customer_id,customer_name,meal_delete_id) VALUES(@date,@count,@price,@cusID,@cusName,@mealDelID)";
+                SqlConnection conn = new SqlConnection(connString);
+                conn.Open();
+                SqlCommand mealAdd = new SqlCommand(mealAddQuery, conn);
+                mealAdd.Parameters.AddWithValue("@date", customerMealDateTimePicker.Value);
+                mealAdd.Parameters.AddWithValue("@count", customerMealCountTextbox.Texts);
+                mealAdd.Parameters.AddWithValue("@price", customerMealPriceTextbox.Texts);
+                mealAdd.Parameters.AddWithValue("@cusID", customerID);
+                mealAdd.Parameters.AddWithValue("@cusName", customerNameTextbox.Texts);
+                mealAdd.Parameters.AddWithValue("@mealDelID", 1);
+                mealAdd.ExecuteNonQuery();
+                conn.Close();
+                mealAdd.Dispose();
+                DialogResult dialogResult = MessageBox.Show("Meal Succesfully Added. Would you like to add another meal to the currently selected customer?", "Succesfull", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                if (dialogResult == DialogResult.No)
+                {
+                    showCustomerControls(1);
+                    customerPanelTitle.Text = "Customer Meal Add Panel";
+                }
+                customerMealCountTextbox.Texts = "";
+                customerMealPriceTextbox.Texts = "";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
