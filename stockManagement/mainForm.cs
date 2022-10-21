@@ -31,6 +31,7 @@ namespace stockManagement
         //id field
         private int customerID;
         private int productID;
+        private int mealID;
         //availablity fields
         private int isCustomerAvailable = 2;// 0 = available , 1 = not available , 2 = list all
         private int isProductAvailable = 2;// 0 = available , 1 = not available , 2 = list all
@@ -295,6 +296,7 @@ namespace stockManagement
                 }
                 foreach (customtextbox txtbox in customerPanel.Controls.OfType<customtextbox>())
                     txtbox.Enabled = false;
+                customerAddButton.Visible = false;
             }
         }
         //customer add panel
@@ -336,9 +338,9 @@ namespace stockManagement
             DataGridViewRow selectedRow = customerDataGridView.Rows[index];
             customerID = (int)selectedRow.Cells[1].Value;
             customerNameTextbox.Texts = selectedRow.Cells[2].Value.ToString();
-            mealCustomerName.Texts = selectedRow.Cells[2].Value.ToString();
+            customerMealNameTextbox.Texts = selectedRow.Cells[2].Value.ToString();
             customerPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
-            mealCustomerPhone.Texts = selectedRow.Cells[3].Value.ToString();
+            customerMealPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
             customerAddressTextbox.Texts = selectedRow.Cells[4].Value.ToString();
             if (selectedRow.Cells[5].Value.ToString() == "True")
             {
@@ -354,26 +356,26 @@ namespace stockManagement
         //customer datagridview cellcontent click event
         private void customerDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            //customer update
-            if (e.ColumnIndex == 0 && selectedCustomerControl == 1)
-            {
-                setCustomerControlValues((int)e.RowIndex);
-                showCustomerControls(2);
-                showPanel(customerPanel);
-            }
-            //customer delete panel
-            else if (e.ColumnIndex == 0 && selectedCustomerControl == 2)
-            {
-                setCustomerControlValues((int)e.RowIndex);
-                showCustomerControls(3);
-                showPanel(customerPanel);
-            }
-            else if (e.ColumnIndex == 0 && selectedCustomerControl == 3)
-            {
-                setCustomerControlValues((int)e.RowIndex);
-                showMealControls(0);
-                showPanel(mealPanel);
-            }
+            var senderGrid = (DataGridView)sender;
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+                //customer update
+                if (e.ColumnIndex == 0 && selectedCustomerControl == 1)
+                {
+                    showCustomerControls(2);
+                    showPanel(customerPanel);
+                }
+                //customer delete panel
+                else if (e.ColumnIndex == 0 && selectedCustomerControl == 2)
+                {
+                    showCustomerControls(3);
+                    showPanel(customerPanel);
+                }
+                else if (e.ColumnIndex == 0 && selectedCustomerControl == 3)
+                {
+                    showMealControls(0);
+                    showPanel(mealPanel);
+                }
+            setCustomerControlValues((int)e.RowIndex);
         }
         //customer add button
         private void customerAddButton_Click(object sender, EventArgs e)
@@ -607,17 +609,16 @@ namespace stockManagement
             //update panel side
             if (e.ColumnIndex == 0 && selectedProductControl == 1)
             {
-                setProductControlValues((int)e.RowIndex);
                 showProductControls(2);
                 showPanel(productPanel);
             }
             //delete panel side
             else if (e.ColumnIndex == 0 && selectedProductControl == 2)
             {
-                setProductControlValues((int)e.RowIndex);
                 showProductControls(3);
                 showPanel(productPanel);
             }
+            setProductControlValues((int)e.RowIndex);
         }
         //product toggle button event
         private void productDeleteToggleButton_CheckedChanged(object sender, EventArgs e)
@@ -732,17 +733,17 @@ namespace stockManagement
             showCustomerControls(1);
             customerPanelTitle.Text = "Customer Meal Add Panel";
         }
-
+        // TODO : MUST GET CUSTOMER MEALS ACCORDING TO SELECTED CUSTOMER
         private void mealUpdatePanelButton_Click(object sender, EventArgs e)
         {
-            showPanel(customerPanel);
+            showPanel(mealPanel);
             showMealControls(0);
             selectedCustomerControl = 4;
             customerPanelTitle.Text = "Customer Meal Update Panel";
         }
         private void mealDeletePanelButton_Click(object sender, EventArgs e)
         {
-            showPanel(customerPanel);
+            showPanel(mealPanel);
             showMealControls(0);
             selectedCustomerControl = 5;
             customerPanelTitle.Text = "Customer Meal Delete Panel";
@@ -751,43 +752,82 @@ namespace stockManagement
         {
 
         }
-
-
-        private void clearCustomerMealAddControls()
-        {
-            customerMealCountTextbox.Texts = "";
-            customerMealPriceTextbox.Texts = "";
-        }
         private void customerMealAddButton_Click(object sender, EventArgs e)
         {
             try
             {
-                string mealAddQuery = "INSERT INTO mealTable (date,count,price,customer_id,customer_name,meal_delete_id) VALUES(@date,@count,@price,@cusID,@cusName,@mealDelID)";
-                SqlConnection conn = new SqlConnection(connString);
-                conn.Open();
-                SqlCommand mealAdd = new SqlCommand(mealAddQuery, conn);
-                mealAdd.Parameters.AddWithValue("@date", customerMealDateTimePicker.Value);
-                mealAdd.Parameters.AddWithValue("@count", customerMealCountTextbox.Texts);
-                mealAdd.Parameters.AddWithValue("@price", customerMealPriceTextbox.Texts);
-                mealAdd.Parameters.AddWithValue("@cusID", customerID);
-                mealAdd.Parameters.AddWithValue("@cusName", customerNameTextbox.Texts);
-                mealAdd.Parameters.AddWithValue("@mealDelID", 1);
-                mealAdd.ExecuteNonQuery();
-                conn.Close();
-                mealAdd.Dispose();
-                DialogResult dialogResult = MessageBox.Show("Meal Succesfully Added. Would you like to add another meal to the currently selected customer?", "Succesfull", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
-                if (dialogResult == DialogResult.No)
+                if (!string.IsNullOrEmpty(customerMealNameTextbox.Texts) && !string.IsNullOrEmpty(customerMealPhoneTextbox.Texts))
                 {
-                    showCustomerControls(1);
-                    customerPanelTitle.Text = "Customer Meal Add Panel";
+                    string mealAddQuery = "INSERT INTO mealTable (date,count,price,customer_id,customer_name,meal_delete_id) VALUES(@date,@count,@price,@cusID,@cusName,@mealDelID)";
+                    SqlConnection conn = new SqlConnection(connString);
+                    conn.Open();
+                    SqlCommand mealAdd = new SqlCommand(mealAddQuery, conn);
+                    mealAdd.Parameters.AddWithValue("@date", customerMealDateTimePicker.Value);
+                    mealAdd.Parameters.AddWithValue("@count", customerMealCountTextbox.Texts);
+                    mealAdd.Parameters.AddWithValue("@price", customerMealPriceTextbox.Texts);
+                    mealAdd.Parameters.AddWithValue("@cusID", customerID);
+                    mealAdd.Parameters.AddWithValue("@cusName", customerNameTextbox.Texts);
+                    mealAdd.Parameters.AddWithValue("@mealDelID", 1);
+                    mealAdd.ExecuteNonQuery();
+                    conn.Close();
+                    mealAdd.Dispose();
+                    DialogResult dialogResult = MessageBox.Show("Meal Succesfully Added. Would you like to add another meal to the currently selected customer?", "Succesfull", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    if (dialogResult == DialogResult.No)
+                    {
+                        showCustomerControls(1);
+                        customerPanelTitle.Text = "Customer Meal Add Panel";
+                    }
+                    customerMealCountTextbox.Texts = "";
+                    customerMealPriceTextbox.Texts = "";
                 }
-                customerMealCountTextbox.Texts = "";
-                customerMealPriceTextbox.Texts = "";
+                else
+                    MessageBox.Show("Please Select Customer! ", "WARNING!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void mealFilterFirstDatetimepicker_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void setMealControlValues(int index)
+        {
+            try
+            {
+                DataGridViewRow selectedrow = customerMealDataGridView.Rows[index];
+                SqlConnection conn = new SqlConnection(connString);
+                string selectedCustomerQuery = "SELECT customer_phone FROM customerTable WHERE customer_id=@id";
+                SqlCommand selectedCustomer = new SqlCommand(selectedCustomerQuery, conn);
+                conn.Open();
+                selectedCustomer.Parameters.AddWithValue("@id", Convert.ToInt32(selectedrow.Cells[5].Value));
+                customerMealPhoneTextbox.Texts = selectedCustomer.ExecuteScalar().ToString();
+                conn.Close();
+                customerMealNameTextbox.Texts = selectedrow.Cells[6].Value.ToString();
+                customerMealCountTextbox.Texts = selectedrow.Cells[3].Value.ToString();
+                customerMealPriceTextbox.Texts = selectedrow.Cells[4].Value.ToString();
+                customerMealDateTimePicker.Value = Convert.ToDateTime(selectedrow.Cells[2].Value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void customerMealDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var senderGrid = (DataGridView)sender;
+            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
+                if (selectedMealControl == 1)
+                {
+
+                }
+                else if (selectedMealControl == 2)
+                {
+
+                }
+            setMealControlValues((int)e.RowIndex);
         }
     }
 }
