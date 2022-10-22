@@ -1,4 +1,5 @@
 ﻿using stockmanagement;
+using stockManagement.mealTableDBDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,6 +7,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
@@ -20,9 +22,11 @@ namespace stockManagement
         string connString = "Data Source=SEYYIT\\SQLEXPRESS;Initial Catalog=stockMangementDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         private DataTable dtCustomers = new DataTable();
         private DataTable dtProducts = new DataTable();
+        private DataTable dtMeals = new DataTable();
         //filter fields
         private string productFilterString = "";
         private string customerFilterString = "";
+        private string mealFilterString = "";
         private string productSelectedFilterCategory = null;
         //selected control field
         private int selectedProductControl;
@@ -35,6 +39,7 @@ namespace stockManagement
         //availablity fields
         private int isCustomerAvailable = 2;// 0 = available , 1 = not available , 2 = list all
         private int isProductAvailable = 2;// 0 = available , 1 = not available , 2 = list all
+        private int isMealAvailable = 2;// 0 = available , 1 = not available , 2 = list all
         public mainForm()
         {
             // TODO : DON'T FORGET THE PRODUCT PRICES , THIS THING IS MUST FOR THE PROJECT 
@@ -50,6 +55,7 @@ namespace stockManagement
             getProductData();
             getCustomerData();
             getCategoryData();
+            getMealData();
         }
         //hides all panels
         private void hidePanel()
@@ -342,16 +348,7 @@ namespace stockManagement
             customerPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
             customerMealPhoneTextbox.Texts = selectedRow.Cells[3].Value.ToString();
             customerAddressTextbox.Texts = selectedRow.Cells[4].Value.ToString();
-            if (selectedRow.Cells[5].Value.ToString() == "True")
-            {
-                customerTogglebutton.Checked = true;
-                customerTogglebuttonIndicatorLabel.Text = "Available";
-            }
-            else
-            {
-                customerTogglebutton.Checked = false;
-                customerTogglebuttonIndicatorLabel.Text = "Not Available";
-            }
+            customerTogglebutton.Checked = Convert.ToBoolean(selectedRow.Cells[5].Value);
         }
         //customer datagridview cellcontent click event
         private void customerDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -598,10 +595,8 @@ namespace stockManagement
             productCategoryCombobox.SelectedItem = selectedrow.Cells[3].Value;
             productTypeCombobox.SelectedItem = selectedrow.Cells[4].Value;
             productQuantityTextbox.Texts = selectedrow.Cells[5].Value.ToString();
-            if (selectedrow.Cells[6].Value.ToString() == "True")
-                productDeleteTogglebutton.Checked = true;
-            else
-                productDeleteTogglebutton.Checked = false;
+            productDeleteTogglebutton.Checked = Convert.ToBoolean(selectedrow.Cells[6].Value);
+
         }
         //product datagridview cell content click event
         private void productDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -700,25 +695,39 @@ namespace stockManagement
                         control.Visible = true;
                 }
             }
-            else if (choice == 1)//meal update panel
+            else if (choice == 1)//meal panel with datagridview
             {
                 foreach (Control control in mealPanel.Controls)
                 {
                     control.Visible = false;
-                    if (control.Tag != null && control.Tag.ToString() == "1" || control.Tag.ToString() == "0")
+                    if (control.Tag != null && control.Tag.ToString() == "1")
                         control.Visible = true;
                 }
                 customerMealAddButton.Visible = false;
+                mealPanelTitleLabel.Visible = true;
             }
             else if (choice == 2)//meal update panel
             {
                 foreach (Control control in mealPanel.Controls)
                 {
                     control.Visible = false;
-                    if (control.Tag != null && control.Tag.ToString() == "2" || control.Tag.ToString() == "0")
+                    if (control.Tag != null && (control.Tag.ToString() == "2" || control.Tag.ToString() == "0"))
                         control.Visible = true;
                 }
                 customerMealAddButton.Visible = false;
+                mealPanelTitleLabel.Text = "Customer Update Panel";
+            }
+            else if (choice == 3)
+            {
+                foreach (Control control in mealPanel.Controls)//meal delete button
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && (control.Tag.ToString() == "3" || control.Tag.ToString() == "0"))
+                        control.Visible = true;
+                }
+                customerMealAddButton.Visible = false;
+                mealPanelTitleLabel.Visible = true;
+                mealPanelTitleLabel.Text = "Customer Delete Panel";
             }
         }
         private void mealAdminControls_Click(object sender, EventArgs e)
@@ -737,20 +746,83 @@ namespace stockManagement
         private void mealUpdatePanelButton_Click(object sender, EventArgs e)
         {
             showPanel(mealPanel);
-            showMealControls(0);
-            selectedCustomerControl = 4;
-            customerPanelTitle.Text = "Customer Meal Update Panel";
+            showMealControls(1);
+            selectedMealControl = 2;
+            mealPanelTitleLabel.Text = "Customer Meal Update Panel";
         }
         private void mealDeletePanelButton_Click(object sender, EventArgs e)
         {
             showPanel(mealPanel);
-            showMealControls(0);
-            selectedCustomerControl = 5;
-            customerPanelTitle.Text = "Customer Meal Delete Panel";
+            showMealControls(1);
+            selectedMealControl = 3;
+            mealPanelTitleLabel.Text = "Customer Meal Delete Panel";
+        }
+        //get meal data
+        private void getMealData()
+        {
+            SqlConnection conn = new SqlConnection(connString);
+            string mealSelectQuery = "SELECT * FROM mealTable";
+            SqlCommand mealSelect = new SqlCommand(mealSelectQuery, conn);
+            conn.Open();
+            SqlDataAdapter dac = new SqlDataAdapter(mealSelect);
+            dac.Fill(dtMeals);
+            customerMealDataGridView.DataSource = dtMeals;
+            conn.Close();
+            dac.Dispose();
+        }
+        //refresh data grid after some operations
+        private void refreshMealDataGridView()
+        {
+            //for refreshing meal gridview data
+            dtMeals.Clear();
+            getMealData();
+            customerMealDataGridView.Update();
+            customerMealDataGridView.Refresh();
         }
         private void customerMealUpdateButton_Click(object sender, EventArgs e)
         {
+            try
+            {
+                string mealUpdateQuery = "UPDATE mealTable SET date=@date,count=@count,price=@price,meal_delete_id=@mealDelID WHERE meal_id=@id";
+                SqlConnection conn = new SqlConnection(connString);
+                SqlCommand mealDelete = new SqlCommand(mealUpdateQuery, conn);
+                conn.Open();
+                mealDelete.Parameters.AddWithValue("@date", Convert.ToDateTime(customerMealDateTimePicker.Value));
+                mealDelete.Parameters.AddWithValue("@count", customerMealCountTextbox.Texts);
+                mealDelete.Parameters.AddWithValue("@price", customerMealPriceTextbox.Texts);
+                if (customerMealAvailableTogglebutton.Checked)
+                    mealDelete.Parameters.AddWithValue("@mealDelID", 1);
+                else
+                    mealDelete.Parameters.AddWithValue("@mealDelID", 0);
+                mealDelete.Parameters.AddWithValue("@id", mealID);
+                mealDelete.ExecuteNonQuery();
+                conn.Close();
+                refreshMealDataGridView();
 
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void customerMealDeleteButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string mealDeleteQuery = "UPDATE mealTable SET meal_delete_id=@mealDelID WHERE meal_id=@id";
+                SqlConnection conn = new SqlConnection(connString);
+                SqlCommand mealDelete = new SqlCommand(mealDeleteQuery, conn);
+                conn.Open();
+                mealDelete.Parameters.AddWithValue("@mealDelID", 0);
+                mealDelete.Parameters.AddWithValue("@id", mealID);
+                mealDelete.ExecuteNonQuery();
+                refreshMealDataGridView();
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void customerMealAddButton_Click(object sender, EventArgs e)
         {
@@ -760,8 +832,8 @@ namespace stockManagement
                 {
                     string mealAddQuery = "INSERT INTO mealTable (date,count,price,customer_id,customer_name,meal_delete_id) VALUES(@date,@count,@price,@cusID,@cusName,@mealDelID)";
                     SqlConnection conn = new SqlConnection(connString);
-                    conn.Open();
                     SqlCommand mealAdd = new SqlCommand(mealAddQuery, conn);
+                    conn.Open();
                     mealAdd.Parameters.AddWithValue("@date", customerMealDateTimePicker.Value);
                     mealAdd.Parameters.AddWithValue("@count", customerMealCountTextbox.Texts);
                     mealAdd.Parameters.AddWithValue("@price", customerMealPriceTextbox.Texts);
@@ -775,10 +847,12 @@ namespace stockManagement
                     if (dialogResult == DialogResult.No)
                     {
                         showCustomerControls(1);
+                        showPanel(customerPanel);
                         customerPanelTitle.Text = "Customer Meal Add Panel";
                     }
                     customerMealCountTextbox.Texts = "";
                     customerMealPriceTextbox.Texts = "";
+                    refreshMealDataGridView();
                 }
                 else
                     MessageBox.Show("Please Select Customer! ", "WARNING!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -788,10 +862,58 @@ namespace stockManagement
                 MessageBox.Show(ex.Message);
             }
         }
-
+        //meal filter field
+        private void filterMeal(string nameFilterField, string name, string dateFilterField, DateTime date1, DateTime date2, string availableField)
+        {
+            string start = Convert.ToDateTime(date1).ToString("yyyy-MM-dd");
+            string end = Convert.ToDateTime(date2).ToString("yyyy-MM-dd");
+            if (!string.IsNullOrEmpty(name))
+                mealFilterString += String.Format("[{0}] LIKE '%{1}%'", nameFilterField, name);
+            if (name.Length > 0)
+                mealFilterString += String.Format("AND [{0}] >= #{1}# AND [{0}] <= #{2}#", dateFilterField, start, end);
+            else if (customerMealFilterCombobox.SelectedIndex != -1 && isMealAvailable != 2)
+                mealFilterString += String.Format("[{0}] >= #{1}# AND [{0}] <= #{2}# AND", dateFilterField, start, end);
+            else
+                mealFilterString += String.Format("[{0}] >= #{1}# AND [{0}] <= #{2}#", dateFilterField, start, end);
+            if (customerMealFilterCombobox.SelectedIndex != -1 && isMealAvailable != 2)
+                if (name.Length > 0)
+                    mealFilterString += String.Format("AND [{0}] = {1}", availableField, isMealAvailable);
+                else
+                    mealFilterString += String.Format("[{0}] = {1}", availableField, isMealAvailable);
+            dtMeals.DefaultView.RowFilter = mealFilterString;
+            mealFilterString = "";
+        }
         private void mealFilterFirstDatetimepicker_ValueChanged(object sender, EventArgs e)
         {
+            filterMeal(dtMeals.Columns["customer_name"].ToString(), mealFilterCustomerNameTextbox.Texts, dtMeals.Columns["date"].ToString(), mealFilterFirstDatetimepicker.Value, mealFilterSecondDatetimepicker.Value, dtMeals.Columns["meal_delete_id"].ToString());
+        }
+        private void mealFilterCustomerNameTextbox__TextChanged(object sender, EventArgs e)
+        {
+            filterMeal(dtMeals.Columns["customer_name"].ToString(), mealFilterCustomerNameTextbox.Texts, dtMeals.Columns["date"].ToString(), mealFilterFirstDatetimepicker.Value, mealFilterSecondDatetimepicker.Value, dtMeals.Columns["meal_delete_id"].ToString());
+        }
 
+        private void mealFilterSecondDatetimepicker_ValueChanged(object sender, EventArgs e)
+        {
+            filterMeal(dtMeals.Columns["customer_name"].ToString(), mealFilterCustomerNameTextbox.Texts, dtMeals.Columns["date"].ToString(), mealFilterFirstDatetimepicker.Value, mealFilterSecondDatetimepicker.Value, dtMeals.Columns["meal_delete_id"].ToString());
+        }
+
+        private void customerMealFilterCombobox_OnSelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (customerMealFilterCombobox.SelectedIndex == 0)
+            {
+                isMealAvailable = 1;
+                filterMeal(dtMeals.Columns["customer_name"].ToString(), mealFilterCustomerNameTextbox.Texts, dtMeals.Columns["date"].ToString(), mealFilterFirstDatetimepicker.Value, mealFilterSecondDatetimepicker.Value, dtMeals.Columns["meal_delete_id"].ToString());
+            }
+            else if (customerMealFilterCombobox.SelectedIndex == 1)
+            {
+                isMealAvailable = 0;
+                filterMeal(dtMeals.Columns["customer_name"].ToString(), mealFilterCustomerNameTextbox.Texts, dtMeals.Columns["date"].ToString(), mealFilterFirstDatetimepicker.Value, mealFilterSecondDatetimepicker.Value, dtMeals.Columns["meal_delete_id"].ToString());
+            }
+            else if (customerMealFilterCombobox.SelectedIndex == 2)
+            {
+                isMealAvailable = 2;
+                filterMeal(dtMeals.Columns["customer_name"].ToString(), mealFilterCustomerNameTextbox.Texts, dtMeals.Columns["date"].ToString(), mealFilterFirstDatetimepicker.Value, mealFilterSecondDatetimepicker.Value, dtMeals.Columns["meal_delete_id"].ToString());
+            }
         }
         private void setMealControlValues(int index)
         {
@@ -805,10 +927,12 @@ namespace stockManagement
                 selectedCustomer.Parameters.AddWithValue("@id", Convert.ToInt32(selectedrow.Cells[5].Value));
                 customerMealPhoneTextbox.Texts = selectedCustomer.ExecuteScalar().ToString();
                 conn.Close();
-                customerMealNameTextbox.Texts = selectedrow.Cells[6].Value.ToString();
+                mealID = Convert.ToInt32(selectedrow.Cells[1].Value);
+                customerMealDateTimePicker.Value = Convert.ToDateTime(selectedrow.Cells[2].Value);
                 customerMealCountTextbox.Texts = selectedrow.Cells[3].Value.ToString();
                 customerMealPriceTextbox.Texts = selectedrow.Cells[4].Value.ToString();
-                customerMealDateTimePicker.Value = Convert.ToDateTime(selectedrow.Cells[2].Value);
+                customerMealNameTextbox.Texts = selectedrow.Cells[6].Value.ToString();
+                customerMealAvailableTogglebutton.Checked = Convert.ToBoolean(selectedrow.Cells[7].Value);
             }
             catch (Exception ex)
             {
@@ -817,17 +941,30 @@ namespace stockManagement
         }
         private void customerMealDataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            var senderGrid = (DataGridView)sender;
-            if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn && e.RowIndex >= 0)
-                if (selectedMealControl == 1)
-                {
-
-                }
-                else if (selectedMealControl == 2)
-                {
-
-                }
+            if (selectedMealControl == 2 && e.ColumnIndex == 0)
+            {
+                showMealControls(2);
+                showPanel(mealPanel);
+            }
+            else if (selectedMealControl == 3 && e.ColumnIndex == 0)
+            {
+                showMealControls(3);
+                showPanel(mealPanel);
+            }
             setMealControlValues((int)e.RowIndex);
+        }
+
+        private void customerMealAvailableTogglebutton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (customerMealAvailableTogglebutton.Checked)
+                mealAvailableIndicatorLabel.Text = "Available";
+            else
+                mealAvailableIndicatorLabel.Text = "Not Available";
+        }
+
+        private void mealPanel_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

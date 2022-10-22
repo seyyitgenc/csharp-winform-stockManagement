@@ -34,11 +34,14 @@ namespace stockManagement
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.navigationPanel = new System.Windows.Forms.Panel();
             this.recipeLinkLabel = new System.Windows.Forms.LinkLabel();
             this.incomeOutcomeLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -59,6 +62,13 @@ namespace stockManagement
             this.productAvailableLabel = new System.Windows.Forms.Label();
             this.productDeleteTogglebutton = new stockmanagement.customtogglebtn();
             this.productDataGridView = new System.Windows.Forms.DataGridView();
+            this.productidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.categoryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.storagetypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productquantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.productdeleteidDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.Select = new System.Windows.Forms.DataGridViewButtonColumn();
             this.productTableBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.productDataSet = new stockManagement.productDataSet();
             this.productDeleteButton = new stockmanagement.custombtn();
@@ -150,6 +160,10 @@ namespace stockManagement
             this.productTableTableAdapter = new stockManagement.productDataSetTableAdapters.productTableTableAdapter();
             this.mealTableTableAdapter = new stockManagement.mealTableDBDataSetTableAdapters.mealTableTableAdapter();
             this.mealPanel = new System.Windows.Forms.Panel();
+            this.customerMealAvailableFilterLabel = new System.Windows.Forms.Label();
+            this.customerMealFilterCombobox = new stockmanagement.customcombobox();
+            this.mealAvailableIndicatorLabel = new System.Windows.Forms.Label();
+            this.customerMealAvailableTogglebutton = new stockmanagement.customtogglebtn();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.mealCustomerNameFilterLabel = new System.Windows.Forms.Label();
@@ -166,13 +180,6 @@ namespace stockManagement
             this.customerMealAddButton = new stockmanagement.custombtn();
             this.customerMealPriceTextbox = new stockmanagement.customtextbox();
             this.customerMealCountTextbox = new stockmanagement.customtextbox();
-            this.Select = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.productidDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productnameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.categoryDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.storagetypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productquantityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.productdeleteidDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.navigationPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).BeginInit();
             this.customerContextMenu.SuspendLayout();
@@ -520,43 +527,43 @@ namespace stockManagement
             this.productDataGridView.AllowUserToOrderColumns = true;
             this.productDataGridView.AllowUserToResizeColumns = false;
             this.productDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
-            this.productDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            this.productDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
+            this.productDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            this.productDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.productDataGridView.AutoGenerateColumns = false;
             this.productDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.productDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.productDataGridView.CausesValidation = false;
             this.productDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(50)))), ((int)(((byte)(45)))));
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.productDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.productDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             this.productDataGridView.ColumnHeadersHeight = 29;
             this.productDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.productDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Select,
             this.productidDataGridViewTextBoxColumn,
             this.productnameDataGridViewTextBoxColumn,
             this.categoryDataGridViewTextBoxColumn,
             this.storagetypeDataGridViewTextBoxColumn,
             this.productquantityDataGridViewTextBoxColumn,
-            this.productdeleteidDataGridViewCheckBoxColumn});
+            this.productdeleteidDataGridViewCheckBoxColumn,
+            this.Select});
             this.productDataGridView.DataSource = this.productTableBindingSource;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.ForestGreen;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.productDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.ForestGreen;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.productDataGridView.DefaultCellStyle = dataGridViewCellStyle11;
             this.productDataGridView.EnableHeadersVisualStyles = false;
             this.productDataGridView.Location = new System.Drawing.Point(0, 276);
             this.productDataGridView.MultiSelect = false;
@@ -570,6 +577,64 @@ namespace stockManagement
             this.productDataGridView.TabIndex = 12;
             this.productDataGridView.Tag = "1";
             this.productDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.productDataGridView_CellContentClick);
+            // 
+            // productidDataGridViewTextBoxColumn
+            // 
+            this.productidDataGridViewTextBoxColumn.DataPropertyName = "product_id";
+            this.productidDataGridViewTextBoxColumn.HeaderText = "product_id";
+            this.productidDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.productidDataGridViewTextBoxColumn.Name = "productidDataGridViewTextBoxColumn";
+            this.productidDataGridViewTextBoxColumn.ReadOnly = true;
+            this.productidDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // productnameDataGridViewTextBoxColumn
+            // 
+            this.productnameDataGridViewTextBoxColumn.DataPropertyName = "product_name";
+            this.productnameDataGridViewTextBoxColumn.HeaderText = "productName";
+            this.productnameDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.productnameDataGridViewTextBoxColumn.Name = "productnameDataGridViewTextBoxColumn";
+            this.productnameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // categoryDataGridViewTextBoxColumn
+            // 
+            this.categoryDataGridViewTextBoxColumn.DataPropertyName = "category";
+            this.categoryDataGridViewTextBoxColumn.HeaderText = "Category";
+            this.categoryDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
+            this.categoryDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // storagetypeDataGridViewTextBoxColumn
+            // 
+            this.storagetypeDataGridViewTextBoxColumn.DataPropertyName = "storage_type";
+            this.storagetypeDataGridViewTextBoxColumn.HeaderText = "storageType";
+            this.storagetypeDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.storagetypeDataGridViewTextBoxColumn.Name = "storagetypeDataGridViewTextBoxColumn";
+            this.storagetypeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productquantityDataGridViewTextBoxColumn
+            // 
+            this.productquantityDataGridViewTextBoxColumn.DataPropertyName = "product_quantity";
+            this.productquantityDataGridViewTextBoxColumn.HeaderText = "productQuantity";
+            this.productquantityDataGridViewTextBoxColumn.MinimumWidth = 6;
+            this.productquantityDataGridViewTextBoxColumn.Name = "productquantityDataGridViewTextBoxColumn";
+            this.productquantityDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // productdeleteidDataGridViewCheckBoxColumn
+            // 
+            this.productdeleteidDataGridViewCheckBoxColumn.DataPropertyName = "product_delete_id";
+            this.productdeleteidDataGridViewCheckBoxColumn.HeaderText = "productDeleleteID";
+            this.productdeleteidDataGridViewCheckBoxColumn.MinimumWidth = 6;
+            this.productdeleteidDataGridViewCheckBoxColumn.Name = "productdeleteidDataGridViewCheckBoxColumn";
+            this.productdeleteidDataGridViewCheckBoxColumn.ReadOnly = true;
+            // 
+            // Select
+            // 
+            this.Select.HeaderText = "Select";
+            this.Select.MinimumWidth = 6;
+            this.Select.Name = "Select";
+            this.Select.ReadOnly = true;
+            this.Select.Text = "Select";
+            this.Select.UseColumnTextForButtonValue = true;
             // 
             // productTableBindingSource
             // 
@@ -788,15 +853,15 @@ namespace stockManagement
             // 
             // productPanelTitleLabel
             // 
-            this.productPanelTitleLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.productPanelTitleLabel.AutoSize = true;
+            this.productPanelTitleLabel.Dock = System.Windows.Forms.DockStyle.Top;
             this.productPanelTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.productPanelTitleLabel.Location = new System.Drawing.Point(539, 42);
+            this.productPanelTitleLabel.Location = new System.Drawing.Point(0, 0);
             this.productPanelTitleLabel.Name = "productPanelTitleLabel";
-            this.productPanelTitleLabel.Size = new System.Drawing.Size(206, 32);
+            this.productPanelTitleLabel.Size = new System.Drawing.Size(1292, 32);
             this.productPanelTitleLabel.TabIndex = 0;
             this.productPanelTitleLabel.Tag = "0";
             this.productPanelTitleLabel.Text = "Product Panel";
+            this.productPanelTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // customerPanel
             // 
@@ -914,21 +979,21 @@ namespace stockManagement
             this.customerDataGridView.AllowUserToOrderColumns = true;
             this.customerDataGridView.AllowUserToResizeColumns = false;
             this.customerDataGridView.AllowUserToResizeRows = false;
-            this.customerDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.customerDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.customerDataGridView.AutoGenerateColumns = false;
             this.customerDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.customerDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.customerDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2f, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.customerDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.customerDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
             this.customerDataGridView.ColumnHeadersHeight = 29;
             this.customerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.customerDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -939,14 +1004,14 @@ namespace stockManagement
             this.customeraddressDataGridViewTextBoxColumn,
             this.customerDataGridViewCheckBoxColumn});
             this.customerDataGridView.DataSource = this.customerTableBindingSource;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.0F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.ForestGreen;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.customerDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.ForestGreen;
+            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.customerDataGridView.DefaultCellStyle = dataGridViewCellStyle13;
             this.customerDataGridView.EnableHeadersVisualStyles = false;
             this.customerDataGridView.Location = new System.Drawing.Point(0, 202);
             this.customerDataGridView.MultiSelect = false;
@@ -1232,15 +1297,15 @@ namespace stockManagement
             // 
             // customerPanelTitle
             // 
-            this.customerPanelTitle.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.customerPanelTitle.AutoSize = true;
+            this.customerPanelTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.customerPanelTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.customerPanelTitle.Location = new System.Drawing.Point(504, 42);
+            this.customerPanelTitle.Location = new System.Drawing.Point(0, 0);
             this.customerPanelTitle.Name = "customerPanelTitle";
-            this.customerPanelTitle.Size = new System.Drawing.Size(206, 32);
+            this.customerPanelTitle.Size = new System.Drawing.Size(1292, 32);
             this.customerPanelTitle.TabIndex = 6;
             this.customerPanelTitle.Tag = "0";
             this.customerPanelTitle.Text = "Add Customer";
+            this.customerPanelTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // customerMealDataGridView
             // 
@@ -1249,13 +1314,23 @@ namespace stockManagement
             this.customerMealDataGridView.AllowUserToOrderColumns = true;
             this.customerMealDataGridView.AllowUserToResizeColumns = false;
             this.customerMealDataGridView.AllowUserToResizeRows = false;
-            this.customerMealDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
+            this.customerMealDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
+            this.customerMealDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.customerMealDataGridView.AutoGenerateColumns = false;
             this.customerMealDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.customerMealDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.customerMealDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(30)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.customerMealDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.customerMealDataGridView.ColumnHeadersHeight = 29;
             this.customerMealDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.customerMealDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1268,8 +1343,16 @@ namespace stockManagement
             this.customernameDataGridViewTextBoxColumn1,
             this.mealdeleteidDataGridViewCheckBoxColumn});
             this.customerMealDataGridView.DataSource = this.mealTableBindingSource;
+            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.ForestGreen;
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.customerMealDataGridView.DefaultCellStyle = dataGridViewCellStyle16;
             this.customerMealDataGridView.EnableHeadersVisualStyles = false;
-            this.customerMealDataGridView.Location = new System.Drawing.Point(0, 528);
+            this.customerMealDataGridView.Location = new System.Drawing.Point(0, 276);
             this.customerMealDataGridView.MultiSelect = false;
             this.customerMealDataGridView.Name = "customerMealDataGridView";
             this.customerMealDataGridView.ReadOnly = true;
@@ -1277,9 +1360,9 @@ namespace stockManagement
             this.customerMealDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerMealDataGridView.RowTemplate.Height = 24;
             this.customerMealDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.customerMealDataGridView.Size = new System.Drawing.Size(1292, 250);
+            this.customerMealDataGridView.Size = new System.Drawing.Size(1292, 502);
             this.customerMealDataGridView.TabIndex = 26;
-            this.customerMealDataGridView.Tag = "0";
+            this.customerMealDataGridView.Tag = "1";
             this.customerMealDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerMealDataGridView_CellContentClick);
             // 
             // customerMealAddSelectButton
@@ -1867,6 +1950,10 @@ namespace stockManagement
             // mealPanel
             // 
             this.mealPanel.BackColor = System.Drawing.Color.Salmon;
+            this.mealPanel.Controls.Add(this.customerMealAvailableFilterLabel);
+            this.mealPanel.Controls.Add(this.customerMealFilterCombobox);
+            this.mealPanel.Controls.Add(this.mealAvailableIndicatorLabel);
+            this.mealPanel.Controls.Add(this.customerMealAvailableTogglebutton);
             this.mealPanel.Controls.Add(this.label2);
             this.mealPanel.Controls.Add(this.label1);
             this.mealPanel.Controls.Add(this.mealCustomerNameFilterLabel);
@@ -1895,53 +1982,119 @@ namespace stockManagement
             this.mealPanel.TabIndex = 29;
             this.mealPanel.Tag = "";
             this.mealPanel.Visible = false;
+            this.mealPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mealPanel_Paint);
+            // 
+            // customerMealAvailableFilterLabel
+            // 
+            this.customerMealAvailableFilterLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.customerMealAvailableFilterLabel.AutoSize = true;
+            this.customerMealAvailableFilterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.customerMealAvailableFilterLabel.Location = new System.Drawing.Point(945, 230);
+            this.customerMealAvailableFilterLabel.Name = "customerMealAvailableFilterLabel";
+            this.customerMealAvailableFilterLabel.Size = new System.Drawing.Size(103, 25);
+            this.customerMealAvailableFilterLabel.TabIndex = 43;
+            this.customerMealAvailableFilterLabel.Tag = "1";
+            this.customerMealAvailableFilterLabel.Text = "Available :";
+            // 
+            // customerMealFilterCombobox
+            // 
+            this.customerMealFilterCombobox.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.customerMealFilterCombobox.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.customerMealFilterCombobox.BorderColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerMealFilterCombobox.BorderSize = 0;
+            this.customerMealFilterCombobox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDown;
+            this.customerMealFilterCombobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.customerMealFilterCombobox.ForeColor = System.Drawing.Color.DimGray;
+            this.customerMealFilterCombobox.IconColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerMealFilterCombobox.Items.AddRange(new object[] {
+            "Available",
+            "Not Available",
+            "List All"});
+            this.customerMealFilterCombobox.ListBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(228)))), ((int)(((byte)(245)))));
+            this.customerMealFilterCombobox.ListTextColor = System.Drawing.Color.DimGray;
+            this.customerMealFilterCombobox.Location = new System.Drawing.Point(1070, 230);
+            this.customerMealFilterCombobox.MinimumSize = new System.Drawing.Size(150, 30);
+            this.customerMealFilterCombobox.Name = "customerMealFilterCombobox";
+            this.customerMealFilterCombobox.Size = new System.Drawing.Size(189, 30);
+            this.customerMealFilterCombobox.TabIndex = 42;
+            this.customerMealFilterCombobox.Tag = "1";
+            this.customerMealFilterCombobox.Texts = "Select Availablity";
+            this.customerMealFilterCombobox.OnSelectedIndexChanged += new System.EventHandler(this.customerMealFilterCombobox_OnSelectedIndexChanged);
+            // 
+            // mealAvailableIndicatorLabel
+            // 
+            this.mealAvailableIndicatorLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mealAvailableIndicatorLabel.AutoSize = true;
+            this.mealAvailableIndicatorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.mealAvailableIndicatorLabel.Location = new System.Drawing.Point(668, 410);
+            this.mealAvailableIndicatorLabel.Name = "mealAvailableIndicatorLabel";
+            this.mealAvailableIndicatorLabel.Size = new System.Drawing.Size(26, 25);
+            this.mealAvailableIndicatorLabel.TabIndex = 41;
+            this.mealAvailableIndicatorLabel.Tag = "2";
+            this.mealAvailableIndicatorLabel.Text = "--";
+            // 
+            // customerMealAvailableTogglebutton
+            // 
+            this.customerMealAvailableTogglebutton.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.customerMealAvailableTogglebutton.Location = new System.Drawing.Point(572, 407);
+            this.customerMealAvailableTogglebutton.MinimumSize = new System.Drawing.Size(45, 22);
+            this.customerMealAvailableTogglebutton.Name = "customerMealAvailableTogglebutton";
+            this.customerMealAvailableTogglebutton.OffBackColor = System.Drawing.Color.Gray;
+            this.customerMealAvailableTogglebutton.OffToggleColor = System.Drawing.Color.Gainsboro;
+            this.customerMealAvailableTogglebutton.OnBackColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerMealAvailableTogglebutton.OnToggleColor = System.Drawing.Color.WhiteSmoke;
+            this.customerMealAvailableTogglebutton.Size = new System.Drawing.Size(70, 30);
+            this.customerMealAvailableTogglebutton.TabIndex = 40;
+            this.customerMealAvailableTogglebutton.Tag = "2";
+            this.customerMealAvailableTogglebutton.UseVisualStyleBackColor = true;
+            this.customerMealAvailableTogglebutton.CheckedChanged += new System.EventHandler(this.customerMealAvailableTogglebutton_CheckedChanged);
             // 
             // label2
             // 
-            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label2.Location = new System.Drawing.Point(457, 232);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label2.Location = new System.Drawing.Point(494, 180);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(118, 25);
+            this.label2.Size = new System.Drawing.Size(106, 25);
             this.label2.TabIndex = 39;
             this.label2.Tag = "1";
             this.label2.Text = "First Date :";
             // 
             // label1
             // 
-            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label1.Location = new System.Drawing.Point(861, 228);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(494, 230);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 25);
+            this.label1.Size = new System.Drawing.Size(137, 25);
             this.label1.TabIndex = 38;
             this.label1.Tag = "1";
             this.label1.Text = "Second Date :";
             // 
             // mealCustomerNameFilterLabel
             // 
-            this.mealCustomerNameFilterLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mealCustomerNameFilterLabel.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.mealCustomerNameFilterLabel.AutoSize = true;
-            this.mealCustomerNameFilterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.mealCustomerNameFilterLabel.Location = new System.Drawing.Point(10, 234);
+            this.mealCustomerNameFilterLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.mealCustomerNameFilterLabel.Location = new System.Drawing.Point(10, 233);
             this.mealCustomerNameFilterLabel.Name = "mealCustomerNameFilterLabel";
-            this.mealCustomerNameFilterLabel.Size = new System.Drawing.Size(180, 25);
+            this.mealCustomerNameFilterLabel.Size = new System.Drawing.Size(165, 25);
             this.mealCustomerNameFilterLabel.TabIndex = 37;
             this.mealCustomerNameFilterLabel.Tag = "1";
             this.mealCustomerNameFilterLabel.Text = "Customer Name :";
             // 
             // mealFilterCustomerNameTextbox
             // 
-            this.mealFilterCustomerNameTextbox.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mealFilterCustomerNameTextbox.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.mealFilterCustomerNameTextbox.BackColor = System.Drawing.SystemColors.Window;
             this.mealFilterCustomerNameTextbox.BorderColor = System.Drawing.Color.RoyalBlue;
             this.mealFilterCustomerNameTextbox.BorderFocusColor = System.Drawing.Color.DarkSlateBlue;
             this.mealFilterCustomerNameTextbox.BorderSize = 4;
             this.mealFilterCustomerNameTextbox.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.mealFilterCustomerNameTextbox.ForeColor = System.Drawing.Color.DimGray;
-            this.mealFilterCustomerNameTextbox.Location = new System.Drawing.Point(197, 226);
+            this.mealFilterCustomerNameTextbox.Location = new System.Drawing.Point(190, 230);
             this.mealFilterCustomerNameTextbox.Margin = new System.Windows.Forms.Padding(4);
             this.mealFilterCustomerNameTextbox.MaxLength = 40;
             this.mealFilterCustomerNameTextbox.Multiline = false;
@@ -1953,23 +2106,25 @@ namespace stockManagement
             this.mealFilterCustomerNameTextbox.Tag = "1";
             this.mealFilterCustomerNameTextbox.Texts = "";
             this.mealFilterCustomerNameTextbox.UnderlinedStyle = false;
+            this.mealFilterCustomerNameTextbox._TextChanged += new System.EventHandler(this.mealFilterCustomerNameTextbox__TextChanged);
             // 
             // mealFilterSecondDatetimepicker
             // 
-            this.mealFilterSecondDatetimepicker.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mealFilterSecondDatetimepicker.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.mealFilterSecondDatetimepicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.mealFilterSecondDatetimepicker.Location = new System.Drawing.Point(1033, 227);
+            this.mealFilterSecondDatetimepicker.Location = new System.Drawing.Point(644, 230);
             this.mealFilterSecondDatetimepicker.Name = "mealFilterSecondDatetimepicker";
             this.mealFilterSecondDatetimepicker.Size = new System.Drawing.Size(250, 28);
             this.mealFilterSecondDatetimepicker.TabIndex = 35;
             this.mealFilterSecondDatetimepicker.Tag = "1";
+            this.mealFilterSecondDatetimepicker.ValueChanged += new System.EventHandler(this.mealFilterSecondDatetimepicker_ValueChanged);
             // 
             // mealFilterFirstDatetimepicker
             // 
-            this.mealFilterFirstDatetimepicker.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.mealFilterFirstDatetimepicker.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.mealFilterFirstDatetimepicker.CalendarFont = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.mealFilterFirstDatetimepicker.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.mealFilterFirstDatetimepicker.Location = new System.Drawing.Point(591, 229);
+            this.mealFilterFirstDatetimepicker.Location = new System.Drawing.Point(644, 180);
             this.mealFilterFirstDatetimepicker.Name = "mealFilterFirstDatetimepicker";
             this.mealFilterFirstDatetimepicker.Size = new System.Drawing.Size(250, 28);
             this.mealFilterFirstDatetimepicker.TabIndex = 34;
@@ -1978,15 +2133,15 @@ namespace stockManagement
             // 
             // mealPanelTitleLabel
             // 
-            this.mealPanelTitleLabel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.mealPanelTitleLabel.AutoSize = true;
-            this.mealPanelTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.mealPanelTitleLabel.Location = new System.Drawing.Point(605, 42);
+            this.mealPanelTitleLabel.Dock = System.Windows.Forms.DockStyle.Top;
+            this.mealPanelTitleLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.mealPanelTitleLabel.Location = new System.Drawing.Point(0, 0);
             this.mealPanelTitleLabel.Name = "mealPanelTitleLabel";
-            this.mealPanelTitleLabel.Size = new System.Drawing.Size(120, 25);
+            this.mealPanelTitleLabel.Size = new System.Drawing.Size(1292, 32);
             this.mealPanelTitleLabel.TabIndex = 33;
-            this.mealPanelTitleLabel.Tag = "0";
+            this.mealPanelTitleLabel.Tag = "2";
             this.mealPanelTitleLabel.Text = "Meal Panel";
+            this.mealPanelTitleLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // mealCustomerNameLabel
             // 
@@ -2060,6 +2215,7 @@ namespace stockManagement
             // 
             // customerMealDeleteButton
             // 
+            this.customerMealDeleteButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.customerMealDeleteButton.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.customerMealDeleteButton.backgroundColor = System.Drawing.Color.MediumSlateBlue;
             this.customerMealDeleteButton.BorderColor = System.Drawing.Color.PaleVioletRed;
@@ -2069,17 +2225,19 @@ namespace stockManagement
             this.customerMealDeleteButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customerMealDeleteButton.Font = new System.Drawing.Font("Georgia", 20F);
             this.customerMealDeleteButton.ForeColor = System.Drawing.Color.White;
-            this.customerMealDeleteButton.Location = new System.Drawing.Point(530, 433);
+            this.customerMealDeleteButton.Location = new System.Drawing.Point(630, 460);
             this.customerMealDeleteButton.Name = "customerMealDeleteButton";
-            this.customerMealDeleteButton.Size = new System.Drawing.Size(154, 50);
+            this.customerMealDeleteButton.Size = new System.Drawing.Size(170, 50);
             this.customerMealDeleteButton.TabIndex = 28;
-            this.customerMealDeleteButton.Tag = "1";
+            this.customerMealDeleteButton.Tag = "3";
             this.customerMealDeleteButton.Text = "Delete";
             this.customerMealDeleteButton.textColor = System.Drawing.Color.White;
             this.customerMealDeleteButton.UseVisualStyleBackColor = false;
+            this.customerMealDeleteButton.Click += new System.EventHandler(this.customerMealDeleteButton_Click);
             // 
             // customerMealUpdateButton
             // 
+            this.customerMealUpdateButton.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.customerMealUpdateButton.BackColor = System.Drawing.Color.MediumSlateBlue;
             this.customerMealUpdateButton.backgroundColor = System.Drawing.Color.MediumSlateBlue;
             this.customerMealUpdateButton.BorderColor = System.Drawing.Color.PaleVioletRed;
@@ -2089,9 +2247,9 @@ namespace stockManagement
             this.customerMealUpdateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customerMealUpdateButton.Font = new System.Drawing.Font("Georgia", 20F);
             this.customerMealUpdateButton.ForeColor = System.Drawing.Color.White;
-            this.customerMealUpdateButton.Location = new System.Drawing.Point(752, 433);
+            this.customerMealUpdateButton.Location = new System.Drawing.Point(630, 460);
             this.customerMealUpdateButton.Name = "customerMealUpdateButton";
-            this.customerMealUpdateButton.Size = new System.Drawing.Size(154, 50);
+            this.customerMealUpdateButton.Size = new System.Drawing.Size(170, 50);
             this.customerMealUpdateButton.TabIndex = 27;
             this.customerMealUpdateButton.Tag = "2";
             this.customerMealUpdateButton.Text = "Update";
@@ -2111,9 +2269,9 @@ namespace stockManagement
             this.customerMealAddButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.customerMealAddButton.Font = new System.Drawing.Font("Georgia", 20F);
             this.customerMealAddButton.ForeColor = System.Drawing.Color.White;
-            this.customerMealAddButton.Location = new System.Drawing.Point(635, 433);
+            this.customerMealAddButton.Location = new System.Drawing.Point(630, 460);
             this.customerMealAddButton.Name = "customerMealAddButton";
-            this.customerMealAddButton.Size = new System.Drawing.Size(154, 50);
+            this.customerMealAddButton.Size = new System.Drawing.Size(170, 50);
             this.customerMealAddButton.TabIndex = 19;
             this.customerMealAddButton.Tag = "0";
             this.customerMealAddButton.Text = "Add";
@@ -2165,73 +2323,15 @@ namespace stockManagement
             this.customerMealCountTextbox.Texts = "";
             this.customerMealCountTextbox.UnderlinedStyle = false;
             // 
-            // Select
-            // 
-            this.Select.HeaderText = "Select";
-            this.Select.MinimumWidth = 6;
-            this.Select.Name = "Select";
-            this.Select.ReadOnly = true;
-            this.Select.Text = "Select";
-            this.Select.UseColumnTextForButtonValue = true;
-            // 
-            // productidDataGridViewTextBoxColumn
-            // 
-            this.productidDataGridViewTextBoxColumn.DataPropertyName = "product_id";
-            this.productidDataGridViewTextBoxColumn.HeaderText = "product_id";
-            this.productidDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.productidDataGridViewTextBoxColumn.Name = "productidDataGridViewTextBoxColumn";
-            this.productidDataGridViewTextBoxColumn.ReadOnly = true;
-            this.productidDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // productnameDataGridViewTextBoxColumn
-            // 
-            this.productnameDataGridViewTextBoxColumn.DataPropertyName = "product_name";
-            this.productnameDataGridViewTextBoxColumn.HeaderText = "productName";
-            this.productnameDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.productnameDataGridViewTextBoxColumn.Name = "productnameDataGridViewTextBoxColumn";
-            this.productnameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // categoryDataGridViewTextBoxColumn
-            // 
-            this.categoryDataGridViewTextBoxColumn.DataPropertyName = "category";
-            this.categoryDataGridViewTextBoxColumn.HeaderText = "Category";
-            this.categoryDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.categoryDataGridViewTextBoxColumn.Name = "categoryDataGridViewTextBoxColumn";
-            this.categoryDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // storagetypeDataGridViewTextBoxColumn
-            // 
-            this.storagetypeDataGridViewTextBoxColumn.DataPropertyName = "storage_type";
-            this.storagetypeDataGridViewTextBoxColumn.HeaderText = "storageType";
-            this.storagetypeDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.storagetypeDataGridViewTextBoxColumn.Name = "storagetypeDataGridViewTextBoxColumn";
-            this.storagetypeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // productquantityDataGridViewTextBoxColumn
-            // 
-            this.productquantityDataGridViewTextBoxColumn.DataPropertyName = "product_quantity";
-            this.productquantityDataGridViewTextBoxColumn.HeaderText = "productQuantity";
-            this.productquantityDataGridViewTextBoxColumn.MinimumWidth = 6;
-            this.productquantityDataGridViewTextBoxColumn.Name = "productquantityDataGridViewTextBoxColumn";
-            this.productquantityDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // productdeleteidDataGridViewCheckBoxColumn
-            // 
-            this.productdeleteidDataGridViewCheckBoxColumn.DataPropertyName = "product_delete_id";
-            this.productdeleteidDataGridViewCheckBoxColumn.HeaderText = "productDeleleteID";
-            this.productdeleteidDataGridViewCheckBoxColumn.MinimumWidth = 6;
-            this.productdeleteidDataGridViewCheckBoxColumn.Name = "productdeleteidDataGridViewCheckBoxColumn";
-            this.productdeleteidDataGridViewCheckBoxColumn.ReadOnly = true;
-            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gold;
             this.ClientSize = new System.Drawing.Size(1500, 900);
+            this.Controls.Add(this.mealPanel);
             this.Controls.Add(this.productPanel);
             this.Controls.Add(this.customerPanel);
-            this.Controls.Add(this.mealPanel);
             this.Controls.Add(this.incomeOutcomePanel);
             this.Controls.Add(this.recipePanel);
             this.Controls.Add(this.adminControlsPanel);
@@ -2396,12 +2496,6 @@ namespace stockManagement
         private DateTimePicker mealFilterSecondDatetimepicker;
         private DateTimePicker mealFilterFirstDatetimepicker;
         private DataGridView customerDataGridView;
-        private DataGridViewButtonColumn customerDataGridViewButton;
-        private DataGridViewTextBoxColumn customeridDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn customernameDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn customerphoneDataGridViewTextBoxColumn;
-        private DataGridViewTextBoxColumn customeraddressDataGridViewTextBoxColumn;
-        private DataGridViewCheckBoxColumn customerDataGridViewCheckBoxColumn;
         private DataGridViewButtonColumn Select;
         private DataGridViewTextBoxColumn productidDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn productnameDataGridViewTextBoxColumn;
@@ -2409,5 +2503,15 @@ namespace stockManagement
         private DataGridViewTextBoxColumn storagetypeDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn productquantityDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn productdeleteidDataGridViewCheckBoxColumn;
+        private stockmanagement.customtogglebtn customerMealAvailableTogglebutton;
+        private Label mealAvailableIndicatorLabel;
+        private Label customerMealAvailableFilterLabel;
+        private stockmanagement.customcombobox customerMealFilterCombobox;
+        private DataGridViewButtonColumn customerDataGridViewButton;
+        private DataGridViewTextBoxColumn customeridDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn customernameDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn customerphoneDataGridViewTextBoxColumn;
+        private DataGridViewTextBoxColumn customeraddressDataGridViewTextBoxColumn;
+        private DataGridViewCheckBoxColumn customerDataGridViewCheckBoxColumn;
     }
 }
