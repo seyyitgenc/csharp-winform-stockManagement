@@ -1,5 +1,4 @@
 ﻿using stockmanagement;
-using stockManagement.mealTableDBDataSetTableAdapters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,7 +51,6 @@ namespace stockManagement
         private void mainForm_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'mealTableDBDataSet.mealTable' table. You can move, or remove it, as needed.
-            this.mealTableTableAdapter.Fill(this.mealTableDBDataSet.mealTable);
             getProductData();
             getCustomerData();
             getCategoryData();
@@ -855,7 +853,6 @@ namespace stockManagement
             showCustomerControls(1);
             customerPanelTitle.Text = "Customer Meal Add Panel";
         }
-        // TODO : MUST GET CUSTOMER MEALS ACCORDING TO SELECTED CUSTOMER
         private void mealUpdatePanelButton_Click(object sender, EventArgs e)
         {
             showPanel(mealPanel);
