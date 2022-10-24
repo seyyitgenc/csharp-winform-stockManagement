@@ -34,14 +34,14 @@ namespace stockManagement
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(mainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             this.navigationPanel = new System.Windows.Forms.Panel();
             this.recipeLinkLabel = new System.Windows.Forms.LinkLabel();
             this.incomeOutcomeLinkLabel = new System.Windows.Forms.LinkLabel();
@@ -84,6 +84,7 @@ namespace stockManagement
             this.productCategoryCombobox = new stockmanagement.customcombobox();
             this.productPanelTitleLabel = new System.Windows.Forms.Label();
             this.customerPanel = new System.Windows.Forms.Panel();
+            this.customerCalculateDebtButton = new stockmanagement.custombtn();
             this.customerTogglebuttonIndicatorLabel = new System.Windows.Forms.Label();
             this.customerAvailableLabel = new System.Windows.Forms.Label();
             this.customerTogglebutton = new stockmanagement.customtogglebtn();
@@ -180,6 +181,7 @@ namespace stockManagement
             this.customerMealAddButton = new stockmanagement.custombtn();
             this.customerMealPriceTextbox = new stockmanagement.customtextbox();
             this.customerMealCountTextbox = new stockmanagement.customtextbox();
+            this.customerAllDebtsButton = new stockmanagement.custombtn();
             this.navigationPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picboxuser)).BeginInit();
             this.customerContextMenu.SuspendLayout();
@@ -334,13 +336,13 @@ namespace stockManagement
             this.customerContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.customerAddTSI});
             this.customerContextMenu.Name = "contextMenuStrip1";
-            this.customerContextMenu.Size = new System.Drawing.Size(144, 28);
+            this.customerContextMenu.Size = new System.Drawing.Size(177, 28);
             // 
             // customerAddTSI
             // 
             this.customerAddTSI.Name = "customerAddTSI";
-            this.customerAddTSI.Size = new System.Drawing.Size(143, 24);
-            this.customerAddTSI.Text = "Meal Add";
+            this.customerAddTSI.Size = new System.Drawing.Size(176, 24);
+            this.customerAddTSI.Text = "Calculate Debt";
             this.customerAddTSI.Click += new System.EventHandler(this.customerAddTSI_Click);
             // 
             // productPanel
@@ -527,8 +529,8 @@ namespace stockManagement
             this.productDataGridView.AllowUserToOrderColumns = true;
             this.productDataGridView.AllowUserToResizeColumns = false;
             this.productDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
-            this.productDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
+            this.productDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.productDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -537,14 +539,14 @@ namespace stockManagement
             this.productDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.productDataGridView.CausesValidation = false;
             this.productDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.productDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(40)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.productDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.productDataGridView.ColumnHeadersHeight = 29;
             this.productDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.productDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -556,14 +558,14 @@ namespace stockManagement
             this.productdeleteidDataGridViewCheckBoxColumn,
             this.Select});
             this.productDataGridView.DataSource = this.productTableBindingSource;
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.ForestGreen;
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.productDataGridView.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.ForestGreen;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.productDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.productDataGridView.EnableHeadersVisualStyles = false;
             this.productDataGridView.Location = new System.Drawing.Point(0, 276);
             this.productDataGridView.MultiSelect = false;
@@ -866,6 +868,7 @@ namespace stockManagement
             // customerPanel
             // 
             this.customerPanel.BackColor = System.Drawing.Color.Peru;
+            this.customerPanel.Controls.Add(this.customerCalculateDebtButton);
             this.customerPanel.Controls.Add(this.customerTogglebuttonIndicatorLabel);
             this.customerPanel.Controls.Add(this.customerAvailableLabel);
             this.customerPanel.Controls.Add(this.customerTogglebutton);
@@ -885,14 +888,34 @@ namespace stockManagement
             this.customerPanel.Controls.Add(this.customerNameLabel);
             this.customerPanel.Controls.Add(this.customerPanelTitle);
             this.customerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.customerPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.customerPanel.Location = new System.Drawing.Point(204, 115);
-            this.customerPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.customerPanel.Name = "customerPanel";
             this.customerPanel.Size = new System.Drawing.Size(1292, 781);
             this.customerPanel.TabIndex = 3;
             this.customerPanel.Tag = "";
             this.customerPanel.Visible = false;
+            // 
+            // customerCalculateDebtButton
+            // 
+            this.customerCalculateDebtButton.AutoSize = true;
+            this.customerCalculateDebtButton.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerCalculateDebtButton.backgroundColor = System.Drawing.Color.MediumSlateBlue;
+            this.customerCalculateDebtButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerCalculateDebtButton.BorderRadius = 0;
+            this.customerCalculateDebtButton.BorderSize = 0;
+            this.customerCalculateDebtButton.FlatAppearance.BorderSize = 0;
+            this.customerCalculateDebtButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerCalculateDebtButton.Font = new System.Drawing.Font("Georgia", 18F);
+            this.customerCalculateDebtButton.ForeColor = System.Drawing.Color.White;
+            this.customerCalculateDebtButton.Location = new System.Drawing.Point(573, 536);
+            this.customerCalculateDebtButton.Name = "customerCalculateDebtButton";
+            this.customerCalculateDebtButton.Size = new System.Drawing.Size(235, 51);
+            this.customerCalculateDebtButton.TabIndex = 19;
+            this.customerCalculateDebtButton.Tag = "4";
+            this.customerCalculateDebtButton.Text = "Calculate Debt";
+            this.customerCalculateDebtButton.textColor = System.Drawing.Color.White;
+            this.customerCalculateDebtButton.UseVisualStyleBackColor = false;
+            this.customerCalculateDebtButton.Click += new System.EventHandler(this.customerCalculateDebtButton_Click);
             // 
             // customerTogglebuttonIndicatorLabel
             // 
@@ -986,14 +1009,14 @@ namespace stockManagement
             this.customerDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.customerDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.customerDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle12.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.customerDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(45)))), ((int)(((byte)(50)))));
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.customerDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
             this.customerDataGridView.ColumnHeadersHeight = 29;
             this.customerDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.customerDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1004,16 +1027,16 @@ namespace stockManagement
             this.customeraddressDataGridViewTextBoxColumn,
             this.customerDataGridViewCheckBoxColumn});
             this.customerDataGridView.DataSource = this.customerTableBindingSource;
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle13.SelectionBackColor = System.Drawing.Color.ForestGreen;
-            dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.customerDataGridView.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.ForestGreen;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.customerDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
             this.customerDataGridView.EnableHeadersVisualStyles = false;
-            this.customerDataGridView.Location = new System.Drawing.Point(0, 202);
+            this.customerDataGridView.Location = new System.Drawing.Point(0, 165);
             this.customerDataGridView.MultiSelect = false;
             this.customerDataGridView.Name = "customerDataGridView";
             this.customerDataGridView.ReadOnly = true;
@@ -1021,7 +1044,7 @@ namespace stockManagement
             this.customerDataGridView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
             this.customerDataGridView.RowTemplate.Height = 24;
             this.customerDataGridView.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.customerDataGridView.Size = new System.Drawing.Size(1292, 579);
+            this.customerDataGridView.Size = new System.Drawing.Size(1292, 616);
             this.customerDataGridView.TabIndex = 10;
             this.customerDataGridView.Tag = "1";
             this.customerDataGridView.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.customerDataGridView_CellContentClick);
@@ -1314,8 +1337,8 @@ namespace stockManagement
             this.customerMealDataGridView.AllowUserToOrderColumns = true;
             this.customerMealDataGridView.AllowUserToResizeColumns = false;
             this.customerMealDataGridView.AllowUserToResizeRows = false;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
-            this.customerMealDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(238)))), ((int)(((byte)(239)))), ((int)(((byte)(249)))));
+            this.customerMealDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.customerMealDataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
@@ -1323,14 +1346,14 @@ namespace stockManagement
             this.customerMealDataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.customerMealDataGridView.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.customerMealDataGridView.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(30)))), ((int)(((byte)(45)))));
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.customerMealDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(25)))), ((int)(((byte)(30)))), ((int)(((byte)(45)))));
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.customerMealDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             this.customerMealDataGridView.ColumnHeadersHeight = 29;
             this.customerMealDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.customerMealDataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -1343,14 +1366,14 @@ namespace stockManagement
             this.customernameDataGridViewTextBoxColumn1,
             this.mealdeleteidDataGridViewCheckBoxColumn});
             this.customerMealDataGridView.DataSource = this.mealTableBindingSource;
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.ForestGreen;
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.customerMealDataGridView.DefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.ForestGreen;
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.customerMealDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
             this.customerMealDataGridView.EnableHeadersVisualStyles = false;
             this.customerMealDataGridView.Location = new System.Drawing.Point(0, 276);
             this.customerMealDataGridView.MultiSelect = false;
@@ -1588,7 +1611,7 @@ namespace stockManagement
             this.mealControlsPanel.Controls.Add(this.mealUpdatePanelButton);
             this.mealControlsPanel.Controls.Add(this.mealAddPanelControl);
             this.mealControlsPanel.Dock = System.Windows.Forms.DockStyle.Top;
-            this.mealControlsPanel.Location = new System.Drawing.Point(0, 556);
+            this.mealControlsPanel.Location = new System.Drawing.Point(0, 622);
             this.mealControlsPanel.Name = "mealControlsPanel";
             this.mealControlsPanel.Size = new System.Drawing.Size(200, 135);
             this.mealControlsPanel.TabIndex = 24;
@@ -1672,7 +1695,7 @@ namespace stockManagement
             this.mealAdminControls.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.mealAdminControls.Font = new System.Drawing.Font("Georgia", 12F);
             this.mealAdminControls.ForeColor = System.Drawing.Color.White;
-            this.mealAdminControls.Location = new System.Drawing.Point(0, 506);
+            this.mealAdminControls.Location = new System.Drawing.Point(0, 572);
             this.mealAdminControls.Name = "mealAdminControls";
             this.mealAdminControls.Size = new System.Drawing.Size(200, 50);
             this.mealAdminControls.TabIndex = 23;
@@ -1685,7 +1708,7 @@ namespace stockManagement
             // 
             this.dashLabel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.dashLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.dashLabel2.Location = new System.Drawing.Point(0, 486);
+            this.dashLabel2.Location = new System.Drawing.Point(0, 552);
             this.dashLabel2.Name = "dashLabel2";
             this.dashLabel2.Size = new System.Drawing.Size(200, 20);
             this.dashLabel2.TabIndex = 22;
@@ -1695,13 +1718,14 @@ namespace stockManagement
             // 
             this.customerControlsPanel.AutoSize = true;
             this.customerControlsPanel.BackColor = System.Drawing.Color.Ivory;
+            this.customerControlsPanel.Controls.Add(this.customerAllDebtsButton);
             this.customerControlsPanel.Controls.Add(this.customerDeletePanelButton);
             this.customerControlsPanel.Controls.Add(this.customerUpdatePanelButton);
             this.customerControlsPanel.Controls.Add(this.customerAddPanelButton);
             this.customerControlsPanel.Dock = System.Windows.Forms.DockStyle.Top;
             this.customerControlsPanel.Location = new System.Drawing.Point(0, 330);
             this.customerControlsPanel.Name = "customerControlsPanel";
-            this.customerControlsPanel.Size = new System.Drawing.Size(200, 156);
+            this.customerControlsPanel.Size = new System.Drawing.Size(200, 222);
             this.customerControlsPanel.TabIndex = 21;
             this.customerControlsPanel.Visible = false;
             // 
@@ -1982,7 +2006,6 @@ namespace stockManagement
             this.mealPanel.TabIndex = 29;
             this.mealPanel.Tag = "";
             this.mealPanel.Visible = false;
-            this.mealPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mealPanel_Paint);
             // 
             // customerMealAvailableFilterLabel
             // 
@@ -2323,15 +2346,37 @@ namespace stockManagement
             this.customerMealCountTextbox.Texts = "";
             this.customerMealCountTextbox.UnderlinedStyle = false;
             // 
+            // customerAllDebtsButton
+            // 
+            this.customerAllDebtsButton.BackColor = System.Drawing.Color.MediumVioletRed;
+            this.customerAllDebtsButton.backgroundColor = System.Drawing.Color.MediumVioletRed;
+            this.customerAllDebtsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.customerAllDebtsButton.BorderColor = System.Drawing.Color.PaleVioletRed;
+            this.customerAllDebtsButton.BorderRadius = 0;
+            this.customerAllDebtsButton.BorderSize = 0;
+            this.customerAllDebtsButton.Dock = System.Windows.Forms.DockStyle.Top;
+            this.customerAllDebtsButton.FlatAppearance.BorderSize = 0;
+            this.customerAllDebtsButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.customerAllDebtsButton.Font = new System.Drawing.Font("Georgia", 12F);
+            this.customerAllDebtsButton.ForeColor = System.Drawing.Color.White;
+            this.customerAllDebtsButton.Location = new System.Drawing.Point(0, 156);
+            this.customerAllDebtsButton.Name = "customerAllDebtsButton";
+            this.customerAllDebtsButton.Size = new System.Drawing.Size(200, 66);
+            this.customerAllDebtsButton.TabIndex = 18;
+            this.customerAllDebtsButton.Text = "Calculate All Debts";
+            this.customerAllDebtsButton.textColor = System.Drawing.Color.White;
+            this.customerAllDebtsButton.UseVisualStyleBackColor = false;
+            this.customerAllDebtsButton.Click += new System.EventHandler(this.customerAllDebtsButton_Click);
+            // 
             // mainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Gold;
             this.ClientSize = new System.Drawing.Size(1500, 900);
+            this.Controls.Add(this.customerPanel);
             this.Controls.Add(this.mealPanel);
             this.Controls.Add(this.productPanel);
-            this.Controls.Add(this.customerPanel);
             this.Controls.Add(this.incomeOutcomePanel);
             this.Controls.Add(this.recipePanel);
             this.Controls.Add(this.adminControlsPanel);
@@ -2513,5 +2558,7 @@ namespace stockManagement
         private DataGridViewTextBoxColumn customerphoneDataGridViewTextBoxColumn;
         private DataGridViewTextBoxColumn customeraddressDataGridViewTextBoxColumn;
         private DataGridViewCheckBoxColumn customerDataGridViewCheckBoxColumn;
+        private stockmanagement.custombtn customerCalculateDebtButton;
+        private stockmanagement.custombtn customerAllDebtsButton;
     }
 }

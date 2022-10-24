@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
@@ -101,8 +102,8 @@ namespace stockManagement
         {
             showPanel(customerPanel);
             showCustomerControls(1);
-            selectedCustomerControl = 3;
-            customerPanelTitle.Text = "Customer Meal Add Panel";
+            selectedCustomerControl = 4;
+            customerPanelTitle.Text = "Select Customer to Calculate It's Debt";
         }
 
         private void hideAdminControls()
@@ -269,7 +270,7 @@ namespace stockManagement
                         control.Visible = true;
                 }
             }
-            else if (choice == 1)// customer update panel with datagridview
+            else if (choice == 1)// customer panel with datagridview
             {
                 foreach (Control control in customerPanel.Controls)
                 {
@@ -302,6 +303,22 @@ namespace stockManagement
                 }
                 foreach (customtextbox txtbox in customerPanel.Controls.OfType<customtextbox>())
                     txtbox.Enabled = false;
+                customerAddButton.Visible = false;
+            }
+            else if (choice == 4)
+            {
+                customerPanelTitle.Text = "Selected Customer";
+                foreach (Control control in customerPanel.Controls)
+                {
+                    control.Visible = false;
+                    if (control.Tag != null && control.Tag.ToString() == "0")
+                    {
+                        control.Visible = true;
+                        control.Enabled = false;
+                    }
+                    if (control.Tag.ToString() == "4")
+                        control.Visible = true;
+                }
                 customerAddButton.Visible = false;
             }
         }
@@ -371,6 +388,11 @@ namespace stockManagement
                 {
                     showMealControls(0);
                     showPanel(mealPanel);
+                }
+                else if (e.ColumnIndex == 0 && selectedCustomerControl == 4)
+                {
+                    showCustomerControls(4);
+                    showPanel(customerPanel);
                 }
             setCustomerControlValues((int)e.RowIndex);
         }
@@ -496,6 +518,97 @@ namespace stockManagement
             {
                 isCustomerAvailable = 0;
                 filterCustomers(customerFilterTextBox.Texts, dtCustomers.Columns["customer_name"].ToString(), dtCustomers.Columns["customer_delete_id"].ToString());
+            }
+        }
+        //calculate debt for selected customer
+        private void customerCalculateDebtButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string debtAmountQuery = "SELECT SUM(price*count) FROM mealTable WHERE customer_id = @id AND meal_delete_id=1";
+                string saveDebtQuery = "INSERT INTO debtTable (debt_amount,customer_id,customer_name,debt_delete_id) VALUES(@amount,@cusID,@cusName,@debtDelID)";
+                string updateMealQuery = "UPDATE mealTable SET meal_delete_id=@mealDelID WHERE customer_id=@cusID";
+
+                SqlConnection conn = new SqlConnection(connString);
+
+                conn.Open();
+
+                SqlCommand debtAmount = new SqlCommand(debtAmountQuery, conn);
+                SqlCommand saveDebt = new SqlCommand(saveDebtQuery, conn);
+                SqlCommand updateMeal = new SqlCommand(updateMealQuery, conn);
+
+                debtAmount.Parameters.AddWithValue("@id", customerID);
+                int amount = (int)debtAmount.ExecuteScalar();
+                debtAmount.Dispose();
+
+                saveDebt.Parameters.AddWithValue("@amount", amount);
+                saveDebt.Parameters.AddWithValue("@cusID", customerID);
+                saveDebt.Parameters.AddWithValue("@cusName", customerNameTextbox.Texts);
+                saveDebt.Parameters.AddWithValue("@debtDelID", 1);
+                saveDebt.ExecuteNonQuery();
+                saveDebt.Dispose();
+
+                updateMeal.Parameters.AddWithValue("@mealDelID", 0);
+                updateMeal.Parameters.AddWithValue("@cusID", customerID);
+                updateMeal.ExecuteNonQuery();
+                updateMeal.Dispose();
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        //save every single debt
+        private void readSingleRow(IDataRecord record)
+        {
+            try
+            {
+                string saveallDebtsQuery = "INSERT INTO debtTable (debt_amount,customer_id,customer_name,debt_delete_id) VALUES(@amount,@cusID,@cusName,@debtDelID)";
+                SqlConnection conn = new SqlConnection(connString);
+
+                conn.Open();
+                SqlCommand saveAllDebts = new SqlCommand(saveallDebtsQuery, conn);
+
+                saveAllDebts.Parameters.AddWithValue("@cusID", record[0]);
+                saveAllDebts.Parameters.AddWithValue("@cusName", record[1]);
+                saveAllDebts.Parameters.AddWithValue("@amount", record[2]);
+                saveAllDebts.Parameters.AddWithValue("@debtDelID", 1);
+                saveAllDebts.ExecuteNonQuery();
+
+                conn.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        //calculate debt for all customers
+        private void customerAllDebtsButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                string calculateAllDebtsQuery = "SELECT customer_id,customer_name,sum(price*count) FROM mealTable WHERE meal_delete_id=1 GROUP BY customer_id,customer_name";
+                string updateMealQuery = "UPDATE mealTable SET meal_delete_id=0";
+
+                SqlConnection conn = new SqlConnection(connString);
+                conn.Open();
+
+                SqlCommand calculateAllDebts = new SqlCommand(calculateAllDebtsQuery, conn);
+                SqlCommand updateMeal = new SqlCommand(updateMealQuery, conn);
+                SqlDataReader drDebts = calculateAllDebts.ExecuteReader();
+
+                while (drDebts.Read())
+                    readSingleRow((IDataRecord)drDebts);
+                drDebts.Close();
+                updateMeal.ExecuteNonQuery();
+                conn.Close();
+                MessageBox.Show("All Customer Debts Calculated and saved into the debts table.", "Succesfull", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         //product add button
@@ -962,9 +1075,6 @@ namespace stockManagement
                 mealAvailableIndicatorLabel.Text = "Not Available";
         }
 
-        private void mealPanel_Paint(object sender, PaintEventArgs e)
-        {
 
-        }
     }
 }
